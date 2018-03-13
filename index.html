@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>About</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/tufte.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <article>
+      <h1>TONY KWOK</h1>
+      <p class="subtitle">Last updated: Jun 24, 2003 10:23:00 AM</p>
+      <section>
+        <h2>Objective</h2>
+        <p>To obtain a challenging position as a software engineer.</p>
+        <h2>Work Experience</h2>
+        <h3>Sony Mobile Communications - Android Engineer - May 2013 ~ present</h3>
+        <h3>Camera</h3>
+        <p>Camera is one of the core application in Sony Xperia™ smartphones. I was responsible for camera related modules, including HAL, framework and application.</p>
+        <ul>
+          <li>Maintenance and bug fix</li>
+          <li>Feature development</li>
+          <ul>
+            <li>Voice-guided self-portrait: based on the face position (the position is calculated by face detection) in the viewfinder, guide the user how to move his phone, e.g. left, up, right, down by voice</li>
+            <li>Sound photo: capture a much more playful photo with sound embedded in it. The sound is store in JPEG file’s exif APP2 section not a separating file, so it is much easier to transfer and share among difference devices.</li>
+            <li>Realtime face beauty: apply various effects like Distortion, Vignette, Depth of field, etc. on camera’s preview/capture frame buffer (YUV format) before sending it to graphics module to complete rendering and compositing. There are mainly 2 different solutions to achieve this, both of them are implemented, compared and finally solution B was chosen since it met our requirements from both performance and power aspects:</li>
+              <ul>
+                <li>A: GPU/openGL
+This solution is much power consuming and device becomes hot quickly, because it uses OpenGL ES2.0 shader to do the YUV-RGB conversion first and then uses GL to render the RGB frame on GLSurfaceView.</li>
+                <li>B: CPU
+Just need to get the backend graphics buffer of the SurfaceView and copy the YUV frame buffer to the backed graphics buffer directly without color conversion. Since this solution use CPU to do compositing, it consumes less power than solution A, and thermal won’t increase quickly.</li>
+              </ul>
+           </ul>
+           <li>Camera View Layout Hierarchies Optimization: Camera View layout was too complicated to impact launch performance. After a deep investigation on camera view layout hierarchies, I found that there were so many redundant/unnecessary views, one kind of them could be removed, and another kind of them could be merged, and the rest of them could use lazy load approach. It’s not an easy job, cause any changes should not involve degrades, but it worth, finally our camera app launches much quickly than before even for cold boot case.</li>
+       </ul>
+
+      </section>
+    </article>
+  </body>
+</html>

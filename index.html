@@ -1,40 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta content="text/html; charset=utf-8" http-equiv="content-type">
-    <title>About</title>
-    <link type="text/css" rel="stylesheet" href="assets/css/tufte.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
-    <article>
-      <h1>TONY KWOK</h1>
-      <p class="subtitle">Last updated: Jun 24, 2003 10:23:00 AM</p>
-      <section>
-        <h2>Objective</h2>
-        <p>To obtain a challenging position as a software engineer.</p>
-        <h2>Work Experience</h2>
-        <h3>Sony Mobile Communications - Android Engineer - May 2013 ~ present</h3>
-        <h3>Camera</h3>
-        <p>Camera is one of the core application in Sony Xperia™ smartphones. I was responsible for camera related modules, including HAL, framework and application.</p>
-        <ul>
-          <li>Maintenance and bug fix</li>
-          <li>Feature development</li>
-          <ul>
-            <li>Voice-guided self-portrait: based on the face position (the position is calculated by face detection) in the viewfinder, guide the user how to move his phone, e.g. left, up, right, down by voice</li>
-            <li>Sound photo: capture a much more playful photo with sound embedded in it. The sound is store in JPEG file’s exif APP2 section not a separating file, so it is much easier to transfer and share among difference devices.</li>
-            <li>Realtime face beauty: apply various effects like Distortion, Vignette, Depth of field, etc. on camera’s preview/capture frame buffer (YUV format) before sending it to graphics module to complete rendering and compositing. There are mainly 2 different solutions to achieve this, both of them are implemented, compared and finally solution B was chosen since it met our requirements from both performance and power aspects:</li>
-              <ul>
-                <li>A: GPU/openGL
-This solution is much power consuming and device becomes hot quickly, because it uses OpenGL ES2.0 shader to do the YUV-RGB conversion first and then uses GL to render the RGB frame on GLSurfaceView.</li>
-                <li>B: CPU
-Just need to get the backend graphics buffer of the SurfaceView and copy the YUV frame buffer to the backed graphics buffer directly without color conversion. Since this solution use CPU to do compositing, it consumes less power than solution A, and thermal won’t increase quickly.</li>
-              </ul>
-           </ul>
-           <li>Camera View Layout Hierarchies Optimization: Camera View layout was too complicated to impact launch performance. After a deep investigation on camera view layout hierarchies, I found that there were so many redundant/unnecessary views, one kind of them could be removed, and another kind of them could be merged, and the rest of them could use lazy load approach. It’s not an easy job, cause any changes should not involve degrades, but it worth, finally our camera app launches much quickly than before even for cold boot case.</li>
-       </ul>
 
-      </section>
-    </article>
-  </body>
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
+  <title>About</title>
+  <link type="text/css" rel="stylesheet" href="assets/css/tufte.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <article>
+    <h1>RESUME</h1>
+
+    <section>
+      <h2>Profile</h2>
+      <p>Name: GUO PENG</p>
+      <p>Gender: Male</p>
+      <p>Date of birth: August 14th, 1984</p>
+      <p>Email: tony_kwok@126.com</p>
+      <p>Phone: 13488862189</p>
+      <p>OSS: https://github.com/tonykwok
+    </section>
+
+    <section>
+      <h2>Objective</h2>
+      <p>To obtain a challenging position as a software engineer.</p>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <p>2007.9-2009.4, Dep. of Computer Science, Beijing Institute of Technology, China, M.E.</p>
+      <p>2003.9-2007.6, Dep. of Computer Science, QUFU Normal University, China, B.E.</p>
+    </section>
+
+    <section>
+      <h2>Work Experience</h2>
+      <h3>#01: Sony Mobile Communications Inc. - Android Engineer - June 2011 ~ present</h3>
+      <p>Sony&reg; Xperia&trade; Camera application maintenance and new feature development</p>
+      <ul>
+        <li>Voice-guided self-portrait: based on the face position (the position is calculated by face detection) in the viewfinder,
+          guide the user how to move his phone, e.g. left, up, right, down by voice</li>
+        <li>Sound photo: capture a much more playful photo with sound embedded in it. The sound is store in JPEG file’s exif
+          APP2 section not a separating file, so it is much easier to transfer and share among difference devices.</li>
+        <li>Realtime face beauty: apply various effects like Distortion, Vignette, Depth of field, etc. on camera’s preview/capture
+          frame buffer (YUV format) before sending it to graphics module to complete rendering and compositing. There are
+          mainly 2 different solutions to achieve this, both of them are implemented, compared and finally solution B was
+          chosen since it met our requirements from both performance and power aspects:</li>
+        <ul>
+          <li>A: GPU/openGL This solution is much power consuming and device becomes hot quickly, because it uses OpenGL ES2.0
+            shader to do the YUV-RGB conversion first and then uses GL to render the RGB frame on GLSurfaceView.</li>
+          <li>B: CPU Just need to get the backend graphics buffer of the SurfaceView and copy the YUV frame buffer to the backed
+            graphics buffer directly without color conversion. Since this solution use CPU to do compositing, it consumes
+            less power than solution A, and thermal won’t increase quickly.</li>
+        </ul>
+        <li>Camera performance and efficiency improvement: Camera View layout was too complicated to impact launch performance.
+          After a deep investigation on camera view layout hierarchies, I found that there were so many redundant/unnecessary
+          views, one kind of them could be removed, and another kind of them could be merged, and the rest of them could
+          use lazy load approach. It’s not an easy job, cause any changes should not involve degrades, but it worth, finally
+          our camera app launches much quickly than before even for cold boot case.</li>
+      </ul>
+      <h3>#02: July 2009-June 2011 Kingdee Software Co., Ltd.</h3>
+      <p>Enterprise Application Suite based on Kingdee Business Operating System</p>
+      <p>EAS is an ERP software based on Client-Server Architecture. On the client side, the UI is build with Java™ Swing, we
+        enrich the existing Swing both with extensions to as well as brand new ones to meet our special requirement, such
+        as KingdeeTable, F7BizPromptBox and so on; On the server side, we adopt Java EE technologies and our own application
+        server – Apusic, the forth application server that passing Java EE 5.0 certification in the world. During the period,
+        I was responsible for Manufacture Module design and development, including Production Line Scheduling, Manufacture
+        Order, Manufacture Order Split and Reform, Definition of Production Line, Definition of Resource, Class Team, Class
+        Group and so on.</p>
+    </section>
+    <section>
+      <h2>Projects</h2>
+      <h3>#01: Java Bytecode Class File Encryption Based on Java Native Interface</h3>
+      <p>Most Obfuscators only rename the identifiers in java class file. As such, it does nothing but makes the files decompiled
+        by Java Decompilers difficult to read. Considering these limits, I overwrite the ClassLoader and use Java Native
+        Interface to convert byte array into java class, because the main part is written in C, this approach puts the security
+        on a level comparable to software written in a native language.</p>
+      <h3>#02: Content-Based Image Retrieval System Based on Java</h3>
+      <p>A java-based CBIR library which I build based on the following thesis: ”Fast Multi-Resolution Image Querying, Charles
+        E. Jacobs, Adam Frinkelstein, David H. Salesin” Currently, this library was integrated into a Material Management
+        System to help users find the most similar materials corresponding to the image they have chosen.</p>
+      <h3>#03: Expression Evaluation on Android Platform</h3>
+      <p>A tool for evaluating expressionsof type string, e.g.
+        <code>double value = eval("3.14 * (3 ^ 2) - (3 / 2) * 2");</code> As we all know there is an eval function in JavaScript and Android™ supports JavaScript as well, but unfortunately,
+        WebView.loadUrl() has no return value, so we need some tips and tricks here.</p>
+      <h3>#04: Alloy Look and Feel Improvement and Enhancement</h3>
+      <p>Alloy Look and Feel is a pluggable java look and feel that can be used by Java developers to enhance the appearance
+        and atmosphere of their Java Swing applications. Since the INCORS® Corporation has stopped supporting it since version
+        1.4.4, I did some bug fixes and alterations to this release, and customized it to meet the aesthetic standard of
+        mine.
+      </p>
+      <h3>#05: Regex4j</h3>
+      <p>
+        <a href="https://github.com/tonykwok/regex4j">Regex4j</a> is a
+        <a href="https://en.wikipedia.org/wiki/Regular_expression">Regular Expression Engine</a> ported from the
+        <code>System.Text.RegularExpressions</code> module of
+        <a href="https://github.com/dotnet/corefx">Microsoft's .Net Core Libraries</a>
+        for Java platform. As a compensation for the Java built-in Pattern class, with one of its advantages, you can avoid the
+        <code>StackOverflowError</code> issues (
+        <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6337993">JDK-6337993</a>,
+        <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6882582">JDK-6882582</a> and
+        <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=8078476">JDK-8078476</a>), which have been in the java.util.regex package since Java 1.4 and still exist in the latest JDK.</p>
+    </section>
+    <p class="subtitle">Last updated: Mar 13, 2018 17:30:00</p>
+  </article>
+</body>
+
 </html>

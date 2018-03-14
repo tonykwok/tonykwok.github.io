@@ -17,14 +17,12 @@
       <p>Name: GUO PENG</p>
       <p>Gender: Male</p>
       <p>Date of birth: August 14th, 1984</p>
-      <p>Email: tony_kwok@126.com</p>
+      <p>Email:
+        <a href="mailto:tony_kwok@126.com">tony_kwok@126.com</a>
+      </p>
       <p>Phone: 13488862189</p>
-      <p>OSS: https://github.com/tonykwok
-    </section>
-
-    <section>
-      <h2>Objective</h2>
-      <p>To obtain a challenging position as a software engineer.</p>
+      <p>OSS:
+        <a href="https://github.com/tonykwok">https://github.com/tonykwok</a>
     </section>
 
     <section>
@@ -35,39 +33,42 @@
 
     <section>
       <h2>Work Experience</h2>
-      <h3>#01: Sony Mobile Communications Inc. - Android Engineer - June 2011 ~ present</h3>
-      <p>Sony&reg; Xperia&trade; Camera application maintenance and new feature development</p>
+      <h3>#01: June 2011 ~ present, Sony Mobile Communications Inc.</h3>
+      <p>
+        <b>Camera application new feature development:</b>
+      </p>
+      <p>Voice-guided self-portrait: based on the face position (the position is calculated by face detection) in the viewfinder,
+        guide the user how to move his phone, e.g. left, up, right, down by voice</p>
+      <p>Sound photo: capture a much more playful photo with sound embedded in it. The sound is store in JPEG file’s exif APP2
+        section not a separating file, so it is much easier to transfer and share among difference devices.</p>
+      <p>Realtime face beauty: apply various effects like Distortion, Vignette, Depth of field, etc. on camera’s preview/capture
+        frame buffer (YUV format) before sending it to graphics module to complete rendering and compositing. There are mainly
+        2 different solutions to achieve this, both of them are implemented, compared and finally solution B was chosen since
+        it met our requirements from both performance and power aspects:</p>
       <ul>
-        <li>Voice-guided self-portrait: based on the face position (the position is calculated by face detection) in the viewfinder,
-          guide the user how to move his phone, e.g. left, up, right, down by voice</li>
-        <li>Sound photo: capture a much more playful photo with sound embedded in it. The sound is store in JPEG file’s exif
-          APP2 section not a separating file, so it is much easier to transfer and share among difference devices.</li>
-        <li>Realtime face beauty: apply various effects like Distortion, Vignette, Depth of field, etc. on camera’s preview/capture
-          frame buffer (YUV format) before sending it to graphics module to complete rendering and compositing. There are
-          mainly 2 different solutions to achieve this, both of them are implemented, compared and finally solution B was
-          chosen since it met our requirements from both performance and power aspects:</li>
-        <ul>
-          <li>A: GPU/openGL This solution is much power consuming and device becomes hot quickly, because it uses OpenGL ES2.0
-            shader to do the YUV-RGB conversion first and then uses GL to render the RGB frame on GLSurfaceView.</li>
-          <li>B: CPU Just need to get the backend graphics buffer of the SurfaceView and copy the YUV frame buffer to the backed
-            graphics buffer directly without color conversion. Since this solution use CPU to do compositing, it consumes
-            less power than solution A, and thermal won’t increase quickly.</li>
-        </ul>
-        <li>Camera performance and efficiency improvement: Camera View layout was too complicated to impact launch performance.
-          After a deep investigation on camera view layout hierarchies, I found that there were so many redundant/unnecessary
-          views, one kind of them could be removed, and another kind of them could be merged, and the rest of them could
-          use lazy load approach. It’s not an easy job, cause any changes should not involve degrades, but it worth, finally
-          our camera app launches much quickly than before even for cold boot case.</li>
+        <li>A: GPU/openGL This solution is much power consuming and device becomes hot quickly, because it uses OpenGL ES2.0
+          shader to do the YUV-RGB conversion first and then uses GL to render the RGB frame on GLSurfaceView.</li>
+        <li>B: CPU Just need to get the backend graphics buffer of the SurfaceView and copy the YUV frame buffer to the backed
+          graphics buffer directly without color conversion. Since this solution use CPU to do compositing, it consumes less
+          power than solution A, and thermal won’t increase quickly.</li>
       </ul>
-      <h3>#02: July 2009-June 2011 Kingdee Software Co., Ltd.</h3>
-      <p>Enterprise Application Suite based on Kingdee Business Operating System</p>
-      <p>EAS is an ERP software based on Client-Server Architecture. On the client side, the UI is build with Java™ Swing, we
-        enrich the existing Swing both with extensions to as well as brand new ones to meet our special requirement, such
-        as KingdeeTable, F7BizPromptBox and so on; On the server side, we adopt Java EE technologies and our own application
-        server – Apusic, the forth application server that passing Java EE 5.0 certification in the world. During the period,
-        I was responsible for Manufacture Module design and development, including Production Line Scheduling, Manufacture
-        Order, Manufacture Order Split and Reform, Definition of Production Line, Definition of Resource, Class Team, Class
-        Group and so on.</p>
+      <p>
+        <b>Camera performance and efficiency improvement:</b>
+      </p>
+      <p>Camera View layout was too complicated to impact launch performance. After a deep investigation on camera view layout
+        hierarchies, I found that there were so many redundant/unnecessary views, one kind of them could be removed, and
+        another kind of them could be merged, and the rest of them could use lazy load approach. It’s not an easy job, cause
+        any changes should not involve degrades, but it worth, finally our camera app launches much quickly than before even
+        for cold boot case.</p>
+
+      <h3>#02: July 2009-June 2011, Kingdee Software Co., Ltd.</h3>
+      <p>EAS (Enterprise Application Suite based on Kingdee Business Operating System) is an ERP software based on Client-Server
+        Architecture. On the client side, the UI is build with Java™ Swing, we enrich the existing Swing both with extensions
+        to as well as brand new ones to meet our special requirement, such as KingdeeTable, F7BizPromptBox and so on; On
+        the server side, we adopt Java EE technologies and our own application server – Apusic, the forth application server
+        that passing Java EE 5.0 certification in the world. During the period, I was responsible for Manufacture Module
+        design and development, including Production Line Scheduling, Manufacture Order, Manufacture Order Split and Reform,
+        Definition of Production Line, Definition of Resource, Class Team, Class Group and so on.</p>
     </section>
     <section>
       <h2>Projects</h2>
@@ -102,7 +103,7 @@
         <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6882582">JDK-6882582</a> and
         <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=8078476">JDK-8078476</a>), which have been in the java.util.regex package since Java 1.4 and still exist in the latest JDK.</p>
     </section>
-    <p class="subtitle">Last updated: Mar 13, 2018 17:30:00</p>
+    <p><i>&copy; 2018 TONY KWOK, Powered by <a href="https://www.github.com/">Github</a>. Last updated: Mar 13, 2018 17:30:00</i></p>
   </article>
 </body>
 

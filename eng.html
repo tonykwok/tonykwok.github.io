@@ -9,7 +9,9 @@
 </head>
 
 <body>
-  <p><a href="chs.html">切换到中文</a></p>
+  <p>
+    <a href="chs.html">切换到中文</a>
+  </p>
   <article>
     <section>
       <h1>TONY KWOK</h1>
@@ -20,16 +22,13 @@
           <a href="mailto:tony_kwok@126.com">tony_kwok@126.com</a>
         </li>
         <li>+86 134 888 62189</li>
-        <li>
-          <a href="https://github.com/tonykwok">https://github.com/tonykwok</a>
-        </li>
       </ul>
     </section>
 
     <section>
       <h2>Education</h2>
-      <p>2007.9-2009.4, Dep. of Computer Science, Beijing Institute of Technology, China, M.E.</p>
-      <p>2003.9-2007.6, Dep. of Computer Science, QUFU Normal University, China, B.E.</p>
+      <p>2007.9-2009.4, Dept. of Computer Science, Beijing Institute of Technology, China, M.E.</p>
+      <p>2003.9-2007.6, Dept. of Computer Science, QUFU Normal University, China, B.E.</p>
     </section>
 
     <section>
@@ -40,7 +39,7 @@
       </p>
       <p>Voice-guided self-portrait: based on the face position (the position is calculated by face detection) in the viewfinder,
         guide the user how to move his phone, e.g. left, up, right, down by voice</p>
-      <p>Sound photo: capture a much more playful photo with sound embedded in it. The sound is store in JPEG file’s exif APP2
+      <p>Sound photo: capture a much more playful photo with sound embedded in it. The sound is store in JPEG file’s EXIF APP2
         section not a separating file, so it is much easier to transfer and share among difference devices.</p>
       <p>Realtime face beauty: apply various effects like Distortion, Vignette, Depth of field, etc. on camera’s preview/capture
         frame buffer (YUV format) before sending it to graphics module to complete rendering and compositing. There are mainly
@@ -54,12 +53,12 @@
           power than solution A, and thermal won’t increase quickly.</li>
       </ul>
       <p>
-        <b>Camera performance and efficiency improvement:</b>
+        <b>Camera performance improvement:</b>
       </p>
       <p>Camera View layout was too complicated to impact launch performance. After a deep investigation on camera view layout
         hierarchies, I found that there were so many redundant/unnecessary views, one kind of them could be removed, and
-        another kind of them could be merged, and the rest of them could use lazy load approach. It’s not an easy job, cause
-        any changes should not involve degrades, but it worth, finally our camera app launches much quickly than before even
+        another kind of them could be merged, and the rest of them could use lazy load approach. It’s not an easy job, since
+        any changes should not cause degrades, but it's worth it. Finally our camera app launches much quickly than before even
         for cold boot case.</p>
 
       <h3>#02: July 2009-June 2011, Kingdee Software Co., Ltd.</h3>
@@ -102,7 +101,15 @@
         <code>StackOverflowError</code> issues (
         <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6337993">JDK-6337993</a>,
         <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6882582">JDK-6882582</a> and
-        <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=8078476">JDK-8078476</a>), which have been in the <code>java.util.regex</code> package since Java 1.4 and still exist in the latest JDK.</p>
+        <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=8078476">JDK-8078476</a>), which have been in the
+        <code>java.util.regex</code> package since Java 1.4 and still exist in the latest JDK.</p>
+    </section>
+
+    <section>
+      <h2>Open Source Porjects</h2>
+      <p>
+        <a href="https://github.com/tonykwok">https://github.com/tonykwok</a>
+      </p>
     </section>
   </article>
 </body>

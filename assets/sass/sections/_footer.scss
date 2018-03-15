@@ -1,0 +1,37 @@
+//---------------------------
+//
+// Footer
+//
+//---------------------------
+
+.site-footer {
+  padding: $line-height__base * 2;
+
+  color: #99999a;
+  background-color: #FAFAFB;
+
+  @media #{$medium-down} {
+    text-align: center;
+    padding: $line-height__medium;
+  }
+}
+
+.social-nav {
+  margin: 0;
+  padding: 0;
+  line-height: $line-height__medium;
+  text-align: right;
+
+  li { display: inline-block; }
+
+  .icon {
+    fill: $color__type;
+    transition: .5s;
+    &:hover { fill: $color__type--hover; }
+  }
+
+  @media #{$medium-down} {
+    text-align: center;
+    padding-top: $line-height__medium / 2;
+  }
+}

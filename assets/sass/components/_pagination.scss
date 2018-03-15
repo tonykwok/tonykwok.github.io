@@ -1,0 +1,70 @@
+//---------------------------
+//
+// Pagination
+//
+//---------------------------
+
+.post-prev-next-pagination {
+  margin-bottom: $line-height__base;
+
+  @media #{$medium-down} {
+    margin-bottom: $line-height__medium;
+  }
+}
+
+.post-navigation {
+  font-size: $font-size__small;
+  line-height: $line-height__medium;
+
+
+  // Show next & prev icons in small screens
+  .icon {
+    display: none;
+
+    @media #{$medium-down} {
+      display: inline-block;
+    }
+  }
+
+  // Hide pagination title in small screens
+  .post-navigation__title {
+    @media #{$medium-down} {
+      display: none;
+    }
+  }
+
+  &.prev { float: left; }
+  &.next { text-align: right; float: right; }
+
+  @media #{$medium-down} {
+    &.prev,
+    &.next { text-align: center; }
+  }
+}
+
+.post-navigation__link {
+  text-decoration: none;
+  padding: ($line-height__base / 4) ($line-height__base / 2);
+}
+
+// Newer Posts & Older Posts
+
+.pagination {
+  font-size: $font-size__small;
+  line-height: $line-height__medium;
+
+  a {
+    width: 50%;
+    text-decoration: none;
+  }
+}
+
+.newer-posts {
+  float: left;
+  text-align: left;
+}
+
+.older-posts {
+  float: right;
+  text-align: right;
+}

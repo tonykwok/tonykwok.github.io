@@ -1,0 +1,41 @@
+//---------------------------
+//
+// Box
+//
+//---------------------------
+
+.box {
+  padding: $line-height__base 0;
+  margin-bottom: $line-height__base;
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  overflow: hidden;
+
+  @media #{$medium-down} {
+    padding: ($line-height__base / 2) 0;
+    margin-bottom: $line-height__base / 2;
+  }
+}
+
+.box__icon {
+  float: left;
+  width: $line-height__base;
+  margin-right: $line-height__base / 3;
+}
+
+.box__title {
+  margin: 0;
+  font-weight: 300;
+  line-height: $line-height__medium;
+}
+
+.box__body {
+  overflow: hidden;
+}
+
+.box__text {
+  font-size: $font-size__small;
+  line-height: $line-height__small;
+  margin-top: $line-height__small / 2;
+  margin-bottom: 0;
+}

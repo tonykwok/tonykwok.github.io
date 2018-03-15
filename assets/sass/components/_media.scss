@@ -1,0 +1,32 @@
+//---------------------------
+//
+// Media
+//
+//---------------------------
+
+img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+
+  @media #{$medium-down} {
+    margin-bottom: $line-height__small;
+  }
+}
+
+.post-content img {
+  margin-bottom: $line-height__base;
+}
+
+p img {
+  margin-bottom: 0;
+}
+
+iframe,
+.twitter-tweet {
+  margin-bottom: $line-height__base !important;
+
+  @media #{$medium-down} {
+    margin-bottom: $line-height__small;
+  }
+}

@@ -1,0 +1,27 @@
+//---------------------------
+//
+// Post Meta
+//
+//---------------------------
+
+.post-tags {
+  font-size: $font-size__small;
+  margin-bottom: $line-height__base;
+
+  a {
+    padding: ($line-height__small / 2) $line-height__small;;
+    margin-right: $line-height__base / 4;
+    background-color: $grey-bg;
+    text-decoration: none;
+  }
+}
+
+.post-footer {
+  line-height: $line-height__small;
+  margin-bottom: $line-height__base;
+}
+
+.share-link {
+  font-size: $font-size__small;
+  margin-right: $line-height__base / 4;
+}

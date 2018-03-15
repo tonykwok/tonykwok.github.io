@@ -9,7 +9,9 @@
 </head>
 
 <body>
-  <p><a href="eng.html">Switch to English</a></p>
+  <p>
+    <a href="eng.html">Switch to English</a>
+  </p>
   <article>
     <section>
       <h2>个人简介</h2>
@@ -82,7 +84,7 @@
       <p>目前，对于Java软件的加密，通常采用的都是使用混淆软件（Obfuscator）对编译生成的Class文件进行混淆，比如开源的ProGuard（目前该软件已经在Google发布Android 2.3 Gingerbread的时候，作为一个插件添加到ADT中）。混淆降低了的程序的可读性，提高了循环结构的复杂度，比如：混淆后的代码较多地使用了Break语句等等，但是使用反编译工具（JAD等）还是能够看出个所以然来。使用JNI技术结合自定义的ClassLoader可以避免这个问题，因为Class文件本身已经被加密了所以反编译软件无法识别（一般反编译软件会首先查看所读取的Class文件是否符合Java规范，即是否以CAFEBABE字节码开头），只有在加载该Class到JVM的时候，自定义的ClassLoader才负责解密并将对应的Byte数组转化成相应的Class对象。
       </p>
       <h3>基于纹理特征的图像检索系统</h3>
-      <p>该项目是在维客网上接到的一个客户需求，也是我比较感兴趣的方向。客户是一家从事布料销售的外贸公司，为了能及时快速地查询到目前数据库中是否有某一类花纹的布料，系统需要根据操作员输入的样本图片，对数据库进行查询，返回按相似度有大到小的匹配结果。显然，颜色不是客户关心的重点，图像纹理特征才是图像是否匹配的判定标准，同时考虑到特征提取效率等问题，决定采用相对简单Haar小波特征，最终采用JavaTM语言并参考网上的一篇论文（Fast
+      <p>该项目是在维客网上接到的一个客户需求，也是我比较感兴趣的方向。客户是一家从事布料销售的外贸公司，为了能及时快速地查询到目前数据库中是否有某一类花纹的布料，系统需要根据操作员输入的样本图片，对数据库进行查询，返回按相似度有大到小的匹配结果。显然，颜色不是客户关心的重点，图像纹理特征才是图像是否匹配的判定标准，同时考虑到特征提取效率等问题，决定采用相对简单Haar小波特征，最终采用Java语言并参考网上的一篇论文（Fast
         Multi-resolution Image Querying）实现了该算法。</p>
       <h3>Android平台上的字符串类型数学运算表达式求值</h3>
       <p>在JDK 5.0版本之后，Java平台开始支持对脚本语言的支持（比如：JavaScript），因此，在Java平台上解决上述问题还是比较简单的，直接调用JavaScript中的eval方法即可。虽然Android平台上已经有用于浏览Web页面的WebView控件，并且该控件也支持JavaScript脚本，但是它在执行JavaScript脚本的时候是没有返回值的。最后通过参考API文档，使用自定义的WebChromeClient解决了该问题。
@@ -97,12 +99,12 @@
           <code>StackOverflowError</code>异常（
           <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6337993">JDK-6337993</a>，
           <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6882582">JDK-6882582</a>，
-          <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=8078476">JDK-8078476</a>）， 该异常自JDK 1.4便存在，并在最新的JDK里面依旧存在。
+          <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=8078476">JDK-8078476</a>）， 该异常自JDK 1.4便存在，并且在最新的JDK里面依旧存在。
         </p>
     </section>
 
     <section>
-      <h2>开源共享项目</h2>
+      <h2>开源项目</h2>
       <p>
         <a href="https://www.github.com/tonykwok">https://www.github.com/tonykwok</a>
     </section>

@@ -1,0 +1,1313 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OpenCV on Tegra &mdash; FCam for Tegra 1.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FCam for Tegra 1.3 documentation" href="index.html" />
+    <link rel="next" title="Profiling your application" href="profiling.html" />
+    <link rel="prev" title="OpenGL ES 2.0" href="opengles.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: black; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/nvidia_logo.png" border="0" alt="NVIDIA logo"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="profiling.html" title="Profiling your application"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="opengles.html" title="OpenGL ES 2.0"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">OpenCV on Tegra</a><ul>
+<li><a class="reference internal" href="#creating-a-native-c-c-opencv-sample-project">Creating a Native (C/C++) OpenCV Sample Project</a></li>
+<li><a class="reference internal" href="#display-results-using-opengl">Display Results using OpenGL</a></li>
+<li><a class="reference internal" href="#debugging-your-opencv-application">Debugging your OpenCV application</a></li>
+<li><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="opengles.html"
+                        title="previous chapter">OpenGL ES 2.0</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="profiling.html"
+                        title="next chapter">Profiling your application</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/opencv.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="opencv-on-tegra">
+<h1>OpenCV on Tegra<a class="headerlink" href="#opencv-on-tegra" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial we show how to implement image processing and computer vision algorithms in Android using the OpenCV library.
+We show how to load an input image from an SD card, and also how to grab video frames from the Android camera by only using OpenCV native C++ code.
+We then apply a simple feature detector for each input frame, and display the results on the screen using both OpenCV and
+OpenGL ES for rendering lines and text.</p>
+<div class="section" id="creating-a-native-c-c-opencv-sample-project">
+<span id="opencv-image"></span><h2>Creating a Native (C/C++) OpenCV Sample Project<a class="headerlink" href="#creating-a-native-c-c-opencv-sample-project" title="Permalink to this headline">¶</a></h2>
+<p>This example, called <tt class="docutils literal"><span class="pre">SimpleImageOpenCV</span></tt>, is based on the <a class="reference internal" href="opengles.html#opengles"><em>OpenGL ES example</em></a> previously presented.
+The complete project can be found in <tt class="docutils literal"><span class="pre">/tutorials/SimpleImageOpenCV_Complete/</span></tt>.</p>
+<p>The basic functionalities of the example include:</p>
+<blockquote>
+<div><ul class="simple">
+<li>loading an image from an SD card using OpenCV&#8217;s <tt class="docutils literal"><span class="pre">highgui</span></tt> functions,</li>
+<li>capturing video frames from a camera using OpenCV&#8217;s <tt class="docutils literal"><span class="pre">cv::VideoCapture</span></tt> class, and</li>
+<li>applying feature detection to the image and video frames using <tt class="docutils literal"><span class="pre">cv::FastFeatureDetector</span></tt> class.</li>
+</ul>
+</div></blockquote>
+<p>We start by explaining how to set up the OpenCV library, then show how to implement an image
+processing program using OpenCV step by step. To start from the OpenGL ES example,
+follow the instructions for <a class="reference internal" href="opengles.html#import-existing-project-opengles"><em>importing a project into
+Eclipse</em></a> to import the starting point for this example
+(<tt class="docutils literal"><span class="pre">/tutorials/SimpleImageOpenCV</span></tt>), which is identical to the OpenGL ES example
+<tt class="docutils literal"><span class="pre">SimpleImageDisplayGL</span></tt>.</p>
+<ol class="arabic">
+<li><p class="first">Set up OpenCV:</p>
+<ul>
+<li><p class="first">Open <tt class="docutils literal"><span class="pre">Android.mk</span></tt> and add the highlighted lines:</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_PATH</span> <span class="o">:=</span> <span class="k">$(</span>call my-dir<span class="k">)</span>
+
+<span class="cp">include $(CLEAR_VARS)</span>
+
+<span class="hll"><span class="nv">OPENCV_CAMERA_MODULES</span>  <span class="o">:=</span> on
+</span><span class="hll"><span class="nv">OPENCV_LIB_TYPE</span>        <span class="o">:=</span> STATIC
+</span><span class="hll"><span class="c"># Generic OpenCV.mk</span>
+</span><span class="hll"><span class="c">#include $(NVPACK_PATH)/OpenCV-2.4.5-Tegra-sdk/sdk/native/jni/OpenCV.mk</span>
+</span><span class="hll"><span class="c"># Tegra optimized OpenCV.mk</span>
+</span><span class="hll"><span class="cp">include $(NVPACK_PATH)/OpenCV-2.4.5-Tegra-sdk/sdk/native/jni/OpenCV-tegra3.mk</span>
+</span></pre></div>
+</div>
+</li>
+</ul>
+<blockquote>
+<div><p>The <tt class="docutils literal"><span class="pre">OPENCV_CAMERA_MODULES</span></tt> adds the camera libraries to the build process; if
+you don&#8217;t need to use the camera you can set this option to <em>off</em>. <tt class="docutils literal"><span class="pre">OPENCV_LIB_TYPE</span></tt>
+allows us to choose between static and shared libraries.  For now, we use static linkage.
+We finally include <tt class="docutils literal"><span class="pre">OpenCV-tegra3.mk</span></tt> which defines the flags, paths and libraries
+that are needed to build an application with OpenCV optimized for Tegra 3.
+For other devices you can use <tt class="docutils literal"><span class="pre">OpenCV.mk</span></tt> instead.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is possible to link OpenCV either as a shared or a statically linked library.
+Here we use static linking as that is easier for a fully native (C++) project.</p>
+</div>
+</div></blockquote>
+<ul>
+<li><p class="first">Specify the name of this module :</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_MODULE</span> <span class="o">:=</span> SimpleImageOpenCV
+</pre></div>
+</div>
+</li>
+<li><p class="first">The <tt class="docutils literal"><span class="pre">OpenCV*.mk</span></tt> file will initialize LOCAL_LDLIBS and LOCAL_STATITC_LIBRARIES,
+for this reason we need to append to these variables using the <tt class="docutils literal"><span class="pre">+=</span></tt> operator
+instead of redefining them with the <tt class="docutils literal"><span class="pre">:=</span></tt> notation. Modify the following lines
+replacing the <tt class="docutils literal"><span class="pre">:=</span></tt> with the <tt class="docutils literal"><span class="pre">+=</span></tt> operator:</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_LDLIBS</span>           <span class="o">+=</span> -lc -lm -llog -landroid -ldl -lGLESv2 -lEGL
+<span class="nv">LOCAL_STATIC_LIBRARIES</span> <span class="o">+=</span> nv_and_util nv_egl_util nv_bitfont nv_math nv_glesutil nv_hhdds nv_log nv_shader nv_file nv_thread
+</pre></div>
+</div>
+<p>You can find more details at <a class="reference external" href="http://opencv.willowgarage.com/wiki/OpenCVAndroidBinariesBuild#How_to_build_an_Android_application.2C_which_uses_OpenCV">How to build an Android application, which uses OpenCV</a>.</p>
+</li>
+</ul>
+</li>
+<li><p class="first">Modify the Manifest file:</p>
+<p>Open the <tt class="docutils literal"><span class="pre">AndroidManifest.xml</span></tt> file by clicking <tt class="docutils literal"><span class="pre">AndroidManifest.xml</span></tt> in Project Explorer. Choose an <tt class="docutils literal"><span class="pre">AndroidManifest.xml</span></tt> XML tab  if the XML is not shown. Then, we add the followings (highlights).</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;manifest</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class="na">package=</span><span class="s">&quot;com.nvidia.tutorial&quot;</span>
+    <span class="na">android:versionCode=</span><span class="s">&quot;1&quot;</span>
+    <span class="na">android:versionName=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;uses-sdk</span> <span class="na">android:minSdkVersion=</span><span class="s">&quot;14&quot;</span> <span class="na">android:targetSdkVersion=</span><span class="s">&quot;15&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="hll">    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;</span> <span class="nt">/&gt;</span>
+</span><span class="hll">    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.CAMERA&quot;</span> <span class="nt">/&gt;</span>
+</span><span class="hll">    <span class="nt">&lt;uses-feature</span> <span class="na">android:name=</span><span class="s">&quot;android.hardware.camera&quot;</span> <span class="nt">/&gt;</span>
+</span><span class="hll">    <span class="nt">&lt;uses-feature</span> <span class="na">android:name=</span><span class="s">&quot;android.hardware.camera.autofocus&quot;</span> <span class="nt">/&gt;</span>
+</span><span class="hll">    <span class="nt">&lt;uses-feature</span> <span class="na">android:name=</span><span class="s">&quot;android.hardware.camera.front&quot;</span> <span class="na">android:required=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+</span><span class="hll">    <span class="nt">&lt;uses-feature</span> <span class="na">android:name=</span><span class="s">&quot;android.hardware.camera.front.autofocus&quot;</span> <span class="na">android:required=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+</span>
+    <span class="c">&lt;!-- We do not have Java code. Therefore android:hasCode is set to false. --&gt;</span>
+    <span class="nt">&lt;application</span> <span class="na">android:label=</span><span class="s">&quot;@string/app_name&quot;</span> <span class="na">android:hasCode=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- Our activity is the built-in NativeActivity framework class.</span>
+<span class="c">             This will take care of integrating with our NDK code. --&gt;</span>
+        <span class="nt">&lt;activity</span> <span class="na">android:name=</span><span class="s">&quot;android.app.NativeActivity&quot;</span>
+                  <span class="na">android:label=</span><span class="s">&quot;@string/app_name&quot;</span>
+                  <span class="na">android:configChanges=</span><span class="s">&quot;orientation|keyboard|keyboardHidden&quot;</span>
+                  <span class="na">android:theme=</span><span class="s">&quot;@android:style/Theme.NoTitleBar.Fullscreen&quot;</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- Tell NativeActivity the name of or .so --&gt;</span>
+            <span class="nt">&lt;meta-data</span> <span class="na">android:name=</span><span class="s">&quot;android.app.lib_name&quot;</span>
+<span class="hll">                       <span class="na">android:value=</span><span class="s">&quot;SimpleImageOpenCV&quot;</span> <span class="nt">/&gt;</span>
+</span>            <span class="nt">&lt;intent-filter&gt;</span>
+                <span class="nt">&lt;action</span>   <span class="na">android:name=</span><span class="s">&quot;android.intent.action.MAIN&quot;</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;category</span> <span class="na">android:name=</span><span class="s">&quot;android.intent.category.LAUNCHER&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/intent-filter&gt;</span>
+        <span class="nt">&lt;/activity&gt;</span>
+    <span class="nt">&lt;/application&gt;</span>
+
+<span class="nt">&lt;/manifest&gt;</span>
+</pre></div>
+</div>
+<p>We first add a permission to access an SD card to load and save images. We also add a permission
+to access cameras, and declare several camera features that we plan to use.  Notice that we also
+changed <tt class="docutils literal"><span class="pre">android.app.lib_name</span></tt> from <tt class="docutils literal"><span class="pre">SimpleImageDisplay</span></tt> to <tt class="docutils literal"><span class="pre">SimpleImageOpenCV</span></tt> because
+we changed the library name in <tt class="docutils literal"><span class="pre">Android.mk</span></tt> in the previous step.</p>
+</li>
+<li><p class="first">Make an OpenCV example source file:</p>
+<p>Create new source and header files <tt class="docutils literal"><span class="pre">jni/OpenCV_native.cpp</span></tt> and <tt class="docutils literal"><span class="pre">jni/OpenCV_native.h</span></tt>, which we will use
+to implement our image processing with OpenCV. You can make them either by (1) directly creating empty files in
+the <tt class="docutils literal"><span class="pre">jni</span></tt> directory, or you can (2) <em>Right-click the project &gt; New &gt; Source File (or Header file)</em>, and
+specify the name of files under the <tt class="docutils literal"><span class="pre">jni</span></tt> directory.</p>
+<p>Then, let&#8217;s add some placeholders which we will soon fill in:</p>
+<p><tt class="docutils literal"><span class="pre">OpenCV_native.h</span></tt></p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#ifndef OPENCV_NATIVE_H_</span>
+<span class="cp">#define OPENCV_NATIVE_H_</span>
+
+<span class="cp">#include &lt;jni.h&gt;</span>
+<span class="cp">#include &lt;opencv2/core/core.hpp&gt;</span>
+<span class="cp">#include &lt;opencv2/highgui/highgui.hpp&gt;</span>
+<span class="cp">#include &lt;opencv2/imgproc/imgproc.hpp&gt;</span>
+<span class="cp">#include &lt;opencv2/features2d/features2d.hpp&gt;</span>
+<span class="cp">#include &lt;opencv2/video/video.hpp&gt;</span>
+
+<span class="cp">#include &lt;vector&gt;</span>
+
+<span class="k">class</span> <span class="nc">COpenCVSample</span>
+<span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">COpenCVSample</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+    <span class="o">~</span><span class="n">COpenCVSample</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Load an image and apply any algorithm on the image and return the result image</span>
+<span class="hll">    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">runLoadCVImg</span><span class="p">();</span>
+</span>    <span class="c1">// Apply an algorithm on an input cv::Mat image</span>
+<span class="hll">    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">runOpenCVFeatureDetector</span><span class="p">(</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">img</span> <span class="p">);</span>
+</span>    <span class="c1">// Return the blank opencv image with error msg</span>
+<span class="hll">    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">errorImage</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errmsg</span> <span class="p">);</span>
+</span><span class="p">};</span>
+
+<span class="cp">#endif </span><span class="cm">/* OPENCV_NATIVE_H_ */</span><span class="cp"></span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">OpenCV_native.cpp</span></tt></p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &quot;OpenCV_native.h&quot;</span>
+
+<span class="hll"><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">COpenCVSample</span><span class="o">::</span><span class="n">runLoadCVImg</span><span class="p">()</span>
+</span><span class="p">{</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">img</span><span class="p">;</span>
+
+    <span class="c1">// Do something to load an image and return it</span>
+
+    <span class="k">return</span> <span class="n">img</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="hll"><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">COpenCVSample</span><span class="o">::</span><span class="n">runOpenCVFeatureDetector</span><span class="p">(</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">img</span> <span class="p">)</span>
+</span><span class="p">{</span>
+
+    <span class="c1">// Do something to detect features</span>
+
+    <span class="k">return</span> <span class="n">img</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="hll"><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">COpenCVSample</span><span class="o">::</span><span class="n">errorImage</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errmsg</span> <span class="p">)</span>
+</span><span class="p">{</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">img</span><span class="p">;</span>
+
+    <span class="c1">// Do something to draw an error message on an image and return it</span>
+
+    <span class="k">return</span> <span class="n">img</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We will call the above functions from <tt class="docutils literal"><span class="pre">Engine.cpp</span></tt> later on, and the texture for the display will
+be updated from <tt class="docutils literal"><span class="pre">cv::Mat</span></tt> images that are returned by these functions.</p>
+<p>As <tt class="docutils literal"><span class="pre">Android.mk</span></tt> uses wildcards for the source files, we don&#8217;t need to add these files to the makefile.</p>
+</li>
+<li><p class="first">Initialize the UI for the example:</p>
+<p>In <tt class="docutils literal"><span class="pre">Engine::initUI()</span></tt> within <tt class="docutils literal"><span class="pre">Engine.cpp</span></tt>, we modify the highlighted lines to change the
+text on the buttons.  The buttons will be used for calling functions to either grab video frames
+from the camera or load an image from SD card.</p>
+<div class="highlight-c++"><div class="highlight"><pre> <span class="kt">bool</span> <span class="n">Engine</span><span class="o">::</span><span class="n">initUI</span><span class="p">()</span>
+ <span class="p">{</span>
+    <span class="c1">// The UI might have been initialized already</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">mUiInitialized</span> <span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="p">[...]</span>
+
+    <span class="c1">// UI Buttons</span>
+    <span class="n">mUiButton</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">NVBFTextAlloc</span><span class="p">();</span>
+    <span class="n">NVBFTextSetFont</span><span class="p">(</span> <span class="n">mUiButton</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span> <span class="p">);</span> <span class="c1">// should look up by font file name.</span>
+    <span class="n">NVBFTextSetSize</span><span class="p">(</span> <span class="n">mUiButton</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">48</span> <span class="p">);</span>
+    <span class="n">NVBFTextSetColor</span><span class="p">(</span> <span class="n">mUiButton</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">NV_PC_PREDEF_WHITE</span> <span class="p">);</span>
+    <span class="n">NVBFTextSetShadow</span><span class="p">(</span> <span class="n">mUiButton</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">5</span><span class="p">,</span> <span class="n">NV_PC_PREDEF_BLACK</span> <span class="p">);</span>
+<span class="hll">    <span class="n">NVBFTextSetString</span><span class="p">(</span> <span class="n">mUiButton</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">NVBF_STYLESTR_BOLD</span> <span class="s">&quot;CAM&quot;</span> <span class="p">);</span>
+</span>
+    <span class="n">mUiButton</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">NVBFTextAlloc</span><span class="p">();</span>
+    <span class="n">NVBFTextSetFont</span><span class="p">(</span> <span class="n">mUiButton</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span> <span class="p">);</span> <span class="c1">// should look up by font file name.</span>
+    <span class="n">NVBFTextSetSize</span><span class="p">(</span> <span class="n">mUiButton</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">48</span> <span class="p">);</span>
+    <span class="n">NVBFTextSetColor</span><span class="p">(</span> <span class="n">mUiButton</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">NV_PC_PREDEF_WHITE</span> <span class="p">);</span>
+    <span class="n">NVBFTextSetShadow</span><span class="p">(</span> <span class="n">mUiButton</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">5</span><span class="p">,</span> <span class="n">NV_PC_PREDEF_BLACK</span> <span class="p">);</span>
+<span class="hll">    <span class="n">NVBFTextSetString</span><span class="p">(</span> <span class="n">mUiButton</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">NVBF_STYLESTR_BOLD</span> <span class="s">&quot;IMAGE&quot;</span> <span class="p">);</span>
+</span>
+    <span class="p">[...]</span>
+
+    <span class="n">mUiInitialized</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Build and run the project:</p>
+<ul>
+<li><p class="first">Clean the project by <em>Project &gt; Clean</em>, then build the project.</p>
+</li>
+<li><p class="first">Once you run the project, you will see the NVIDIA logo and the new buttons on the screen.</p>
+<img alt="_images/opencv-run-example6-nvidia.png" class="align-center" src="_images/opencv-run-example6-nvidia.png" />
+</li>
+</ul>
+</li>
+<li><p class="first">Add a function to display an error message using OpenCV:</p>
+<ul class="simple">
+<li>In <tt class="docutils literal"><span class="pre">OpenCV_native.cpp</span></tt>, add the following code to make an image with an error message using OpenCV highgui functions.</li>
+</ul>
+<blockquote>
+<div><div class="highlight-c++"><div class="highlight"><pre><span class="c1">// Return the blank opencv image with error msg</span>
+<span class="hll"><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">COpenCVSample</span><span class="o">::</span><span class="n">errorImage</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">errmsg</span> <span class="p">)</span>
+</span><span class="p">{</span>
+    <span class="c1">// Make a black background image</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">img</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">::</span><span class="n">zeros</span><span class="p">(</span> <span class="mi">720</span><span class="p">,</span> <span class="mi">1280</span><span class="p">,</span> <span class="n">CV_8UC3</span> <span class="p">);</span>
+
+    <span class="c1">// Add message with cv::putText</span>
+<span class="hll">    <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">sterr</span><span class="p">;</span>
+</span><span class="hll">    <span class="n">sterr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Loading image failed. Please check out the path&quot;</span><span class="p">;</span>
+</span><span class="hll">    <span class="n">cv</span><span class="o">::</span><span class="n">putText</span><span class="p">(</span> <span class="n">img</span><span class="p">,</span> <span class="n">sterr</span><span class="p">.</span><span class="n">str</span><span class="p">(),</span> <span class="n">cv</span><span class="o">::</span><span class="n">Point</span><span class="p">(</span> <span class="n">img</span><span class="p">.</span><span class="n">cols</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">200</span><span class="p">,</span> <span class="n">img</span><span class="p">.</span><span class="n">rows</span> <span class="o">/</span> <span class="mi">2</span> <span class="p">),</span>
+</span><span class="hll">                 <span class="n">cv</span><span class="o">::</span><span class="n">FONT_HERSHEY_PLAIN</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Scalar</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">);</span>
+</span>
+    <span class="c1">// OpenCV uses BGR, but OpenGL ES uses RGB</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">rgb_img</span><span class="p">(</span> <span class="n">img</span> <span class="p">);</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">cvtColor</span><span class="p">(</span> <span class="n">img</span><span class="p">,</span> <span class="n">rgb_img</span><span class="p">,</span> <span class="n">CV_BGR2RGB</span> <span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">rgb_img</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Add functionality for loading an image from an SD card:</p>
+<ul class="simple">
+<li>Upload the <a class="reference download internal" href="_downloads/lena.jpg"><tt class="xref download docutils literal"><span class="pre">lena.jpg</span></tt></a> image to your device.  You can use <tt class="docutils literal"><span class="pre">adb</span>
+<span class="pre">shell</span></tt> to find the path to external storage (using <tt class="docutils literal"><span class="pre">ls</span></tt> and <tt class="docutils literal"><span class="pre">cd</span></tt> commands), and <tt class="docutils literal"><span class="pre">adb</span>
+<span class="pre">push</span></tt> to move the file over (e.g., <tt class="docutils literal"><span class="pre">adb</span> <span class="pre">push</span> <span class="pre">lena.jpg</span> <span class="pre">/storage/sdcard0/DCIM</span></tt>). You can also
+upload the image using File Explorer (In Eclipse, <em>Project &gt; Show View &gt; File Explorer</em>).</li>
+<li>In <tt class="docutils literal"><span class="pre">COpenCVSample::runLoadCVImg()</span></tt> in <tt class="docutils literal"><span class="pre">OpenCV_native.cpp</span></tt>, specify the path to the input
+image. We then load the image using <tt class="docutils literal"><span class="pre">cv::imread()</span></tt>.</li>
+</ul>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">COpenCVSample</span><span class="o">::</span><span class="n">runLoadCVImg</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Specify a path for the test image</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">path</span><span class="p">;</span>
+<span class="hll">    <span class="n">path</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;/storage/sdcard0/DCIM/lena.jpg&quot;</span><span class="p">;</span>  <span class="c1">// you may have to modify this path!</span>
+</span>
+<span class="hll">    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">img</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">imread</span><span class="p">(</span> <span class="n">path</span><span class="p">.</span><span class="n">str</span><span class="p">()</span> <span class="p">);</span>
+</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">img</span><span class="p">.</span><span class="n">rows</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// If the path was wrong, draw in error message into cv::Mat</span>
+<span class="hll">        <span class="k">return</span> <span class="n">errorImage</span><span class="p">(</span> <span class="s">&quot;Wrong image path!&quot;</span> <span class="p">);</span>
+</span>    <span class="p">}</span>
+
+    <span class="c1">// Convert to RGB for OpenGL ES</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">rgb_img</span><span class="p">(</span> <span class="n">img</span> <span class="p">);</span>
+<span class="hll">    <span class="n">cv</span><span class="o">::</span><span class="n">cvtColor</span><span class="p">(</span> <span class="n">img</span><span class="p">,</span> <span class="n">rgb_img</span><span class="p">,</span> <span class="n">CV_BGR2RGB</span> <span class="p">);</span>
+</span>
+    <span class="k">return</span> <span class="n">rgb_img</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Because OpenCV uses BGR, while OpenGL ES uses RGB format, we have to convert the color space
+with <tt class="docutils literal"><span class="pre">cv::cvtColor()</span></tt>. Then, return the converted image buffer.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Display the loaded image:</p>
+<ul class="simple">
+<li>Now we show how to call the functions in <tt class="docutils literal"><span class="pre">OpenCV_native.cpp</span></tt>, and to update a texture with
+the image returned by these functions.</li>
+<li>First include <tt class="docutils literal"><span class="pre">OpenCV_native.h</span></tt> in <tt class="docutils literal"><span class="pre">Engine.h</span></tt>, and add an instance of <tt class="docutils literal"><span class="pre">COpenCVSample</span></tt> class. We then also
+add a function to update an OpenGL texture (highlights).</li>
+</ul>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span class="hll"><span class="cp">#include &quot;OpenCV_native.h&quot;</span>
+</span>
+<span class="p">[...]</span>
+
+<span class="k">class</span> <span class="nc">Engine</span>
+<span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">FRAMES_TO_RENDER</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+<span class="nl">public:</span>
+    <span class="cm">/**</span>
+<span class="cm">     * The constructor saves a pointer to the engine and to the callback</span>
+<span class="cm">     * functions in the Android app. It also initializes the nv_shader library.</span>
+<span class="cm">     */</span>
+    <span class="n">Engine</span><span class="p">(</span> <span class="n">NvEGLUtil</span> <span class="o">&amp;</span><span class="n">egl</span><span class="p">,</span> <span class="k">struct</span> <span class="n">android_app</span> <span class="o">*</span><span class="n">app</span> <span class="p">);</span>
+
+    <span class="p">[...]</span>
+
+<span class="nl">protected:</span>
+
+    <span class="p">[...]</span>
+
+    <span class="c1">// Function for updating textures</span>
+<span class="hll">    <span class="kt">void</span> <span class="n">updateCVTexture</span><span class="p">(</span> <span class="n">GLuint</span> <span class="n">imgTexture</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">img</span> <span class="p">);</span>
+</span>
+    <span class="p">[...]</span>
+
+    <span class="c1">// Variables for the UI</span>
+    <span class="n">NvUIRect</span> <span class="n">mUiButtonZone</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="kt">void</span>    <span class="o">*</span><span class="n">mClockText</span><span class="p">;</span>
+    <span class="kt">void</span>    <span class="o">*</span><span class="n">mUiPauseText</span><span class="p">;</span>
+    <span class="kt">void</span>    <span class="o">*</span><span class="n">mUiButton</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="kt">int</span>      <span class="n">mHitButton</span><span class="p">;</span>      <span class="c1">// Stores which of the two buttons is currently active</span>
+
+    <span class="c1">// Variables for OpenCV</span>
+<span class="hll">    <span class="n">COpenCVSample</span> <span class="n">mCV</span><span class="p">;</span>
+</span><span class="p">};</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>Implement <tt class="docutils literal"><span class="pre">updateCVTexture(</span> <span class="pre">GLuint</span> <span class="pre">imgTexture,</span> <span class="pre">cv::Mat</span> <span class="pre">img</span> <span class="pre">)</span></tt> in <tt class="docutils literal"><span class="pre">Engine.cpp</span></tt>.
+In addition to updating the texture we call into the shader to update the image
+size and keep the aspect ratio.</li>
+</ul>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span class="c1">// Update a texture with OpenCV image (Mat)</span>
+<span class="kt">void</span> <span class="n">Engine</span><span class="o">::</span><span class="n">updateCVTexture</span><span class="p">(</span> <span class="n">GLuint</span> <span class="n">imgTexture</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">img</span> <span class="p">)</span>
+<span class="p">{</span>
+   <span class="c1">// The images we get from the camera or read from opencv are byte aligned.</span>
+   <span class="n">glPixelStorei</span><span class="p">(</span> <span class="n">GL_UNPACK_ALIGNMENT</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+   <span class="c1">// Update the texture</span>
+   <span class="n">glBindTexture</span><span class="p">(</span> <span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">imgTexture</span> <span class="p">);</span>
+   <span class="n">glTexImage2D</span><span class="p">(</span> <span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">GL_RGB</span><span class="p">,</span> <span class="n">img</span><span class="p">.</span><span class="n">cols</span><span class="p">,</span> <span class="n">img</span><span class="p">.</span><span class="n">rows</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">GL_RGB</span><span class="p">,</span> <span class="n">GL_UNSIGNED_BYTE</span><span class="p">,</span> <span class="n">img</span><span class="p">.</span><span class="n">data</span> <span class="p">);</span>
+   <span class="n">glBindTexture</span><span class="p">(</span> <span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="mi">0</span> <span class="p">);</span>
+
+   <span class="c1">// Update the shader</span>
+   <span class="n">mRectShader</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">setImageSize</span><span class="p">(</span> <span class="n">img</span><span class="p">.</span><span class="n">cols</span><span class="p">,</span> <span class="n">img</span><span class="p">.</span><span class="n">rows</span><span class="p">,</span>
+         <span class="n">RectShader</span><span class="o">::</span><span class="n">STORAGE_TOP_FIRST</span><span class="p">,</span> <span class="n">RectShader</span><span class="o">::</span><span class="n">ASPECT_RATIO_KEEP</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In <tt class="docutils literal"><span class="pre">glTexImage2D</span></tt>, we set the image buffer as <tt class="docutils literal"><span class="pre">GL_RGB</span></tt>, and the type of the data as <tt class="docutils literal"><span class="pre">GL_UNSIGNED_BYTE</span></tt>.
+See the <a class="reference external" href="http://www.khronos.org/opengles/sdk/docs/man/xhtml/glTexImage2D.xml">glTexImage2D reference</a>
+for details on <tt class="docutils literal"><span class="pre">glPixelStorei</span></tt> and <tt class="docutils literal"><span class="pre">glTexImage2D</span></tt>.</p>
+</div></blockquote>
+<ul class="simple">
+<li>Modify the message handling function to add a call to <tt class="docutils literal"><span class="pre">COpenCVSample::runLoadCVImg()</span></tt>
+if the <strong>IMAGE</strong> button was pressed.</li>
+</ul>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span class="kt">int</span> <span class="n">Engine</span><span class="o">::</span><span class="n">handleInput</span><span class="p">(</span> <span class="n">AInputEvent</span> <span class="o">*</span> <span class="n">event</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// We only handle motion events (touchscreen) and key (button/key) events</span>
+    <span class="kt">int32_t</span> <span class="n">eventType</span> <span class="o">=</span> <span class="n">AInputEvent_getType</span><span class="p">(</span> <span class="n">event</span> <span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span> <span class="n">eventType</span> <span class="o">==</span> <span class="n">AINPUT_EVENT_TYPE_MOTION</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="p">[...]</span>
+
+<span class="hll">        <span class="k">if</span><span class="p">(</span> <span class="n">isActiveMode</span><span class="p">()</span> <span class="p">)</span>
+</span>        <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span> <span class="n">mUiButtonZone</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">inside</span><span class="p">(</span> <span class="n">mx</span><span class="p">,</span> <span class="n">my</span> <span class="p">)</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">mHitButton</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+               <span class="c1">// ``CAM`` button calls a camera capture function here</span>
+            <span class="p">}</span>
+<span class="hll">            <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">mUiButtonZone</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">inside</span><span class="p">(</span> <span class="n">mx</span><span class="p">,</span> <span class="n">my</span> <span class="p">)</span> <span class="p">)</span>
+</span>            <span class="p">{</span>
+                <span class="n">mHitButton</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+                <span class="c1">// ``IMAGE`` button calls a load image function, and</span>
+                <span class="c1">// a function to update a texture here.</span>
+<span class="hll">                <span class="n">updateCVTexture</span><span class="p">(</span> <span class="n">mImgTexture</span><span class="p">,</span> <span class="n">mCV</span><span class="p">.</span><span class="n">runLoadCVImg</span><span class="p">()</span> <span class="p">);</span>
+</span>            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="p">[...]</span>
+
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">[...]</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>Finally, as we are going to use only a default shader (<tt class="docutils literal"><span class="pre">mRectShader[1]</span></tt>) for displaying
+image, change the highlighted line.</li>
+</ul>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span class="kt">bool</span> <span class="n">Engine</span><span class="o">::</span><span class="n">renderFrame</span><span class="p">(</span> <span class="kt">bool</span> <span class="n">allocateIfNeeded</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="p">[...]</span>
+
+    <span class="c1">// Set up viewport</span>
+    <span class="n">glViewport</span><span class="p">(</span> <span class="p">(</span> <span class="n">GLint</span> <span class="p">)</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span> <span class="n">GLint</span> <span class="p">)</span><span class="mi">0</span><span class="p">,</span>
+                <span class="p">(</span> <span class="n">GLsizei</span> <span class="p">)(</span> <span class="n">mEgl</span><span class="p">.</span><span class="n">getWidth</span><span class="p">()</span> <span class="p">),</span> <span class="p">(</span> <span class="n">GLsizei</span> <span class="p">)(</span> <span class="n">mEgl</span><span class="p">.</span><span class="n">getHeight</span><span class="p">()</span> <span class="p">)</span> <span class="p">);</span>
+
+    <span class="c1">// Clear buffers as necessary</span>
+    <span class="n">glClear</span><span class="p">(</span> <span class="n">GL_COLOR_BUFFER_BIT</span> <span class="o">|</span> <span class="n">GL_DEPTH_BUFFER_BIT</span> <span class="p">);</span>
+
+    <span class="cm">/* Do some rendering here */</span>
+
+    <span class="c1">// Based on the button that is selected choose the shader that should be used...</span>
+<span class="hll">    <span class="n">mDrawRect</span><span class="o">-&gt;</span><span class="n">setShader</span><span class="p">(</span> <span class="n">mRectShader</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">get</span><span class="p">()</span> <span class="p">);</span>
+</span>    <span class="c1">// ... and pass the texture to the shader.</span>
+    <span class="n">mDrawRect</span><span class="o">-&gt;</span><span class="n">draw</span><span class="p">(</span> <span class="n">mImgTexture</span> <span class="p">);</span>
+
+    <span class="c1">// Render the rendering bitfont text overlaid here.</span>
+    <span class="n">NVBFTextRenderPrep</span><span class="p">();</span>
+
+    <span class="p">[...]</span>
+
+    <span class="c1">// Swap the buffers, which indicates we&#39;re done with rendering this frame</span>
+    <span class="n">mEgl</span><span class="p">.</span><span class="n">swap</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>Now, let&#8217;s build the project and run the application. When you click the <strong>IMAGE</strong> button, the
+following image should be shown:</li>
+</ul>
+<blockquote>
+<div><img alt="_images/opencv-opengl-load-image.png" class="align-center" src="_images/opencv-opengl-load-image.png" />
+<p>If the image was not loaded correctly you get an error message instead:</p>
+<img alt="_images/opencv-run-example6-error.png" class="align-center" src="_images/opencv-run-example6-error.png" />
+<p>If the error message is shown, please make sure you&#8217;ve uploaded the image to the device, and that
+the path specified in the previous step (in <tt class="docutils literal"><span class="pre">COpenCVSample::runLoadCVImg()</span></tt>) is correct.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Add functionality to capture a video frame from the camera.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The camera control from OpenCV is not fully supported on all devices. As of 06/10/2013 all Tegra 3
+and Tegra 4 devices are supported (whether they are production devices or dev boards, such as Cardhu),
+with the exception of some devices based on Android 4.0.x, such as the HTC One X before upgrade to
+Android 4.1.x.</p>
+<p>To date, the native OpenCV camera does not work on:</p>
+<ul class="last simple">
+<li>TI-based devices (such as LG and Motorola devices), with Android 2.x</li>
+<li>Several MTK-based Chinese Android devices, such as Zopo or Huawey</li>
+</ul>
+</div>
+<ul>
+<li><p class="first">We first add an instance for the OpenCV video capturing class, <tt class="docutils literal"><span class="pre">cv::VideoCapture</span></tt>, and a flag
+for switching the display mode between video and the loaded image. In <tt class="docutils literal"><span class="pre">Engine.h</span></tt>, add the
+following lines:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="p">[...]</span>
+
+<span class="c1">// Variables for OpenCV</span>
+<span class="n">COpenCVSample</span> <span class="n">mCV</span><span class="p">;</span>        <span class="c1">// Class instance for OpenCV tutorial</span>
+
+<span class="c1">// OpenCV native camera</span>
+<span class="hll"><span class="n">cv</span><span class="o">::</span><span class="n">VideoCapture</span> <span class="n">mCapture</span><span class="p">;</span>
+</span><span class="hll"><span class="kt">bool</span>             <span class="n">mUseCVCam</span><span class="p">;</span>
+</span>
+<span class="p">[...]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Initialize and set up the <tt class="docutils literal"><span class="pre">cv::VideoCapture</span></tt> class in <tt class="docutils literal"><span class="pre">Engine::initUI()</span></tt> in <tt class="docutils literal"><span class="pre">Engine.cpp</span></tt>.</p>
+<div class="highlight-cpp"><div class="highlight"><pre> <span class="kt">bool</span> <span class="n">Engine</span><span class="o">::</span><span class="n">initUI</span><span class="p">()</span>
+ <span class="p">{</span>
+     <span class="k">if</span><span class="p">(</span> <span class="n">mUiInitialized</span> <span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
+
+     <span class="n">LOGD</span><span class="p">(</span> <span class="s">&quot;Initializing UI&quot;</span> <span class="p">);</span>
+
+     <span class="p">[...]</span>
+
+     <span class="n">mUiInitialized</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+<span class="hll">     <span class="n">mUseCVCam</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class="hll">
+</span><span class="hll">     <span class="c1">// Open the OpenCV camera  0 for frontal and 1 for backward camera</span>
+</span><span class="hll">     <span class="n">mCapture</span><span class="p">.</span><span class="n">open</span><span class="p">(</span> <span class="n">CV_CAP_ANDROID</span> <span class="o">+</span> <span class="mi">0</span> <span class="p">);</span>
+</span><span class="hll">     <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">mCapture</span><span class="p">.</span><span class="n">isOpened</span><span class="p">()</span> <span class="p">)</span>
+</span><span class="hll">     <span class="p">{</span>
+</span><span class="hll">         <span class="n">LOGI</span><span class="p">(</span> <span class="s">&quot;CV: OpenCV camera was not opened correctly&quot;</span> <span class="p">);</span>
+</span><span class="hll">     <span class="p">}</span>
+</span><span class="hll">     <span class="k">else</span>
+</span><span class="hll">     <span class="p">{</span>
+</span><span class="hll">         <span class="n">LOGI</span><span class="p">(</span> <span class="s">&quot;CV: OpenCV camera was opened correctly&quot;</span> <span class="p">);</span>
+</span><span class="hll">     <span class="p">}</span>
+</span><span class="hll">
+</span><span class="hll">     <span class="c1">// set the properties of the OpenCV camera</span>
+</span><span class="hll">     <span class="n">mCapture</span><span class="p">.</span><span class="n">set</span><span class="p">(</span> <span class="n">CV_CAP_PROP_AUTOGRAB</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+</span><span class="hll">     <span class="n">mCapture</span><span class="p">.</span><span class="n">set</span><span class="p">(</span> <span class="n">CV_CAP_PROP_FRAME_WIDTH</span><span class="p">,</span> <span class="mi">640</span> <span class="p">);</span>
+</span><span class="hll">     <span class="n">mCapture</span><span class="p">.</span><span class="n">set</span><span class="p">(</span> <span class="n">CV_CAP_PROP_FRAME_HEIGHT</span><span class="p">,</span> <span class="mi">480</span> <span class="p">);</span>
+</span><span class="hll">
+</span><span class="hll">     <span class="n">LOGI</span><span class="p">(</span> <span class="s">&quot;CV: OpenCV camera setup done&quot;</span> <span class="p">);</span>
+</span><span class="hll">
+</span>     <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+<p>We chose the frontal camera, and set the frame resolution to <tt class="docutils literal"><span class="pre">640</span> <span class="pre">x</span> <span class="pre">480</span></tt>.</p>
+</li>
+<li><p class="first">Now, let&#8217;s write code for getting video frames and update the texture to display them.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="hll"><span class="kt">bool</span> <span class="n">Engine</span><span class="o">::</span><span class="n">renderFrame</span><span class="p">(</span> <span class="kt">bool</span> <span class="n">allocateIfNeeded</span> <span class="p">)</span>
+</span><span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">mEgl</span><span class="p">.</span><span class="n">isReadyToRender</span><span class="p">(</span> <span class="n">allocateIfNeeded</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">[...]</span>
+
+    <span class="c1">// set up viewport</span>
+    <span class="n">glViewport</span><span class="p">(</span> <span class="p">(</span> <span class="n">GLint</span> <span class="p">)</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span> <span class="n">GLint</span> <span class="p">)</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span> <span class="n">GLsizei</span> <span class="p">)(</span> <span class="n">mEgl</span><span class="p">.</span><span class="n">getWidth</span><span class="p">()</span> <span class="p">),</span> <span class="p">(</span> <span class="n">GLsizei</span> <span class="p">)(</span> <span class="n">mEgl</span><span class="p">.</span><span class="n">getHeight</span><span class="p">()</span> <span class="p">)</span> <span class="p">);</span>
+
+    <span class="c1">// clear buffers as necessary</span>
+    <span class="n">glClear</span><span class="p">(</span> <span class="n">GL_COLOR_BUFFER_BIT</span> <span class="o">|</span> <span class="n">GL_DEPTH_BUFFER_BIT</span> <span class="p">);</span>
+
+    <span class="c1">// Based on the button that is selected choose the shader that should be used...</span>
+    <span class="n">mDrawRect</span><span class="o">-&gt;</span><span class="n">setShader</span><span class="p">(</span> <span class="n">mRectShader</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">get</span><span class="p">()</span> <span class="p">);</span>
+    <span class="c1">// ... and pass the texture to the shader.</span>
+    <span class="n">mDrawRect</span><span class="o">-&gt;</span><span class="n">draw</span><span class="p">(</span> <span class="n">mImgTexture</span> <span class="p">);</span>
+
+    <span class="c1">// OpenCV Camera</span>
+<span class="hll">    <span class="k">if</span><span class="p">(</span> <span class="n">mUseCVCam</span> <span class="p">)</span>
+</span><span class="hll">    <span class="p">{</span>
+</span><span class="hll">        <span class="c1">// grab the openCV camera:</span>
+</span><span class="hll">        <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">mCapture</span><span class="p">.</span><span class="n">grab</span><span class="p">()</span> <span class="p">)</span>
+</span><span class="hll">        <span class="p">{</span>
+</span><span class="hll">            <span class="n">LOGI</span><span class="p">(</span> <span class="s">&quot;CV: cannot grab frame&quot;</span> <span class="p">);</span>
+</span><span class="hll">            <span class="n">mUseCVCam</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class="hll">        <span class="p">}</span>
+</span><span class="hll">        <span class="c1">// retrieve the frame from the openCV camera:</span>
+</span><span class="hll">        <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">frameimg</span><span class="p">;</span>
+</span><span class="hll">        <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">mCapture</span><span class="p">.</span><span class="n">retrieve</span><span class="p">(</span> <span class="n">frameimg</span><span class="p">,</span> <span class="n">CV_CAP_ANDROID_COLOR_FRAME_RGB</span> <span class="p">)</span> <span class="p">)</span>
+</span><span class="hll">        <span class="p">{</span>
+</span><span class="hll">            <span class="n">LOGI</span><span class="p">(</span> <span class="s">&quot;CV:: cannot retrieve frame -- break&quot;</span> <span class="p">);</span>
+</span><span class="hll">            <span class="n">mUseCVCam</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class="hll">        <span class="p">}</span>
+</span><span class="hll">        <span class="c1">// Bind the texture with the frameimg.</span>
+</span><span class="hll">        <span class="n">updateCVTexture</span><span class="p">(</span> <span class="n">mImgTexture</span><span class="p">,</span> <span class="n">frameimg</span> <span class="p">);</span>
+</span><span class="hll">
+</span><span class="hll">        <span class="n">frameimg</span><span class="p">.</span><span class="n">release</span><span class="p">();</span>
+</span><span class="hll">    <span class="p">}</span>
+</span>
+    <span class="p">[...]</span>
+
+    <span class="c1">// done rendering overlaid text.</span>
+    <span class="n">NVBFTextRenderDone</span><span class="p">();</span>
+
+    <span class="k">if</span><span class="p">(</span> <span class="n">mForceRender</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span> <span class="n">mForceRender</span><span class="o">--</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="n">mEgl</span><span class="p">.</span><span class="n">swap</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Then, we set the flag <tt class="docutils literal"><span class="pre">mUseCVCam</span></tt> to <tt class="docutils literal"><span class="pre">true</span></tt> in the message handling function (for the <strong>CAM</strong> button), and set the flag to <tt class="docutils literal"><span class="pre">false</span></tt> when another button (<strong>IMAGE</strong>) is clicked.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="hll"><span class="kt">int</span> <span class="n">Engine</span><span class="o">::</span><span class="n">handleInput</span><span class="p">(</span> <span class="n">AInputEvent</span> <span class="o">*</span><span class="n">event</span> <span class="p">)</span>
+</span><span class="p">{</span>
+    <span class="c1">// We only handle motion events (touchscreen) and key (button/key) events</span>
+    <span class="kt">int32_t</span> <span class="n">eventType</span> <span class="o">=</span> <span class="n">AInputEvent_getType</span><span class="p">(</span> <span class="n">event</span> <span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span> <span class="n">eventType</span> <span class="o">==</span> <span class="n">AINPUT_EVENT_TYPE_MOTION</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="p">[...]</span>
+
+        <span class="k">if</span><span class="p">(</span> <span class="n">isActiveMode</span><span class="p">()</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span> <span class="n">mUiButtonZone</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">inside</span><span class="p">(</span> <span class="n">mx</span><span class="p">,</span> <span class="n">my</span> <span class="p">)</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">mHitButton</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+                <span class="c1">// ``CAM`` button calls a camera capture function here</span>
+<span class="hll">                <span class="n">mUseCVCam</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">mUiButtonZone</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">inside</span><span class="p">(</span> <span class="n">mx</span><span class="p">,</span> <span class="n">my</span> <span class="p">)</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">mHitButton</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="hll">                <span class="n">mUseCVCam</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span>
+                <span class="c1">// ``IMAGE`` button calls a load image function, and</span>
+                <span class="c1">// a function to update a texture here.</span>
+                <span class="n">updateCVTexture</span><span class="p">(</span> <span class="n">mImgTexture</span><span class="p">,</span> <span class="n">mCV</span><span class="p">.</span><span class="n">runLoadCVImg</span><span class="p">()</span> <span class="p">);</span>
+
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="p">[...]</span>
+    <span class="p">}</span>
+    <span class="p">[...]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Finally, release the capture device, <tt class="docutils literal"><span class="pre">cv::VideoCapture</span> <span class="pre">mCapture</span></tt>, in the destructor of the <tt class="docutils literal"><span class="pre">Engine</span></tt> class.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">Engine</span><span class="o">::~</span><span class="n">Engine</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Free the allocated BitFonts</span>
+    <span class="n">NVBFTextFree</span><span class="p">(</span> <span class="n">mUiButton</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">);</span>
+    <span class="n">NVBFTextFree</span><span class="p">(</span> <span class="n">mUiButton</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">);</span>
+    <span class="n">NVBFTextFree</span><span class="p">(</span> <span class="n">mUiPauseText</span> <span class="p">);</span>
+    <span class="n">NVBFTextFree</span><span class="p">(</span> <span class="n">mClockText</span> <span class="p">);</span>
+    <span class="n">NVBFCleanup</span><span class="p">();</span>
+
+    <span class="c1">// Delete the texture</span>
+    <span class="n">glDeleteTextures</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mImgTexture</span> <span class="p">);</span>
+
+    <span class="c1">// release capture device</span>
+<span class="hll">    <span class="n">mCapture</span><span class="p">.</span><span class="n">release</span><span class="p">();</span>
+</span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Build the project again, and click the <tt class="docutils literal"><span class="pre">CAM</span></tt> button. Now the video frames captured from your device will be shown.</p>
+</li>
+</ul>
+<blockquote>
+<div><img alt="_images/opencv-opengl-cam-image.png" class="align-center" src="_images/opencv-opengl-cam-image.png" />
+</div></blockquote>
+</li>
+<li><p class="first">Apply a feature detector onto loaded image and video frames using OpenCV:</p>
+<ul>
+<li><p class="first">We now get back to <tt class="docutils literal"><span class="pre">OpenCV_native.cpp</span></tt> to fill the <tt class="docutils literal"><span class="pre">runOpenCVFeatureDetector(cv::Mat</span> <span class="pre">img)</span></tt> function.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">COpenCVSample</span><span class="o">::</span><span class="n">runOpenCVFeatureDetector</span><span class="p">(</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">img</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">g_img</span><span class="p">(</span> <span class="n">img</span><span class="p">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">img</span><span class="p">.</span><span class="n">cols</span><span class="p">,</span> <span class="n">CV_8UC1</span> <span class="p">);</span>
+
+    <span class="c1">// convert BGR to Gray</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">cvtColor</span><span class="p">(</span> <span class="n">img</span><span class="p">,</span> <span class="n">g_img</span><span class="p">,</span> <span class="n">CV_BGR2GRAY</span> <span class="p">);</span>
+
+    <span class="c1">// detect FAST features</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cv</span><span class="o">::</span><span class="n">KeyPoint</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">FastFeatureDetector</span> <span class="n">detector</span><span class="p">(</span> <span class="mi">50</span> <span class="p">);</span>
+    <span class="n">detector</span><span class="p">.</span><span class="n">detect</span><span class="p">(</span> <span class="n">g_img</span><span class="p">,</span> <span class="n">v</span> <span class="p">);</span>
+
+    <span class="c1">// Draw results</span>
+    <span class="k">for</span><span class="p">(</span> <span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">cv</span><span class="o">::</span><span class="n">circle</span><span class="p">(</span> <span class="n">img</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Point</span><span class="p">(</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">pt</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">pt</span><span class="p">.</span><span class="n">y</span> <span class="p">),</span> <span class="mi">10</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Scalar</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Draw texts in opencv</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">st1</span><span class="p">;</span>
+    <span class="n">st1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Number of features : &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">putText</span><span class="p">(</span> <span class="n">img</span><span class="p">,</span> <span class="n">st1</span><span class="p">.</span><span class="n">str</span><span class="p">(),</span> <span class="n">cv</span><span class="o">::</span><span class="n">Point</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span> <span class="p">),</span> <span class="n">cv</span><span class="o">::</span><span class="n">FONT_HERSHEY_PLAIN</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Scalar</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">st1</span><span class="p">.</span><span class="n">str</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">()</span> <span class="p">);</span>
+    <span class="n">st1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;This text is drawn from OpenCV&quot;</span><span class="p">;</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">putText</span><span class="p">(</span> <span class="n">img</span><span class="p">,</span> <span class="n">st1</span><span class="p">.</span><span class="n">str</span><span class="p">(),</span> <span class="n">cv</span><span class="o">::</span><span class="n">Point</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">80</span> <span class="p">),</span> <span class="n">cv</span><span class="o">::</span><span class="n">FONT_HERSHEY_PLAIN</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Scalar</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">img</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We first convert the input RGB file to a gray scale image to detect features. We then extract
+FAST features, and draw the features with <tt class="docutils literal"><span class="pre">cv::circle()</span></tt>. Then we also add some text using
+<tt class="docutils literal"><span class="pre">cv::putText()</span></tt>.</p>
+</li>
+<li><p class="first">We then add a line of code to apply feature detector to a loaded image.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">COpenCVSample</span><span class="o">::</span><span class="n">runLoadCVImg</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// specifying a path for a testing image</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">path</span><span class="p">;</span>
+    <span class="n">path</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;/storage/sdcard0/DCIM/lena.jpg&quot;</span><span class="p">;</span>
+
+    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">img</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">imread</span><span class="p">(</span> <span class="n">path</span><span class="p">.</span><span class="n">str</span><span class="p">()</span> <span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span> <span class="n">img</span><span class="p">.</span><span class="n">rows</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// If the path was wrong, display error message as a form of cv::Mat</span>
+        <span class="k">return</span> <span class="n">ErrorImage</span><span class="p">(</span> <span class="s">&quot;Wrong image path!&quot;</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="hll">    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">temp</span><span class="p">(</span><span class="n">img</span><span class="p">);</span>
+</span><span class="hll">    <span class="n">img</span> <span class="o">=</span> <span class="n">runOpenCVFeatureDetector</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+</span>
+    <span class="c1">// Since opencv uses BGR, we have to convert it to RGB for opengl side</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">rgb_img</span><span class="p">(</span> <span class="n">img</span> <span class="p">);</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">cvtColor</span><span class="p">(</span> <span class="n">img</span><span class="p">,</span> <span class="n">rgb_img</span><span class="p">,</span> <span class="n">CV_BGR2RGB</span> <span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">rgb_img</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">To apply the detector to video frames from the camera, we change the code in
+<tt class="docutils literal"><span class="pre">Engine::renderFrame(...)</span></tt> function in <tt class="docutils literal"><span class="pre">Engine.cpp</span></tt>.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="kt">bool</span> <span class="n">Engine</span><span class="o">::</span><span class="n">renderFrame</span><span class="p">(</span> <span class="kt">bool</span> <span class="n">allocateIfNeeded</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="p">[...]</span>
+
+    <span class="c1">// OpenCV Camera</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">mUseCVCam</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// grab the openCV camera:</span>
+        <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">mCapture</span><span class="p">.</span><span class="n">grab</span><span class="p">()</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">LOGI</span><span class="p">(</span> <span class="s">&quot;CV: cannot grab frame&quot;</span> <span class="p">);</span>
+            <span class="n">mUseCVCam</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// retrieve the frame from the openCV camera:</span>
+        <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">frameimg</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">mCapture</span><span class="p">.</span><span class="n">retrieve</span><span class="p">(</span> <span class="n">frameimg</span><span class="p">,</span> <span class="n">CV_CAP_ANDROID_COLOR_FRAME_RGB</span> <span class="p">)</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">LOGI</span><span class="p">(</span> <span class="s">&quot;CV:: cannot retrieve frame -- break&quot;</span> <span class="p">);</span>
+            <span class="n">mUseCVCam</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// Bind the texture with the frameimg.</span>
+<span class="hll">        <span class="n">updateCVTexture</span><span class="p">(</span> <span class="n">mImgTexture</span><span class="p">,</span> <span class="n">mCV</span><span class="p">.</span><span class="n">runOpenCVFeatureDetector</span><span class="p">(</span><span class="n">frameimg</span><span class="p">)</span> <span class="p">);</span>
+</span>
+        <span class="n">frameimg</span><span class="p">.</span><span class="n">release</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="p">[...]</span>
+
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">We now build the project again, and run the application. By clicking the <tt class="docutils literal"><span class="pre">IMAGE</span></tt> and <tt class="docutils literal"><span class="pre">CAM</span></tt>
+buttons, you will see the following results.</p>
+</li>
+</ul>
+<blockquote>
+<div><img alt="_images/opencv-run-example6.png" class="align-center" src="_images/opencv-run-example6.png" />
+<img alt="_images/opencv-run-example6-camera.png" class="align-center" src="_images/opencv-run-example6-camera.png" />
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="display-results-using-opengl">
+<span id="simple-image-opencv-gl"></span><h2>Display Results using OpenGL<a class="headerlink" href="#display-results-using-opengl" title="Permalink to this headline">¶</a></h2>
+<p>In the previous section, we have drawn the feature points with OpenCV highgui functions, and updated
+the texture with the resulting image.  Because we drew the result into the image rather than on the
+display, the visual quality of the drawings varies depending on the resolution ratios of the image and
+display.  We now show how to draw line primitives with OpenGL.  The primitives will be overlaid on
+top of the resulting (or input) image/frame at the display resolution.</p>
+<p>This example, called <tt class="docutils literal"><span class="pre">SimpleImageOpenCV_GL</span></tt>, is based on <a class="reference internal" href="#opencv-image"><em>OpenCV example</em></a>
+(<tt class="docutils literal"><span class="pre">SimpleImageOpenCV</span></tt>) shown in the previous section. The complete project can be found in a
+directory, <tt class="docutils literal"><span class="pre">/tutorials/SimpleImageOpenCV_GL_Complete/</span></tt>.</p>
+<ol class="arabic">
+<li><p class="first">Continue from the previous project, or import the <tt class="docutils literal"><span class="pre">SimpleImageOpenCV_GL</span></tt> sample project. In the beginning, the content of the project
+is identical to the <tt class="docutils literal"><span class="pre">SimpleImageOpenCV_GL_Complete</span></tt> sample.</p>
+<p>The basic steps are the same as in the <a class="reference internal" href="opengles.html#import-existing-project-opengles"><em>previous tutorial</em></a>:
+<em>Open Eclipse &gt; Choose a workspace location &gt; File &gt; Import &gt; Android &gt; Existing Android Code Into Workspace
+&gt; Browse a Root Directory</em>  <tt class="docutils literal"><span class="pre">/tutorials/SimpleImageOpenCV_GL</span></tt>. Then, convert the project to CDT.</p>
+</li>
+<li><p class="first">Add a shader for displaying results from OpenCV.</p>
+<ul class="simple">
+<li>Create the following fragment (<tt class="docutils literal"><span class="pre">line.frag</span></tt>) and vertex (<tt class="docutils literal"><span class="pre">line.vert</span></tt>) shaders in <tt class="docutils literal"><span class="pre">assets</span></tt> directory.
+The vertex shader will take vertices in image normalized coordinates and output clip coordinates, mapped
+to the same region of the clip space as the image.</li>
+</ul>
+<blockquote>
+<div><div class="highlight-c"><div class="highlight"><pre><span class="c1">// Vertex Shader : line.vert</span>
+
+<span class="n">attribute</span> <span class="n">vec2</span> <span class="n">aPos</span><span class="p">;</span>      <span class="c1">// Position, in screen coordinates, passed as an attribute.</span>
+<span class="n">uniform</span>   <span class="n">vec2</span> <span class="n">uViewMin</span><span class="p">;</span>  <span class="c1">// Min x,y viewport values (bottom left viewport coordinates)</span>
+<span class="n">uniform</span>   <span class="n">vec2</span> <span class="n">uViewDim</span><span class="p">;</span>  <span class="c1">// x,y viewport dimensions</span>
+<span class="n">uniform</span>   <span class="n">vec3</span> <span class="n">uColor</span><span class="p">;</span>    <span class="c1">// Line color</span>
+<span class="n">varying</span>   <span class="n">vec3</span> <span class="n">vColor</span><span class="p">;</span>    <span class="c1">// Output color</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * This vertex shader maps the vertex coordinates to viewport coordinates in the</span>
+<span class="cm"> * range specified by uViewMin and uViewDim</span>
+<span class="cm"> */</span>
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Convert to clip coordinates.</span>
+    <span class="n">gl_Position</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span> <span class="n">uViewMin</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">aPos</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">uViewDim</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">uViewMin</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">aPos</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">uViewDim</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span> <span class="p">);</span>
+
+    <span class="c1">// Pass the color</span>
+    <span class="n">vColor</span> <span class="o">=</span> <span class="n">uColor</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-c"><div class="highlight"><pre><span class="c1">// Fragment Shader : line.frag</span>
+<span class="n">precision</span> <span class="n">mediump</span> <span class="kt">float</span><span class="p">;</span>
+<span class="n">varying</span> <span class="n">vec3</span> <span class="n">vColor</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+   <span class="n">gl_FragColor</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span> <span class="n">vColor</span><span class="p">,</span> <span class="mf">1.0</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>Declare a shader for lines in <tt class="docutils literal"><span class="pre">Engine.h</span></tt></li>
+</ul>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span class="c1">// Variables for OpenCV</span>
+<span class="n">COpenCVSample</span> <span class="n">mCV</span><span class="p">;</span>        <span class="c1">// Class instance for OpenCV tutorial</span>
+
+<span class="c1">// OpenCV native camera</span>
+<span class="n">cv</span><span class="o">::</span><span class="n">VideoCapture</span> <span class="n">mCapture</span><span class="p">;</span>
+<span class="kt">bool</span>             <span class="n">mUseCVCam</span><span class="p">;</span>
+
+<span class="hll"><span class="c1">// OpenGL for OpenCV</span>
+</span><span class="hll"><span class="n">GLint</span> <span class="n">mCVlineShader</span><span class="p">;</span>
+</span></pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>Load the shader at the end of <tt class="docutils literal"><span class="pre">initUI()</span></tt> in <tt class="docutils literal"><span class="pre">Engine.cpp</span></tt>.</li>
+</ul>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span class="kt">bool</span> <span class="n">Engine</span><span class="o">::</span><span class="n">initUI</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="p">[...]</span>
+
+    <span class="n">LOGI</span><span class="p">(</span> <span class="s">&quot;CV: OpenCV camera setup done&quot;</span> <span class="p">);</span>
+
+    <span class="c1">// Load shader</span>
+<span class="hll">    <span class="n">mCVlineShader</span> <span class="o">=</span> <span class="n">nv_load_program</span><span class="p">(</span> <span class="s">&quot;line&quot;</span> <span class="p">);</span>
+</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Add rendering functions for the shader.</p>
+<ul class="simple">
+<li>Declare rendering functions in <tt class="docutils literal"><span class="pre">Engine.h</span></tt></li>
+</ul>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span class="p">[...]</span>
+
+<span class="c1">// Function for updating textures</span>
+<span class="kt">void</span> <span class="n">updateCVTexture</span><span class="p">(</span> <span class="n">GLuint</span> <span class="n">imgTexture</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">img</span> <span class="p">);</span>
+
+<span class="hll"><span class="c1">// Rendering results from OpenCV</span>
+</span><span class="hll"><span class="kt">void</span> <span class="nf">renderOpenCVResults</span><span class="p">(</span> <span class="kt">int</span> <span class="n">shader</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cv</span><span class="o">::</span><span class="n">Point2f</span><span class="o">&gt;</span> <span class="n">pts</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Size</span> <span class="n">imgsize</span> <span class="p">);</span>
+</span><span class="hll">
+</span><span class="hll"><span class="c1">// Draw a line primitive</span>
+</span><span class="hll"><span class="kt">void</span> <span class="nf">drawLine2D</span><span class="p">(</span> <span class="kt">int</span> <span class="n">shaderLine</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">st</span><span class="p">[],</span> <span class="n">GLfloat</span> <span class="n">dt</span><span class="p">[],</span> <span class="n">GLfloat</span> <span class="n">color</span><span class="p">[]</span> <span class="p">);</span>
+</span><span class="hll">
+</span><span class="hll"><span class="c1">// Draw a square using line primitives</span>
+</span><span class="hll"><span class="kt">void</span> <span class="nf">draw2DSquare</span><span class="p">(</span> <span class="kt">int</span> <span class="n">shaderLine</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">center</span><span class="p">[],</span> <span class="n">GLfloat</span> <span class="n">color</span><span class="p">[],</span> <span class="n">GLfloat</span> <span class="n">size</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">aspectf</span> <span class="p">);</span>
+</span>
+<span class="p">[...]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Modify <tt class="docutils literal"><span class="pre">OpenCV_native.h</span></tt> and  <tt class="docutils literal"><span class="pre">OpenCV_native.cpp</span></tt>.</p>
+<ul class="simple">
+<li>Add member variables for the locations of detected features and input image size in <tt class="docutils literal"><span class="pre">OpenCV_native.h</span></tt>.</li>
+</ul>
+<blockquote>
+<div><div class="highlight-c"><div class="highlight"><pre><span class="n">class</span> <span class="n">COpenCVSample</span>
+<span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">COpenCVSample</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+    <span class="o">~</span><span class="n">COpenCVSample</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+<span class="hll">    <span class="c1">// Variables for OpenGL display</span>
+</span><span class="hll">    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cv</span><span class="o">::</span><span class="n">Point2f</span><span class="o">&gt;</span> <span class="n">mFeature</span><span class="p">;</span>
+</span><span class="hll">    <span class="n">cv</span><span class="o">::</span><span class="n">Size</span>                 <span class="n">mImgSize</span><span class="p">;</span>
+</span>    <span class="p">[...]</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>Store the features in the detector for later rendering in <tt class="docutils literal"><span class="pre">OpenCV_native.cpp</span></tt>.</li>
+</ul>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">COpenCVSample</span><span class="o">::</span><span class="n">runOpenCVFeatureDetector</span><span class="p">(</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">img</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">g_img</span><span class="p">(</span> <span class="n">img</span><span class="p">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">img</span><span class="p">.</span><span class="n">cols</span><span class="p">,</span> <span class="n">CV_8UC1</span> <span class="p">);</span>
+
+    <span class="c1">// convert BGR to Gray</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">cvtColor</span><span class="p">(</span> <span class="n">img</span><span class="p">,</span> <span class="n">g_img</span><span class="p">,</span> <span class="n">CV_BGR2GRAY</span> <span class="p">);</span>
+
+    <span class="c1">// detect FAST features</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cv</span><span class="o">::</span><span class="n">KeyPoint</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">FastFeatureDetector</span> <span class="n">detector</span><span class="p">(</span> <span class="mi">50</span> <span class="p">);</span>
+    <span class="n">detector</span><span class="p">.</span><span class="n">detect</span><span class="p">(</span> <span class="n">g_img</span><span class="p">,</span> <span class="n">v</span> <span class="p">);</span>
+
+    <span class="c1">// Draw results (using OpenCV)</span>
+<span class="hll">    <span class="cm">/*</span>
+</span><span class="cm">    for( size_t i = 0; i &lt; v.size(); i++ )</span>
+<span class="cm">    {</span>
+<span class="cm">        cv::circle( img, cv::Point( v[i].pt.x, v[i].pt.y ), 10, cv::Scalar( 0, 0, 255, 255 ) );</span>
+<span class="cm">    }</span>
+<span class="hll"><span class="cm">    */</span>
+</span>
+<span class="hll">    <span class="c1">// set member variables of detected featureS for OpenGL draw</span>
+</span><span class="hll">    <span class="n">mFeature</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+</span><span class="hll">    <span class="n">mFeature</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span> <span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="p">);</span>
+</span><span class="hll">    <span class="n">mImgSize</span><span class="p">.</span><span class="n">width</span>  <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">cols</span><span class="p">;</span>
+</span><span class="hll">    <span class="n">mImgSize</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">rows</span><span class="p">;</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="k">for</span><span class="p">(</span> <span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+</span><span class="hll">    <span class="p">{</span>
+</span><span class="hll">        <span class="n">cv</span><span class="o">::</span><span class="n">Point2f</span> <span class="n">pt</span><span class="p">;</span>
+</span><span class="hll">        <span class="n">pt</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">pt</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span><span class="hll">        <span class="n">pt</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">pt</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span><span class="hll">        <span class="n">mFeature</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">pt</span> <span class="p">);</span>
+</span><span class="hll">    <span class="p">}</span>
+</span><span class="hll">
+</span>    <span class="p">[...]</span>
+
+    <span class="k">return</span> <span class="n">img</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Render the feature data received from <tt class="docutils literal"><span class="pre">OpenCV_native.cpp</span></tt> in <tt class="docutils literal"><span class="pre">Engine.cpp</span></tt>.</p>
+<ul>
+<li><p class="first">Here is a new rendering function that binds a shader and draws features from OpenCV.
+To render the features at the corresponding image locations, we copy the uniforms from the
+rectangle vertex shader into the line vertex shader. We then convert each feature&#8217;s coordinates
+to normalized image coordinates in the range [0,1] and call <tt class="docutils literal"><span class="pre">draw2DSquare</span></tt> to draw a square around it.
+Let&#8217;s add the implementation of <tt class="docutils literal"><span class="pre">Engine::renderOpenCVResults</span></tt> in the file <tt class="docutils literal"><span class="pre">Engine.cpp</span></tt></p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="kt">void</span> <span class="n">Engine</span><span class="o">::</span><span class="n">renderOpenCVResults</span><span class="p">(</span> <span class="kt">int</span> <span class="n">shader</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cv</span><span class="o">::</span><span class="n">Point2f</span><span class="o">&gt;</span> <span class="n">pts</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Size</span> <span class="n">imgsize</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">GLfloat</span> <span class="n">origin</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">dim</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">sign</span><span class="p">;</span>
+
+    <span class="n">glLineWidth</span><span class="p">(</span> <span class="mf">1.0f</span> <span class="p">);</span>
+    <span class="n">glUseProgram</span><span class="p">(</span> <span class="n">shader</span> <span class="p">);</span>
+
+    <span class="n">mRectShader</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">getOrigUniform</span><span class="p">(</span> <span class="n">origin</span> <span class="p">);</span>
+    <span class="n">mRectShader</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">getDimUniform</span><span class="p">(</span> <span class="n">dim</span> <span class="p">);</span>
+
+    <span class="c1">// Set up the uniforms. Flip the vertical axis if the image row 0 is the top row.</span>
+    <span class="n">glUniform2f</span><span class="p">(</span> <span class="n">glGetUniformLocation</span><span class="p">(</span> <span class="n">shader</span><span class="p">,</span> <span class="s">&quot;uViewMin&quot;</span><span class="p">),</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">);</span>
+    <span class="n">glUniform2f</span><span class="p">(</span> <span class="n">glGetUniformLocation</span><span class="p">(</span> <span class="n">shader</span><span class="p">,</span> <span class="s">&quot;uViewDim&quot;</span><span class="p">),</span> <span class="n">dim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">);</span>
+
+    <span class="c1">// set color for the line primitive</span>
+    <span class="n">GLfloat</span> <span class="n">colorc</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span> <span class="p">};</span>
+
+    <span class="n">GLfloat</span> <span class="n">fpts</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">pts</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">fpts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span> <span class="o">/</span> <span class="n">imgsize</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
+        <span class="n">fpts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span> <span class="o">/</span> <span class="n">imgsize</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+        <span class="n">draw2DSquare</span><span class="p">(</span> <span class="n">shader</span><span class="p">,</span> <span class="n">fpts</span><span class="p">,</span> <span class="n">colorc</span><span class="p">,</span> <span class="mf">4.0</span> <span class="o">/</span> <span class="n">imgsize</span><span class="p">.</span><span class="n">width</span> <span class="p">,</span> <span class="mf">1.0f</span> <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">The following functions are used to draw features by overlaying squares on top of video frames,
+and their implementation should be added to <tt class="docutils literal"><span class="pre">Engine.cpp</span></tt>:</p>
+</li>
+</ul>
+<blockquote>
+<div><div class="highlight-c"><div class="highlight"><pre><span class="kt">void</span> <span class="n">Engine</span><span class="o">::</span><span class="n">draw2DSquare</span><span class="p">(</span> <span class="kt">int</span> <span class="n">shaderLine</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">center</span><span class="p">[],</span> <span class="n">GLfloat</span> <span class="n">color</span><span class="p">[],</span> <span class="n">GLfloat</span> <span class="n">size</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">aspectf</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">GLfloat</span> <span class="n">st</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">dt</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="n">GLfloat</span> <span class="n">half_w</span> <span class="o">=</span> <span class="n">size</span> <span class="o">*</span> <span class="mf">0.5f</span><span class="p">;</span>
+    <span class="n">GLfloat</span> <span class="n">half_h</span> <span class="o">=</span> <span class="n">size</span> <span class="o">*</span> <span class="mf">0.5f</span> <span class="o">*</span> <span class="n">aspectf</span><span class="p">;</span>
+
+    <span class="n">st</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">half_w</span><span class="p">;</span>
+    <span class="n">st</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">half_h</span><span class="p">;</span>
+    <span class="n">dt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">half_w</span><span class="p">;</span>
+    <span class="n">dt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">half_h</span><span class="p">;</span>
+
+    <span class="n">drawLine2D</span><span class="p">(</span> <span class="n">shaderLine</span><span class="p">,</span> <span class="n">st</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">color</span> <span class="p">);</span>
+
+    <span class="n">st</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">half_w</span><span class="p">;</span>
+    <span class="n">st</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">half_h</span><span class="p">;</span>
+    <span class="n">dt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">half_w</span><span class="p">;</span>
+    <span class="n">dt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">half_h</span><span class="p">;</span>
+
+    <span class="n">drawLine2D</span><span class="p">(</span> <span class="n">shaderLine</span><span class="p">,</span> <span class="n">st</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">color</span> <span class="p">);</span>
+
+    <span class="n">st</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">half_w</span><span class="p">;</span>
+    <span class="n">st</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">half_h</span><span class="p">;</span>
+    <span class="n">dt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">half_w</span><span class="p">;</span>
+    <span class="n">dt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">half_h</span><span class="p">;</span>
+
+    <span class="n">drawLine2D</span><span class="p">(</span> <span class="n">shaderLine</span><span class="p">,</span> <span class="n">st</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">color</span> <span class="p">);</span>
+
+    <span class="n">st</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">half_w</span><span class="p">;</span>
+    <span class="n">st</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">half_h</span><span class="p">;</span>
+    <span class="n">dt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">half_w</span><span class="p">;</span>
+    <span class="n">dt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">half_h</span><span class="p">;</span>
+
+    <span class="n">drawLine2D</span><span class="p">(</span> <span class="n">shaderLine</span><span class="p">,</span> <span class="n">st</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">color</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-c"><div class="highlight"><pre><span class="kt">void</span> <span class="n">Engine</span><span class="o">::</span><span class="n">drawLine2D</span><span class="p">(</span> <span class="kt">int</span> <span class="n">shaderLine</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">st</span><span class="p">[],</span> <span class="n">GLfloat</span> <span class="n">dt</span><span class="p">[],</span> <span class="n">GLfloat</span> <span class="n">color</span><span class="p">[]</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">GLfloat</span> <span class="n">lineVertices</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span><span class="p">];</span>
+
+    <span class="n">lineVertices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="n">lineVertices</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+    <span class="n">lineVertices</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">dt</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="n">lineVertices</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">dt</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+    <span class="n">glVertexAttribPointer</span><span class="p">(</span> <span class="n">glGetAttribLocation</span><span class="p">(</span> <span class="n">shaderLine</span><span class="p">,</span> <span class="s">&quot;aPos&quot;</span> <span class="p">),</span>
+                           <span class="mi">2</span><span class="p">,</span> <span class="c1">// each vertex is two floats</span>
+                           <span class="n">GL_FLOAT</span><span class="p">,</span> <span class="n">GL_FALSE</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">lineVertices</span> <span class="p">);</span>
+    <span class="n">glEnableVertexAttribArray</span><span class="p">(</span> <span class="n">glGetAttribLocation</span><span class="p">(</span> <span class="n">shaderLine</span><span class="p">,</span> <span class="s">&quot;aPos&quot;</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">glUniform3f</span><span class="p">(</span> <span class="n">glGetUniformLocation</span><span class="p">(</span> <span class="n">shaderLine</span><span class="p">,</span> <span class="s">&quot;uColor&quot;</span> <span class="p">),</span> <span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">);</span>
+    <span class="n">glDrawArrays</span><span class="p">(</span> <span class="n">GL_LINE_STRIP</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>Call the rendering functions in <tt class="docutils literal"><span class="pre">Engine::renderFrame()</span></tt> if any features are detected
+(<tt class="docutils literal"><span class="pre">mCV.mFeature.size()</span> <span class="pre">&gt;</span> <span class="pre">0</span></tt>).</li>
+</ul>
+<blockquote>
+<div><div class="highlight-cpp"><div class="highlight"><pre><span class="kt">bool</span> <span class="n">Engine</span><span class="o">::</span><span class="n">renderFrame</span><span class="p">(</span> <span class="kt">bool</span> <span class="n">allocateIfNeeded</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">mEgl</span><span class="p">.</span><span class="n">isReadyToRender</span><span class="p">(</span> <span class="n">allocateIfNeeded</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">[...]</span>
+
+    <span class="c1">// clear buffers as necessary</span>
+    <span class="n">glClear</span><span class="p">(</span> <span class="n">GL_COLOR_BUFFER_BIT</span> <span class="o">|</span> <span class="n">GL_DEPTH_BUFFER_BIT</span> <span class="p">);</span>
+
+
+    <span class="c1">// Based on the button that is selected choose the shader that should be used...</span>
+    <span class="n">mDrawRect</span><span class="o">-&gt;</span><span class="n">setShader</span><span class="p">(</span> <span class="n">mRectShader</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">get</span><span class="p">()</span> <span class="p">);</span>
+    <span class="c1">// ... and pass the texture to the shader.</span>
+    <span class="n">mDrawRect</span><span class="o">-&gt;</span><span class="n">draw</span><span class="p">(</span> <span class="n">mImgTexture</span> <span class="p">);</span>
+
+    <span class="c1">// OpenCV Camera</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">mUseCVCam</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="p">[...]</span>
+    <span class="p">}</span>
+
+<span class="hll">    <span class="c1">// Render features with OpenGL</span>
+</span><span class="hll">    <span class="k">if</span> <span class="p">(</span> <span class="n">mCV</span><span class="p">.</span><span class="n">mFeature</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">)</span>
+</span><span class="hll">    <span class="p">{</span>
+</span><span class="hll">         <span class="n">renderOpenCVResults</span><span class="p">(</span> <span class="n">mCVlineShader</span><span class="p">,</span> <span class="n">mCV</span><span class="p">.</span><span class="n">mFeature</span><span class="p">,</span> <span class="n">mCV</span><span class="p">.</span><span class="n">mImgSize</span> <span class="p">);</span>
+</span><span class="hll">    <span class="p">}</span>
+</span>
+    <span class="p">[...]</span>
+
+    <span class="n">mEgl</span><span class="p">.</span><span class="n">swap</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Build the project, and run the application. Clicking <tt class="docutils literal"><span class="pre">IMAGE</span></tt> and <tt class="docutils literal"><span class="pre">CAM</span></tt> buttons will show the
+following results, which is drawn by a shader.</p>
+<ul class="simple">
+<li>Click <tt class="docutils literal"><span class="pre">IMAGE</span></tt></li>
+</ul>
+<blockquote>
+<div><img alt="_images/opencv-opengl-draw1.png" class="align-center" src="_images/opencv-opengl-draw1.png" />
+</div></blockquote>
+<ul>
+<li><p class="first">Click <tt class="docutils literal"><span class="pre">CAM</span></tt></p>
+<img alt="_images/opencv-opengl-draw2.png" class="align-center" src="_images/opencv-opengl-draw2.png" />
+</li>
+</ul>
+<p>The green squares, representing feature points, are drawn by OpenGL.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="debugging-your-opencv-application">
+<span id="debugging-native-opencv"></span><h2>Debugging your OpenCV application<a class="headerlink" href="#debugging-your-opencv-application" title="Permalink to this headline">¶</a></h2>
+<p>We showed under <a class="reference internal" href="devprocess.html#debugging-native-app"><em>Debugging your native application</em></a> that we can debug native applications by doing two steps: setting
+<tt class="docutils literal"><span class="pre">NDK_DEBUG=1</span></tt> as a build option, doing a clean build, and then selecting <em>Debug as &gt; Android Native Application</em> in Eclipse
+to launch the debug enabled application on the device. This should work fine with up-to-date tools.
+If you are working with older versions of the ADT tools for Eclipse, while debugging <tt class="docutils literal"><span class="pre">SimpleImageOpenCV_GL</span></tt> you may get
+the following (or similar) error:</p>
+<div class="highlight-python"><pre>[2012-11-28 12:06:57 - SimpleImageOpenCV_GL_Complete] Unknown Application ABI:
+[2012-11-28 12:06:57 - SimpleImageOpenCV_GL_Complete] Android
+[2012-11-28 12:06:57 - SimpleImageOpenCV_GL_Complete] Unknown Application ABI:
+[2012-11-28 12:06:57 - SimpleImageOpenCV_GL_Complete] NDK:
+
+[...]
+
+[2012-11-28 12:06:57 - SimpleImageOpenCV_GL_Complete] Unable to detect application ABI's</pre>
+</div>
+<p>This is a known issue with the Android ADT tools for Eclipse. The debug launch calls <tt class="docutils literal"><span class="pre">make</span></tt>
+with a <tt class="docutils literal"><span class="pre">DUMP_</span></tt> target that prints out the TARGET_ABI. The problem is, this launch ignores any
+environment variable previously set under <em>C++ &gt; Build &gt; Environment</em>. To work around this issue,
+edit <tt class="docutils literal"><span class="pre">Android.mk</span></tt> with a conditional around the include <tt class="docutils literal"><span class="pre">OpenCV-tegra3.mk</span></tt> and around any
+<tt class="docutils literal"><span class="pre">$(call</span> <span class="pre">import-module,</span> <span class="pre">...)</span></tt>, as shown below. Your build will succeed and you will also be able
+to launch the debugger:</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_PATH</span> <span class="o">:=</span> <span class="k">$(</span>call my-dir<span class="k">)</span>
+<span class="cp">include $(CLEAR_VARS)</span>
+
+<span class="nv">OPENCV_CAMERA_MODULES</span>  <span class="o">:=</span> on
+<span class="nv">OPENCV_INSTALL_MODULES</span> <span class="o">:=</span> on
+<span class="nv">OPENCV_LIB_TYPE</span>        <span class="o">:=</span> STATIC
+
+<span class="hll"><span class="cp">ifeq (,$(DUMP_VAR))</span>
+</span><span class="cp">include $(NVPACK_PATH)/OpenCV-2.4.2-Tegra-sdk/sdk/native/jni/OpenCV-tegra3.mk</span>
+<span class="hll"><span class="cp">endif</span>
+</span>
+<span class="nv">LOCAL_MODULE</span> <span class="o">:=</span> SimpleImageDisplayCVGL
+
+<span class="nv">MY_PREFIX</span>           <span class="o">:=</span> <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>
+<span class="nv">MY_SOURCES</span>          <span class="o">:=</span> <span class="k">$(</span>wildcard <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/*.cpp<span class="k">)</span>
+<span class="nv">MY_SOURCES</span>          <span class="o">+=</span> <span class="k">$(</span>wildcard <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/*.c<span class="k">)</span>
+<span class="nv">LOCAL_SRC_FILES</span>     <span class="o">+=</span> <span class="k">$(</span>MY_SOURCES:<span class="k">$(</span>MY_PREFIX<span class="k">)</span>%<span class="o">=</span>%<span class="k">)</span>
+
+<span class="nv">LOCAL_LDLIBS</span>    <span class="o">+=</span> -lc -lm -llog -landroid -ldl -lGLESv2 -lEGL
+<span class="nv">LOCAL_STATIC_LIBRARIES</span> <span class="o">+=</span> nv_and_util nv_egl_util nv_bitfont nv_math nv_glesutil nv_hhdds nv_log nv_shader nv_file nv_thread
+<span class="nv">LOCAL_CFLAGS</span> <span class="o">+=</span> -std<span class="o">=</span>gnu++0x
+
+<span class="cp">include $(BUILD_SHARED_LIBRARY)</span>
+
+<span class="hll"><span class="cp">ifeq (,$(DUMP_VAR))</span>
+</span>
+<span class="c"># Add the folder with the NVIDIA helper</span>
+<span class="k">$(</span>call import-add-path, <span class="k">$(</span>NVPACK_PATH<span class="k">)</span>/TDK_Samples/tegra_android_native_samples_v10p10/libs/jni<span class="k">)</span>
+
+<span class="c"># Import the modules from the NVIDIA helper</span>
+<span class="k">$(</span>call import-module, nv_and_util<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_egl_util<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_bitfont<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_math<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_glesutil<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_hhdds<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_log<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_shader<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_file<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_thread<span class="k">)</span>
+
+<span class="hll"><span class="cp">endif</span>
+</span></pre></div>
+</div>
+</div>
+<div class="section" id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we have provided information on OpenCV for Android/Tegra devices, and introduced some examples to build an OpenCV-based application on top of native OpenGLE ES example. Below are some additional pointers that include more OpenCV samples in OpenCV4Android (or OpenCV4Tegra), and other OpenCV/TADP documents.</p>
+<ul class="simple">
+<li><a class="reference external" href="http://docs.opencv.org/trunk/doc/tutorials/introduction/android_binary_package/O4A_SDK.html">OpenCV4Android SDK</a> describes more general information on OpenCV SDK for Android.</li>
+<li>OpenCV4Tegra SDK also provides several <a class="reference external" href="http://docs.opencv.org/trunk/doc/tutorials/introduction/android_binary_package/O4A_SDK.html#running-opencv-samples">sample codes</a> which can be found in <tt class="docutils literal"><span class="pre">NVPACK_PATH/OpenCV-2.4.5-Tegra-sdk/samples/</span></tt>.</li>
+<li>More details on OpenCV library can be found in the <a class="reference external" href="http://docs.opencv.org/">document page</a> in its <a class="reference external" href="http://www.opencv.org">official site</a>.</li>
+<li>You can also check out <a class="reference external" href="http://www.cse.iitk.ac.in/users/vision/dipakmj/papers/OReilly%20Learning%20OpenCV.pdf">O&#8217;Reilly&#8217;s OpenCV Book</a>.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="profiling.html" title="Profiling your application"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="opengles.html" title="OpenGL ES 2.0"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, NVIDIA Research - Mobile Visual Computing.
+      Last updated on Jun 13, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

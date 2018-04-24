@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Development tools &mdash; FCam for Tegra 1.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FCam for Tegra 1.3 documentation" href="index.html" />
+    <link rel="next" title="Introduction to Android development" href="devprocess.html" />
+    <link rel="prev" title="Native Development on NVIDIA Android Devices" href="index.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: black; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/nvidia_logo.png" border="0" alt="NVIDIA logo"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="devprocess.html" title="Introduction to Android development"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Native Development on NVIDIA Android Devices"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Development tools</a><ul>
+<li><a class="reference internal" href="#install-the-tegra-android-development-pack-2-0">Install the Tegra Android Development Pack 2.0</a></li>
+<li><a class="reference internal" href="#configure-eclipse-for-this-tutorial">Configure Eclipse for this tutorial</a><ul>
+<li><a class="reference internal" href="#upgrade-the-android-sdk">Upgrade the Android SDK</a></li>
+<li><a class="reference internal" href="#upgrade-android-ndk">Upgrade Android NDK</a></li>
+<li><a class="reference internal" href="#set-the-android-preferences-in-eclipse">Set the Android Preferences in Eclipse</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#what-is-inside-the-android-sdk">What is inside the Android SDK</a></li>
+<li><a class="reference internal" href="#configure-your-device-for-development">Configure your device for development</a><ul>
+<li><a class="reference internal" href="#flashing-your-nvidia-android-devkit">Flashing your NVIDIA Android Devkit</a></li>
+<li><a class="reference internal" href="#device-configuration">Device configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tutorial-sample-codes">Tutorial sample codes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Native Development on NVIDIA Android Devices</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="devprocess.html"
+                        title="next chapter">Introduction to Android development</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/devtools.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="development-tools">
+<h1>Development tools<a class="headerlink" href="#development-tools" title="Permalink to this headline">¶</a></h1>
+<p>To develop Android applications you need many tools, such as the Android SDK,
+the Android NDK, Java, the Eclipse IDE, the Android Development Tools (ADT),
+and command line (bash on Mac or Linux, Cygwin on Windows).
+To simplify installation, NVIDIA has
+created the Tegra Android Development Pack (TADP), a single file that
+installs everything you need.</p>
+<div class="section" id="install-the-tegra-android-development-pack-2-0">
+<h2>Install the Tegra Android Development Pack 2.0<a class="headerlink" href="#install-the-tegra-android-development-pack-2-0" title="Permalink to this headline">¶</a></h2>
+<p>To download the Tegra Android Development Pack 2.0 you will to become
+a member of the <em>Tegra Registered Developer Program</em>. Please visit the
+<a class="reference external" href="http://developer.nvidia.com/tegra-resources">NVIDIA Developer Zone</a>, create
+an account (it is free and easy) and then apply for membership to the <em>Tegra Registered Developer Program</em>.</p>
+<p>Then,</p>
+<ol class="arabic">
+<li><p class="first">Download the latest TADP.</p>
+</li>
+<li><p class="first">Run the installer.</p>
+<div class="admonition-ubuntu-notes admonition">
+<p class="first admonition-title">Ubuntu notes</p>
+<p>Set the executable attribute on the downloaded file:</p>
+<blockquote>
+<div><p>$ chmod a+x tegra-devpack-20-linux-x64-2013-05-09-15755747.run</p>
+</div></blockquote>
+<p>The installer requires a Java runtime installed. If you get a message that
+Java is missing, install openjdk jre.</p>
+<blockquote class="last">
+<div><p>$ sudo apt-get install openjdk-7-jre</p>
+</div></blockquote>
+</div>
+<p>At the <em>Installation Options</em> prompt, select <em>Custom</em>.</p>
+<a class="reference internal image-reference" href="_images/tadp_installer_options.png"><img alt="_images/tadp_installer_options.png" src="_images/tadp_installer_options.png" style="width: 498.0px; height: 374.0px;" /></a>
+</li>
+<li><p class="first">Select the following components; the list of available components will vary by
+OS.</p>
+<ul class="simple">
+<li>Tegra Android Development Pack</li>
+<li>Android SDK r18</li>
+<li>Android 2.3.3 (API 10)</li>
+<li>Android 3.1 (API 12)</li>
+<li>Android 4.0.3 (API 15)</li>
+<li>Android 4.2 (API 17)</li>
+<li>Android NDK r8d</li>
+<li>Eclipse 4.2.1, CDT 8.1.1 and ADT 21.1.</li>
+<li>NVIDIA Debug Manager</li>
+<li>Tegra SDK samples</li>
+<li>OpenCV for Tegra 2.4.4</li>
+<li>Apache Ant 1.8.2</li>
+<li>PerfHUD ES 1.9.9</li>
+<li>Tegra Profiler (Windows only)</li>
+<li>PhysX 3.2 for Android</li>
+<li>Documentation</li>
+</ul>
+<p>The main deviation from the default values are that you may want to skip Nsight (available on Windows only, allows development with Visual Studio,
+not covered in this tutorial).</p>
+</li>
+<li><p class="first">Select the installation folder, and any proxy configuration if needed to access
+internet, and the installer will begin to download the selected components.</p>
+</li>
+<li><p class="first">After the installation files are downloaded (which may take a while) the
+TADP will be installed on your computer.</p>
+</li>
+</ol>
+<div class="admonition-ubuntu-notes admonition">
+<p class="first admonition-title">Ubuntu notes</p>
+<p>The default installation directory for TADP is ~/NVPACK. You can create a link to Eclipse in
+your desktop by opening the ~NVPACK/eclipse folder, creating a link to Eclipse and dragging it
+to the desktop.</p>
+<blockquote class="last">
+<div><a class="reference internal image-reference" href="_images/tadp_eclipse_link_menu.png"><img alt="_images/tadp_eclipse_link_menu.png" src="_images/tadp_eclipse_link_menu.png" style="width: 692.0px; height: 407.2px;" /></a>
+</div></blockquote>
+</div>
+<div class="admonition-windows-notes admonition" id="nvpack-path-set">
+<p class="first admonition-title">Windows notes</p>
+<p>The Windows installer has the option to install Nsight for Tegra development. Note that Nsight
+requires Visual Studio and will fail to install if Visual Studio is not present. If this is the
+case, just ignore the message and continue with the installation.</p>
+<p class="last">From now on we refer to the NVPACK installation directory as <tt class="docutils literal"><span class="pre">$NVPACK_PATH</span></tt>,
+you should create such an environment variable.  If the environment variables
+are not visible to Eclipse (e.g., on Mac if you launch Eclipse via Spotlight),
+you need to define it inside Eclipse.
+Go to <em>Preferences &gt; C/C++ &gt; Build &gt; Environment</em> and <em>Add</em> variable <em>NVPACK_PATH</em> and give it the
+correct value (such as <tt class="docutils literal"><span class="pre">C:\NVPACK</span></tt> or where ever you installed NVPACK).</p>
+</div>
+</div>
+<div class="section" id="configure-eclipse-for-this-tutorial">
+<h2>Configure Eclipse for this tutorial<a class="headerlink" href="#configure-eclipse-for-this-tutorial" title="Permalink to this headline">¶</a></h2>
+<p>Launch Eclipse (it&#8217;s installed in the eclipse folder under NVPACK); when prompted for a workspace,
+use the one that came with TADP: <tt class="docutils literal"><span class="pre">$NVPACK_PATH/nvsample_workspace</span></tt>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/eclipse_workspace_selection.png"><img alt="_images/eclipse_workspace_selection.png" src="_images/eclipse_workspace_selection.png" style="width: 617.0px; height: 236.0px;" /></a>
+</div></blockquote>
+<div class="section" id="upgrade-the-android-sdk">
+<h3>Upgrade the Android SDK<a class="headerlink" href="#upgrade-the-android-sdk" title="Permalink to this headline">¶</a></h3>
+<p>The Android Eclipse plugins require a matching version of the Android SDK Tools.
+Go to <em>Window &gt; Android SDK Manager</em> to update your SDK tools:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/eclipse_android_sdk_manager_run2.png"><img alt="_images/eclipse_android_sdk_manager_run2.png" src="_images/eclipse_android_sdk_manager_run2.png" style="width: 678.0px; height: 297.0px;" /></a>
+</div></blockquote>
+<p>Check the Android SDK Tools and the Android SDK Platform-Tools.
+Click on <strong>Install 2 packages</strong>. After the update finishes,
+you may be prompted to check for updates of the Eclipse Plugin, which
+we already did.</p>
+</div>
+<div class="section" id="upgrade-android-ndk">
+<h3>Upgrade Android NDK<a class="headerlink" href="#upgrade-android-ndk" title="Permalink to this headline">¶</a></h3>
+<p>The Android NDK provides the compiler toolchain to build C and C++ code into native
+binaries. Native modules are usually used to write optimized code or port existing
+C / C++ code into Android. In addition, such modules are built and debugged
+separately from Java code, because there is no Java VM involved. The TADP installs the Android NDK.</p>
+<p>For this tutorial, we will use the Android NDK r8e.
+Go to the <a class="reference external" href="http://developer.android.com/tools/sdk/ndk/index.html">Android NDK</a> web site,
+download the package for your OS, and unpack it.</p>
+<p>Copy the <tt class="docutils literal"><span class="pre">android-ndk-r8e</span></tt> folder to <tt class="docutils literal"><span class="pre">$NVPACK_PATH</span></tt> folder.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>There is a simple to fix bug in the r8c release of the NDK that causes every
+object to be rebuilt even when no changes have been done to the source. See
+<a class="reference external" href="http://code.google.com/p/android/issues/detail?id=39810">Issue 39810</a>. To fix
+the issue line 289 in <tt class="docutils literal"><span class="pre">android_ndk_r8c/build/core/definitions.mk</span></tt> needs to be
+changed from:</p>
+<div class="highlight-python"><pre>$1: $$(__ndk_file_dir)</pre>
+</div>
+<p>to:</p>
+<div class="last highlight-python"><pre>$1: | $$(__ndk_file_dir)</pre>
+</div>
+</div>
+</div>
+<div class="section" id="set-the-android-preferences-in-eclipse">
+<h3>Set the Android Preferences in Eclipse<a class="headerlink" href="#set-the-android-preferences-in-eclipse" title="Permalink to this headline">¶</a></h3>
+<p>To set up the Android Preferences in Eclipse go to <em>Window &gt; Preferences &gt; Android</em> (on Mac: <em>Eclipse &gt; Preferences &gt; Android</em>).
+You will see a list of installed SDK.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/eclipse_android_preferences.png"><img alt="_images/eclipse_android_preferences.png" src="_images/eclipse_android_preferences.png" style="width: 732.0px; height: 547.0px;" /></a>
+</div></blockquote>
+<p>Look for the <strong>SDK Location</strong>, it should point to the
+root of your SDK directory (TADP sets this up for you).</p>
+<p>Change the NDK path under <em>Preferences &gt; Android &gt; NDK</em>. Set the path
+to point to the recommended release of the Android NDK.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/eclipse_android_preferences_ndk.png"><img alt="_images/eclipse_android_preferences_ndk.png" src="_images/eclipse_android_preferences_ndk.png" style="width: 632.0px; height: 191.0px;" /></a>
+</div></blockquote>
+<p>After making your changes, click <strong>OK</strong> to close the window.</p>
+</div>
+</div>
+<div class="section" id="what-is-inside-the-android-sdk">
+<h2>What is inside the Android SDK<a class="headerlink" href="#what-is-inside-the-android-sdk" title="Permalink to this headline">¶</a></h2>
+<p>The Android SDK is maintained by Google and is updated frequently. The SDK consists of:</p>
+<blockquote>
+<div><p><strong>SDK Tools</strong>: Basic set of development and debugging tools. Includes the <em>Android SDK Manager</em>, the
+<em>Android Emulator</em>, and other tools required to build your applications.</p>
+<p><strong>SDK Platform Tools</strong>: The most important of the platform tools is the <em>Android Debug Bridge (adb)</em>, which
+allows you to connect to your device, install and uninstall applications, view logs, and run shell commands.</p>
+<p><strong>SDK Platform</strong>: For every Android API that has been released, there is a corresponding
+Android Platform SDK. Each new <em>Platform SDK</em> adds new APIs and maintains backward compatibility with
+previous ones. If you use the smallest API level that includes the APIs that you need, your application
+runs on more systems than if you require a newer API.</p>
+<p><strong>Vendor APIs</strong>: In addition, hardware vendors can release their own SDKs to work with additional features
+available on their devices.</p>
+</div></blockquote>
+<div class="admonition-see-also admonition">
+<p class="first admonition-title">See also</p>
+<p class="last">Google&#8217;s official <a class="reference external" href="http://developer.android.com/sdk/installing/index.html">Installing the SDK</a>.</p>
+</div>
+</div>
+<div class="section" id="configure-your-device-for-development">
+<h2>Configure your device for development<a class="headerlink" href="#configure-your-device-for-development" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="flashing-your-nvidia-android-devkit">
+<h3>Flashing your NVIDIA Android Devkit<a class="headerlink" href="#flashing-your-nvidia-android-devkit" title="Permalink to this headline">¶</a></h3>
+<p>Unlike regular Android devices, Cardhu (and other NVIDIA Devkit) has to be updated manually.
+If you are using one for this tutorial, please make sure it is running the latest Jelly Bean.
+This not only gives you the benefit from the latest Android system, but also ensure new OpenCV and FCam are pushed to the device.</p>
+<p>Flashing your Cardhu is easy. First, you need to download the latest OS image. This can be done by following the same procedure of installing TADP.
+If you select Custom and drag down the menu, OS image option is at the bottom.</p>
+<blockquote>
+<div><img alt="_images/flash_select_os.png" src="_images/flash_select_os.png" style="width: 500px; height: 380px;" />
+</div></blockquote>
+<p>Once the image is downloaded, it will prompt you an option to flash the device.</p>
+<blockquote>
+<div><img alt="_images/flash_flash_devkit.png" src="_images/flash_flash_devkit.png" style="width: 500px; height: 380px;" />
+</div></blockquote>
+<p>Following the manual to connect the debug board to the devkit, before hitting okay.</p>
+<blockquote>
+<div><img alt="_images/flash_prepare_cardhu.png" src="_images/flash_prepare_cardhu.png" style="width: 500px; height: 380px;" />
+</div></blockquote>
+<p>After awhile, Cardhu will reboot itself and you are ready to go!</p>
+</div>
+<div class="section" id="device-configuration">
+<h3>Device configuration<a class="headerlink" href="#device-configuration" title="Permalink to this headline">¶</a></h3>
+<p>In order to install and debug applications on the device through the USB connection,
+you have to enable USB debugging. On the tablet, tap on
+<em>Settings &gt; Developer options</em> and check <em>USB debugging</em>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/tablet_settings_usbdebugging.png"><img alt="_images/tablet_settings_usbdebugging.png" src="_images/tablet_settings_usbdebugging.png" style="width: 887.9px; height: 499.2px;" /></a>
+</div></blockquote>
+<p>This will enable you to connect to the device from the host computer using adb. To verify
+your device is ready for development run <em>adb devices</em> to see a list of attached devices:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/adbdevices.png"><img alt="_images/adbdevices.png" src="_images/adbdevices.png" style="width: 609.0px; height: 141.0px;" /></a>
+</div></blockquote>
+<p>You will also see the device in Eclipse in the <em>Devices</em> tab. If the tab is not visible, you
+can open the tab from <em>Window &gt; Show View &gt; Other... &gt; Android &gt; Devices</em>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/devicestab.png"><img alt="_images/devicestab.png" src="_images/devicestab.png" style="width: 637.0px; height: 259.0px;" /></a>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="tutorial-sample-codes">
+<h2>Tutorial sample codes<a class="headerlink" href="#tutorial-sample-codes" title="Permalink to this headline">¶</a></h2>
+<p>We have provided some sample codes as part of the tutorial in <a class="reference download internal" href="_downloads/tutorial.zip"><tt class="xref download docutils literal"><span class="pre">tutorial.zip</span></tt></a>.
+Please download and unzip it.  We will call it the <tt class="docutils literal"><span class="pre">/tutorials</span></tt> folder from now on.</p>
+<p>You are now ready to create your first Eclipse project.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="devprocess.html" title="Introduction to Android development"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Native Development on NVIDIA Android Devices"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, NVIDIA Research - Mobile Visual Computing.
+      Last updated on Jun 13, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+The FCameraPro application
+==========================
+
+The FCameraPro application is a fully functional camera application built
+using the FCam for Tegra implementation. You can use this application as the 
+starting point of your projects.
+
+Building FCameraPro with Eclipse TADP
+-------------------------------------
+
+FCameraPro can be found under ``fcam4tegra/packages/fcamerapro``. If you haven't done it yet,
+download :download:`fcam4tegra.zip <./files/fcam4tegra.zip>`. Then follow the instructions under
+:ref:`install_fcam4tegra` and import ``fcam4tegra/packages/fcamerapro`` as a new project
+in your Eclipse workspace as explained under :ref:`import_existing_project_opengles`.
+
+You are done, now you should be able to build and launch the app on the device.
+

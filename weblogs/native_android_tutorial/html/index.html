@@ -1,0 +1,210 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Native Development on NVIDIA Android Devices &mdash; FCam for Tegra 1.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FCam for Tegra 1.3 documentation" href="#" />
+    <link rel="next" title="Development tools" href="devtools.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: black; text-align: left; padding: 10px 10px 15px 15px">
+<a href="#"><img src="_static/nvidia_logo.png" border="0" alt="NVIDIA logo"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="devtools.html" title="Development tools"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Next topic</h4>
+  <p class="topless"><a href="devtools.html"
+                        title="next chapter">Development tools</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="native-development-on-nvidia-android-devices">
+<h1>Native Development on NVIDIA Android Devices<a class="headerlink" href="#native-development-on-nvidia-android-devices" title="Permalink to this headline">¶</a></h1>
+<p>This documentation gives you a roadmap and tutorial on how to do visual computing in C++ on Android.
+We will not cover much Java development here, for that see <a class="reference external" href="http://developer.android.com">http://developer.android.com</a>, but we do cover
+how Java and C/C++ interact via JNI (Java Native Interface).
+Most of this document is relevant for native (C/C++) development on any Android device,
+some only on NVIDIA Tegra devices, and even a smaller subset only on NVIDIA Cardhu developer board.</p>
+<p>Table of contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="devtools.html">Development tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html#install-the-tegra-android-development-pack-2-0">Install the Tegra Android Development Pack 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html#configure-eclipse-for-this-tutorial">Configure Eclipse for this tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html#what-is-inside-the-android-sdk">What is inside the Android SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html#configure-your-device-for-development">Configure your device for development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html#tutorial-sample-codes">Tutorial sample codes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="devprocess.html">Introduction to Android development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="devprocess.html#c-project-on-your-development-machine">C++ project on your development machine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devprocess.html#create-your-first-android-java-application">Create your first Android Java Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devprocess.html#debugging-with-the-debugger">Debugging with the debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devprocess.html#printing-debug-messages-to-the-android-log">Printing debug messages to the Android log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devprocess.html#writing-debug-messages-to-a-file">Writing debug messages to a file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devprocess.html#adding-native-android-code">Adding Native Android code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devprocess.html#debugging-your-native-application">Debugging your native application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devprocess.html#printing-to-android-log-from-native-code">Printing to Android log from native code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devprocess.html#logging-to-a-file-from-native-code">Logging to a file from native code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devprocess.html#calling-java-functions-from-native-code">Calling Java functions from native code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devprocess.html#creating-a-nativeactivity">Creating a NativeActivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devprocess.html#logging-to-a-file-within-a-nativeactivity">Logging to a file within a NativeActivity</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="opengles.html">OpenGL ES 2.0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="opengles.html#importing-an-existing-project">Importing an existing project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengles.html#creating-a-gl-project-from-scratch">Creating a GL project from scratch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengles.html#creating-a-gl-project-using-the-nvidia-framework">Creating a GL project using the NVIDIA framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opengles.html#using-shaders-in-your-gl-project">Using shaders in your GL project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="opencv.html">OpenCV</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="opencv.html#creating-a-native-c-c-opencv-sample-project">Creating a Native (C/C++) OpenCV Sample Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opencv.html#display-results-using-opengl">Display Results using OpenGL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opencv.html#debugging-your-opencv-application">Debugging your OpenCV application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="opencv.html#next-steps">Next steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="profiling.html">Profiling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="profiling.html#preparing-for-profiling">Preparing for profiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiling.html#tegra-profiler">Tegra profiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiling.html#using-a-timer-class">Using a timer class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiling.html#perfhud-es-profiling-opengl-es-code">PerfHUD ES (Profiling OpenGL ES code)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fcam.html">FCam tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fcam.html#fcam-installation-for-tegra">FCam installation for Tegra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fcam.html#the-simplefcam-template-project">The SimpleFCam template project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fcam.html#checking-for-errors">Checking for errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fcam.html#vectors-of-shots">Vectors of shots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fcam.html#streaming-requests">Streaming requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fcam.html#adding-focus">Adding focus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fcam.html#adding-flash">Adding flash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fcam.html#writing-a-custom-device">Writing a custom device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fcam.html#using-fcam-with-opencv-and-opengl">Using FCam with OpenCV and OpenGL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fcam.html#debugging-your-fcam-application">Debugging your FCam application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="imageprocessing.html">High-performance image processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="imageprocessing.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imageprocessing.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imageprocessing.html#test-application">Test application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imageprocessing.html#example-1-adding-images">Example 1: Adding images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imageprocessing.html#example-2-gaussian-blur">Example 2: Gaussian blur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imageprocessing.html#performance-analysis">Performance analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imageprocessing.html#example-3-computing-a-measure-of-similarity-between-images">Example 3: Computing a measure of similarity between images</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fcamerapro.html">FCameraPro</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fcamerapro.html#building-fcamerapro-with-eclipse-tadp">Building FCameraPro with Eclipse TADP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sweng.html">SW engineering tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sweng.html#astyle-for-code-beautification">Astyle for code beautification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sweng.html#git-for-version-control">Git for version control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sweng.html#doxygen-for-documentation">Doxygen for documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sweng.html#gtest-for-unit-testing">Gtest for unit testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sweng.html#modular-code-organization-for-easy-deployment-and-testing">Modular code organization for easy deployment and testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sweng.html#unit-testing-from-the-modules-of-existing-codes">Unit testing from the modules of existing codes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="webinars.html">Webinars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faqs.html">FAQs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faqs.html#my-tablet-froze-how-do-i-reboot-it">1. My tablet froze, how do I reboot it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faqs.html#how-do-i-flash-a-new-system-image-to-the-device">2. How do I flash a new system image to the device?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faqs.html#i-get-usb-device-not-found-when-flashing-the-device-how-do-i-fix-this">3. I get &#8216;USB device not found&#8217; when flashing the device, how do I fix this?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="devtools.html" title="Development tools"
+             >next</a> |</li>
+        <li><a href="#">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, NVIDIA Research - Mobile Visual Computing.
+      Last updated on Jun 13, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

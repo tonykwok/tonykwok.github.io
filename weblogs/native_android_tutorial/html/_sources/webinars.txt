@@ -1,0 +1,10 @@
+Developer Webinars
+==================
+
+The `NVIDIA developer zone <http://developer.nvidia.com/content/developer-webinars>`_ 
+has developer training webinars to get you started quickly. For development with
+Tegra, take a look at the following ones:
+
+1. Tegra debugging width NVIDIA Debug Manager for Android
+2. High Performance Graphics with NVIDIA Tegra using Perfhud ES
+3. Optimizing NVIDIA Tegra Android with Oprofile and PERF

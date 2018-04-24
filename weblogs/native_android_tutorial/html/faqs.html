@@ -1,0 +1,167 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Frequently asked questions &mdash; FCam for Tegra 1.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FCam for Tegra 1.3 documentation" href="index.html" />
+    <link rel="prev" title="Developer Webinars" href="webinars.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: black; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/nvidia_logo.png" border="0" alt="NVIDIA logo"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="webinars.html" title="Developer Webinars"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Frequently asked questions</a><ul>
+<li><a class="reference internal" href="#my-tablet-froze-how-do-i-reboot-it">1. My tablet froze, how do I reboot it?</a></li>
+<li><a class="reference internal" href="#how-do-i-flash-a-new-system-image-to-the-device">2. How do I flash a new system image to the device?</a></li>
+<li><a class="reference internal" href="#i-get-usb-device-not-found-when-flashing-the-device-how-do-i-fix-this">3. I get &#8216;USB device not found&#8217; when flashing the device, how do I fix this?</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="webinars.html"
+                        title="previous chapter">Developer Webinars</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/faqs.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="frequently-asked-questions">
+<h1>Frequently asked questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="my-tablet-froze-how-do-i-reboot-it">
+<h2>1. My tablet froze, how do I reboot it?<a class="headerlink" href="#my-tablet-froze-how-do-i-reboot-it" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>If your Tegra 3 prototype is not responding to touch, you can try to reboot it using adb from a shell window.</dt>
+<dd>&gt; adb reboot</dd>
+</dl>
+<p>If adb is not responding either, then remove the backplate and find the reset button below the camera flash.</p>
+</div>
+<div class="section" id="how-do-i-flash-a-new-system-image-to-the-device">
+<span id="flash-system-image"></span><h2>2. How do I flash a new system image to the device?<a class="headerlink" href="#how-do-i-flash-a-new-system-image-to-the-device" title="Permalink to this headline">¶</a></h2>
+<p>To flash a new system image, follow these steps:</p>
+<ol class="arabic simple">
+<li>Place the device face down on a flat surface. Use a magazine or its original
+wrapping to protect the screen</li>
+<li>Remove the 4 screws that are holding the back plate, and remove the cover.</li>
+<li>Insert the debug board that came with the device to the connector in the back of the device.</li>
+<li>Connect the device to the computer using the usb cable.</li>
+<li>In the debug board, press the RESET + FRC RCV buttons. The LEDs in the debug board should light up.
+The tablet screen will remain black.</li>
+<li>If you have a .zip file, unpack the system image into your computer and run the flashos.bat if your are
+running Windows, or flashos.sh if you are running Linux.</li>
+<li>If you are running the installer, unpack the system image and when asked if you want to flash the system,
+select <em>Yes</em> and follow the instructions. Your system should be already in recovery mode per the steps above.</li>
+<li>The system will reboot.</li>
+</ol>
+<p>Some of the FCam examples will save data to /data/fcam. This directory does not exist by default. This is a good time to create it.
+Run a console and type:</p>
+<div class="highlight-python"><pre>&gt; adb shell mkdir /data/fcam</pre>
+</div>
+<p>Also, by default the device screen will go to sleep after 1 minute. This could be very inconvenient. Tap on the clock, select the Settings icon, choose the &#8216;Settings&#8217; -&gt; &#8216;Display&#8217; -&gt; &#8216;Sleep&#8217; option and change the default timeout time to 30 minutes.</p>
+</div>
+<div class="section" id="i-get-usb-device-not-found-when-flashing-the-device-how-do-i-fix-this">
+<h2>3. I get &#8216;USB device not found&#8217; when flashing the device, how do I fix this?<a class="headerlink" href="#i-get-usb-device-not-found-when-flashing-the-device-how-do-i-fix-this" title="Permalink to this headline">¶</a></h2>
+<p>There two possible reasons for this. Either the tablet is not in recovery mode or there is a
+problem with the recovery mode usb drivers. To check for 1, make sure you have followed all
+the steps outlined above. The tablet screen should remain blank in recovery mode. If you see the
+tablet booting, then it is not in recovery mode. After you have successfully put the system into
+recovery mode, try flashing the device. Make sure the USB cable is connected to the computer and the
+tablet. If you still receive the same error, watch for Windows notifications about missing drivers.
+To be sure, you can launch the Device Manager. Under Universal Serial Bus Controllers, you should see
+one device named “NVIDIA USB Boot-recovery driver for Mobile”. If you don’t find this device, there is
+a driver problem. Locate in the device manager the device unrecognized device (device with a bang!).
+The easiest way to do this is to disconnect and reconnect the usb cable to the computer while the device manager is opened. Then, update the driver to the one included in the system image package under usbpcdriver.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="webinars.html" title="Developer Webinars"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, NVIDIA Research - Mobile Visual Computing.
+      Last updated on Jun 13, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

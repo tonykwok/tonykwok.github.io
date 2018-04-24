@@ -1,0 +1,1067 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SW Engineering tools &mdash; FCam for Tegra 1.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FCam for Tegra 1.3 documentation" href="index.html" />
+    <link rel="next" title="Developer Webinars" href="webinars.html" />
+    <link rel="prev" title="The FCameraPro application" href="fcamerapro.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: black; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/nvidia_logo.png" border="0" alt="NVIDIA logo"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="webinars.html" title="Developer Webinars"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="fcamerapro.html" title="The FCameraPro application"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">SW Engineering tools</a><ul>
+<li><a class="reference internal" href="#astyle-for-code-beautification">Astyle for code beautification</a></li>
+<li><a class="reference internal" href="#git-for-version-control">Git for version control</a><ul>
+<li><a class="reference internal" href="#egit-eclipse-plugin">EGit Eclipse Plugin</a></li>
+<li><a class="reference internal" href="#working-with-a-remote-server">Working with a remote server</a></li>
+<li><a class="reference internal" href="#using-hooks-to-run-astyle-before-a-commit">Using hooks to run Astyle before a commit</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#doxygen-for-documentation">Doxygen for documentation</a></li>
+<li><a class="reference internal" href="#gtest-for-unit-testing">Gtest for unit testing</a></li>
+<li><a class="reference internal" href="#modular-code-organization-for-easy-deployment-and-testing">Modular code organization for easy deployment and testing</a></li>
+<li><a class="reference internal" href="#unit-testing-from-the-modules-of-existing-codes">Unit testing from the modules of existing codes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="fcamerapro.html"
+                        title="previous chapter">The FCameraPro application</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="webinars.html"
+                        title="next chapter">Developer Webinars</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/sweng.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sw-engineering-tools">
+<h1>SW Engineering tools<a class="headerlink" href="#sw-engineering-tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="astyle-for-code-beautification">
+<h2>Astyle for code beautification<a class="headerlink" href="#astyle-for-code-beautification" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://astyle.sourceforge.net/">Artistic Style</a> (or <em>astyle</em> for short) is a source code indenter, formatter, and beautifier for the C, C++, C# and Java programming languages.
+It is a great tool to ensure your code is beatifully and consistently formatted and indented, and can be used to
+replace any tabs with spaces, ensuring consistent indentation regardless of the editor you use to view the code.</p>
+<p>You can apply astyle from command line simply by:</p>
+<div class="highlight-python"><pre>astyle file.cpp</pre>
+</div>
+<p>which would format the file with 4 spaces per indent.
+You can configure the way of formatting either using command line options or you can place the default options into
+<tt class="docutils literal"><span class="pre">~/.astylerc</span></tt> file.</p>
+<p>It is also possible to run an external tool on a file in the editor window in Eclipse.
+Select <em>Run &gt; External Tools &gt; External Tools Configurations...</em>, create a new <em>Program</em> configuration,
+and fill in the boxes as below:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/external_tools_setup.png"><img alt="_images/external_tools_setup.png" src="_images/external_tools_setup.png" style="width: 778.0px; height: 612.0px;" /></a>
+</div></blockquote>
+<p>For convenience, the parameters we have used are here:</p>
+<div class="highlight-python"><pre>--indent=spaces=4 --style=allman --indent-labels --indent-preprocessor --indent-col1-comments \
+--max-instatement-indent=60 --min-conditional-indent=0 --pad-oper --unpad-paren --pad-paren-in \
+--break-closing-brackets --add-brackets --keep-one-line-blocks --keep-one-line-statements \
+--convert-tabs --align-pointer=name --align-reference=name --suffix=none --options=none</pre>
+</div>
+<p>You should probably remove the newlines and backslashes if you copy-paste the text into the <em>Arguments</em> box.
+This version requires version 2.02 or newer &#8212; to use version 2.01, drop the parameter <tt class="docutils literal"><span class="pre">--align-reference=name</span></tt>.
+Note that after pasting the above parameters in the <em>Arguments</em> box, you need to append
+<tt class="docutils literal"><span class="pre">${container_loc}/${resource_name}</span></tt>, specific for configuring the tool in Eclipse.</p>
+<p>Then configure the <em>Refresh</em></p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/ext_refresh.png"><img alt="_images/ext_refresh.png" src="_images/ext_refresh.png" style="width: 396.0px; height: 243.0px;" /></a>
+</div></blockquote>
+<p>and <em>Build</em> tabs.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/ext_build.png"><img alt="_images/ext_build.png" src="_images/ext_build.png" style="width: 414.0px; height: 204.0px;" /></a>
+</div></blockquote>
+<p>Next, select <em>Run &gt; External Tools &gt; Organize Favorites...</em> and add the <em>astyle</em> tool.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/ext_tool_favorites.png"><img alt="_images/ext_tool_favorites.png" src="_images/ext_tool_favorites.png" style="width: 287.0px; height: 239.0px;" /></a>
+</div></blockquote>
+<p>Now you can run astyle for the file that is selected in the edit window by clicking this button.
+Note that you should save the file first as the input is taken from the file, not from the editor
+window.  The content of the editor window is refreshed automatically.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/run_ext_tool.png"><img alt="_images/run_ext_tool.png" src="_images/run_ext_tool.png" style="width: 97.0px; height: 28.0px;" /></a>
+</div></blockquote>
+<p>Eclipse has a built-in formatter, but it is not as nice as astyle.  Whereas astyle lets you format
+whitespace in the editor, such as aligning comments, assignments, or variable declarations in the
+consecutive lines and doesn&#8217;t disturb the edits, Eclipse&#8217;s formatter really reformats everything
+and doesn&#8217;t allow as much manual override.  However, it&#8217;s nice if Eclipse&#8217;s default formatting is somewhat
+similar to what astyle will use.  You can configure Eclipse by selecting Eclipse <em>Window &gt; Preferences &gt; C/C++ &gt;
+Code Style &gt; Import</em> and import this <a class="reference download internal" href="_downloads/mvc_style.xml"><tt class="xref download docutils literal"><span class="pre">mvc_style.xml</span></tt></a> file.
+You can apply the formatter by selecting text and hitting <strong>CTRL-SHFT-F</strong> (or <strong>CMD-SHFT-F</strong> on Mac).</p>
+</div>
+<div class="section" id="git-for-version-control">
+<h2>Git for version control<a class="headerlink" href="#git-for-version-control" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://git-scm.com/">Git</a>  is a distributed version control system.  If you are not familiar with git,
+it is recommended that you read the <a class="reference external" href="http://git-scm.com/book/en/Getting-Started">Getting started</a> and
+<a class="reference external" href="http://git-scm.com/book/en/Git-Basics">Git basics</a> chapters of the Git book. In this section we will
+cover:</p>
+<ul class="simple">
+<li>The EGit plugin for Eclipse</li>
+<li>Working with a remote server</li>
+<li>Using hooks to run Astyle before a commit</li>
+</ul>
+<div class="section" id="egit-eclipse-plugin">
+<h3>EGit Eclipse Plugin<a class="headerlink" href="#egit-eclipse-plugin" title="Permalink to this headline">¶</a></h3>
+<p>EGit is a plugin for Eclipse that provides Git integration. To setup EGit go to <em>Help -&gt; Install New Software</em>
+and select the <tt class="docutils literal"><span class="pre">http://download.eclipse.org/egit/updates</span></tt> site from the <tt class="docutils literal"><span class="pre">Work</span> <span class="pre">with</span></tt> drop down box. If you don&#8217;t
+see the site listed, click on <em>Available software sites</em> and enable it if it is already on the list (usually the case)
+or add it if it is missing.</p>
+<a class="reference internal image-reference" href="_images/eclipse_egit_install.png"><img alt="_images/eclipse_egit_install.png" src="_images/eclipse_egit_install.png" style="width: 818.0px; height: 337.0px;" /></a>
+<p>To enable Git integration for a project, right-click on the project and</p>
+<ol class="arabic simple">
+<li>Open <em>Team -&gt; Share Project</em> (if you don&#8217;t see this option, your project already
+has source control enabled under some software configuration management tool).</li>
+<li>Under <em>Select repository type</em> click on <em>Git</em>.</li>
+<li>Check the option <em>Use or create repository in parent folder of project</em>.</li>
+<li>If you already have a git repository for this project, then check it in the list and click <em>Finish</em>.</li>
+<li>If you didn&#8217;t have a git repository for this project, click on the <em>Create repository</em> button to
+create a new one.</li>
+</ol>
+<p>After you have shared the project through Git, you will see a decoration next to the project name
+that tells you the repository name and the current branch. You can now execute Git commands using
+the <em>Team</em> context menu, most typically <em>Team -&gt; Commit</em>, <em>Team -&gt; Pull</em>, and <em>Team -&gt; Switch To</em>.</p>
+</div>
+<div class="section" id="working-with-a-remote-server">
+<h3>Working with a remote server<a class="headerlink" href="#working-with-a-remote-server" title="Permalink to this headline">¶</a></h3>
+<p>NVIDIA git server is <a class="reference external" href="ssh://git-master:12001">ssh://git-master:12001</a>. The fcam repository path is 3rdparty/fcam.git.
+If you want to connect to the server you must log in to <a class="reference external" href="http://git-master">http://git-master</a> and add your ssh
+public key to the server. Once you log in to the server, go to <em>Settings -&gt; SSH Public Keys</em>.
+Your public key is stored in your $HOME/.ssh/id_rsa.pub file.</p>
+<p>To clone a repository that is on a remote server, you execute the <tt class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span></tt> command:</p>
+<div class="highlight-python"><pre>git clone ssh://server:port/path/repo.git</pre>
+</div>
+<p>You can do the same with the Eclipse Git plugin:</p>
+<ol class="arabic simple">
+<li>Go to <em>File -&gt; Import</em>.</li>
+<li>Select <em>Git -&gt; Projects from Git</em></li>
+<li>Under <em>Select repository source</em> pick <em>URI</em>.</li>
+<li>Enter the repository URI for your project. This is the same URI you would use in a <em>git clone</em> command.</li>
+<li>Select the branches you want to track.</li>
+<li>Select the local directory where you would like the repository to be cloned to.</li>
+<li>Select how you would like to add the project to Eclipse, either by looking for existing Eclipse projects
+under the new repository or by invoking the <em>New Project Wizzard</em> to import the code into a new project.</li>
+</ol>
+<p>If you use the SSH protocol, you will need to upload your public SSH key to the server. Typically this is done
+by logging into <tt class="docutils literal"><span class="pre">http://git-master</span></tt> and going to <em>Settings -&gt; SSH Public Keys</em>. To manage you public keys
+in Eclipse, go to <em>Window -&gt; Preferences -&gt; Network connection -&gt; SSH2</em>, where you will be able to specify
+your keys store location and generate new keys if necessary. Once you have a key you can upload <tt class="docutils literal"><span class="pre">id_rsa.pub</span></tt>
+to the remote server.</p>
+<p>When you work on a repository that you have cloned from a server, you will be working on a local copy of a
+remote branch. This local branch is a <em>remote tracking branch</em>. All commits that you make stay local until
+you push them to the remote server. The push operation will fail if the head of your local remote tracking
+branch is out of sync with the remote head:</p>
+<div class="highlight-python"><pre>$ git push origin dev/newdocs
+To ssh://username@git-master:29481/path/repo.git
+! [rejected]        branchname -&gt; branchname (non-fast-forward)
+error: failed to push some refs to 'ssh://username@git-master:29481/path/repo.git'
+To prevent you from losing history, non-fast-forward updates were rejected
+Merge the remote changes (e.g. 'git pull') before pushing again.  See the
+'Note about fast-forwards' section of 'git push --help' for details.</pre>
+</div>
+<p>To bring your tree in sync, you will need to execute a <tt class="docutils literal"><span class="pre">git</span> <span class="pre">pull</span></tt> command.
+To keep a linear history for the branch it is a good idea to adopt a <a class="reference external" href="http://git-scm.com/book/en/Git-Branching-Rebasing">rebase</a>
+strategy (as opposed to a merge). This means that during pull your local branch will be first updated to the top of the tree and
+your commits re-applied. This is good because you update your local source tree to the state your team has
+brought it to:</p>
+<div class="highlight-python"><pre>$ git pull --rebase  origin branchname
+remote: Counting objects: 21, done.
+remote: Compressing objects: 100% (11/11), done.
+remote: Total 16 (delta 10), reused 11 (delta 5)
+Unpacking objects: 100% (16/16), done.
+From git://server/path/repo
+ * branch            branchname -&gt; FETCH_HEAD
+First, rewinding head to replay your work on top of it...
+Applying: tutorial: Add git section to sweng.rst</pre>
+</div>
+<p>If there are any conflicts you will get a chance to fix them before finishing the rebase. After you
+finish the rebase you can push your changes to the server.</p>
+<p>To summarize, the proposed workflow is:</p>
+<ol class="arabic simple">
+<li>Edit some files.</li>
+<li>Commit your changes to the local branch using <tt class="docutils literal"><span class="pre">git</span> <span class="pre">commit</span></tt></li>
+<li>Update your local tree with any new remote changes using <tt class="docutils literal"><span class="pre">git</span> <span class="pre">pull</span> <span class="pre">--rebase</span> <span class="pre">origin</span> <span class="pre">branchname</span></tt></li>
+<li>Resolve any conflicts if needed.</li>
+<li>Push your changes to the remote server using <tt class="docutils literal"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">branchname</span></tt>.</li>
+</ol>
+<p>You can configure your local branch to always rebased on a pull operation. Edit the <tt class="docutils literal"><span class="pre">.git/config</span></tt> file and
+look for your branch. Then add <tt class="docutils literal"><span class="pre">rebase</span> <span class="pre">=</span> <span class="pre">true</span></tt>:</p>
+<div class="highlight-none"><div class="highlight"><pre>[branch &quot;branchname&quot;]
+   remote = origin
+   merge = refs/heads/branchname
+<span class="hll">   rebase = true
+</span></pre></div>
+</div>
+<p>Sometimes you do frequent local commits at several stages of your work that you would like to push to the remote
+server as a single commit. This is where the <tt class="docutils literal"><span class="pre">git</span> <span class="pre">rebase</span> <span class="pre">-i</span> <span class="pre">FETCH_HEAD</span></tt> command comes very handy to update your <strong>local</strong>
+repository history before pushing your changes:</p>
+<div class="highlight-none"><div class="highlight"><pre>$git rebase -i FETCH_HEAD
+</pre></div>
+</div>
+<div class="highlight-none"><div class="highlight"><pre>pick c4e3c7b tutorial: Added git section to sweng.rst
+pick 3ff25ef tutorial: spacing changes to sweng.rst
+
+# Rebase 33afbde..3ff25ef onto 33afbde
+#
+# Commands:
+#  p, pick = use commit
+#  r, In this case, the proposed workflow becomes: reword = use commit, but edit the commit message
+#  e, edit = use commit, but stop for amending
+#  s, squash = use commit, but meld into previous commit
+#  f, fixup = like &quot;squash&quot;, but discard this commit&#39;s log message
+#  x, exec = run command (the rest of the line) using shell
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+# However, if you remove everything, the rebase will be aborted.
+#
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">git</span> <span class="pre">rebase</span> <span class="pre">-i</span> <span class="pre">FETCH_HEAD</span></tt> will launch an editor with a list of recent commits that you have made since
+you last synchronized your source tree with the remote server (i.e. your local commits). For each commit,
+you can choose to <tt class="docutils literal"><span class="pre">pick</span></tt> it, <tt class="docutils literal"><span class="pre">squash</span></tt> it with the previous one, or delete it. To squash the second commit
+shown above with the previous one, change <tt class="docutils literal"><span class="pre">pick</span></tt> to <tt class="docutils literal"><span class="pre">squash</span></tt>:</p>
+<div class="highlight-none"><div class="highlight"><pre>pick c4e3c7b tutorial: Added git section to sweng.rst
+<span class="hll">squash 3ff25ef tutorial: spacing changes to sweng.rst
+</span></pre></div>
+</div>
+<p>Then you will be prompted to create a new commit message for the new commit:</p>
+<div class="highlight-none"><div class="highlight"><pre># This is a combination of 2 commits.
+# The first commit&#39;s message is:
+
+tutorial: Added git section to sweng.rst
+
+# This is the 2nd commit message:
+
+tutorial: spacing changes to sweng.rst
+</pre></div>
+</div>
+<p>Enter the new message and save the file to proceed with the commit. The proposed workflow then becomes:</p>
+<ol class="arabic simple">
+<li>Edit some files.</li>
+<li>Commit your changes to the local branch using <tt class="docutils literal"><span class="pre">git</span> <span class="pre">commit</span></tt></li>
+<li>Clean up your commits using <tt class="docutils literal"><span class="pre">git</span> <span class="pre">rebase</span> <span class="pre">-i</span> <span class="pre">FETCH_HEAD</span></tt></li>
+<li>Update your local tree with any new remote changes using <tt class="docutils literal"><span class="pre">git</span> <span class="pre">pull</span> <span class="pre">--rebase</span> <span class="pre">origin</span> <span class="pre">branchname</span></tt></li>
+<li>Resolve any conflicts if needed.</li>
+<li>Push your changes to the remote server using <tt class="docutils literal"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">branchname</span></tt>.</li>
+</ol>
+<p>If for any reason there is a problem with the rebase and you find your self in a state that
+doesn&#8217;t seem correct, run <tt class="docutils literal"><span class="pre">git</span> <span class="pre">status</span></tt> and verify if you are in an unattached head state:</p>
+<div class="highlight-none"><div class="highlight"><pre># Not currently on any branch.
+</pre></div>
+</div>
+<p>If this is the case, your rebase is incomplete. To fix this, abort the rebase and do it again:</p>
+<div class="highlight-none"><div class="highlight"><pre>$git rebase --abort
+</pre></div>
+</div>
+<p><strong>Do not</strong> use <tt class="docutils literal"><span class="pre">git</span> <span class="pre">rebase</span> <span class="pre">-i</span></tt> to edit any commit that has already been pushed to the
+server by you or other team member. Only use <tt class="docutils literal"><span class="pre">git</span> <span class="pre">rebase</span> <span class="pre">-i</span> <span class="pre">FETCH_HEAD</span></tt> to see
+the local commits that are not yet pushed.</p>
+<p>See <a class="reference external" href="http://git-scm.com/book/en/Git-Tools-Rewriting-History">rewriting history</a> for more details.</p>
+</div>
+<div class="section" id="using-hooks-to-run-astyle-before-a-commit">
+<h3>Using hooks to run Astyle before a commit<a class="headerlink" href="#using-hooks-to-run-astyle-before-a-commit" title="Permalink to this headline">¶</a></h3>
+<p>Git allows you to define a series of hooks to run at different stages of the Git workflow. One
+such hook is called the pre-commit hook and can be executed when you invoke the <tt class="docutils literal"><span class="pre">git</span> <span class="pre">commit</span></tt>
+command.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The hooks we cover here are shell scripts that are executed locally,
+and as such, you must ensure they work on all operating systems
+the project can be developed on. The EGit plugin for Eclipse
+doesn&#8217;t execute the hooks.</p>
+</div>
+<p>We now show a sample <tt class="docutils literal"><span class="pre">pre-commit</span></tt> hook that invokes Astyle on all files to be committed. Copy the code
+into <tt class="docutils literal"><span class="pre">.git/hooks/pre-commit</span></tt> to enable it.</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c">#!/bin/sh</span>
+
+<span class="k">if </span>git rev-parse --verify HEAD &gt;/dev/null 2&gt;&amp;1
+<span class="k">then</span>
+<span class="k">      </span><span class="nv">against</span><span class="o">=</span>HEAD
+<span class="k">else</span>
+      <span class="c"># Initial commit: diff against an empty tree object</span>
+      <span class="nv">against</span><span class="o">=</span>4b825dc642cb6eb9a060e54bf8d69288fbee4904
+<span class="k">fi</span>
+
+<span class="c"># If you want to allow non-ascii filenames set this variable to true.</span>
+<span class="nv">allownonascii</span><span class="o">=</span><span class="k">$(</span>git config hooks.allownonascii<span class="k">)</span>
+
+<span class="c"># Cross platform projects tend to avoid non-ascii filenames; prevent</span>
+<span class="c"># them from being added to the repository. We exploit the fact that the</span>
+<span class="c"># printable range starts at the space character and ends with tilde.</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$allownonascii&quot;</span> !<span class="o">=</span> <span class="s2">&quot;true&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span>
+      <span class="c"># Note that the use of brackets around a tr range is ok here, (it&#39;s</span>
+      <span class="c"># even required, for portability to Solaris 10&#39;s /usr/bin/tr), since</span>
+      <span class="c"># the square bracket bytes happen to fall in the designated range.</span>
+      <span class="nb">test</span> <span class="s2">&quot;$(git diff --cached --name-only --diff-filter=A -z $against |</span>
+<span class="s2">       LC_ALL=C tr -d &#39;[ -~]\0&#39;)&quot;</span>
+<span class="k">then</span>
+<span class="k">      </span><span class="nb">echo</span> <span class="s2">&quot;Error: Attempt to add a non-ascii file name.&quot;</span>
+      <span class="nb">echo</span>
+<span class="nb">      echo</span> <span class="s2">&quot;This can cause problems if you want to work&quot;</span>
+      <span class="nb">echo</span> <span class="s2">&quot;with people on other platforms.&quot;</span>
+      <span class="nb">echo</span>
+<span class="nb">      echo</span> <span class="s2">&quot;To be portable it is advisable to rename the file ...&quot;</span>
+      <span class="nb">echo</span>
+<span class="nb">      echo</span> <span class="s2">&quot;If you know what you are doing you can disable this&quot;</span>
+      <span class="nb">echo</span> <span class="s2">&quot;check using:&quot;</span>
+      <span class="nb">echo</span>
+<span class="nb">      echo</span> <span class="s2">&quot;  git config hooks.allownonascii true&quot;</span>
+      <span class="nb">echo</span>
+<span class="nb">      exit </span>1
+<span class="k">fi</span>
+
+<span class="nv">version</span><span class="o">=</span><span class="sb">`</span>astyle --version 2&gt; /dev/null<span class="sb">`</span>
+<span class="k">if </span><span class="nb">test</span> <span class="s2">&quot;x$version&quot;</span> !<span class="o">=</span> <span class="s2">&quot;x&quot;</span>; <span class="k">then</span>
+<span class="nb">echo</span> <span class="s2">&quot;SDF3 git pre-receive hook:&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Did not find astyle, please install it before continuing.&quot;</span>
+<span class="nb">exit </span>1
+<span class="k">fi</span>
+<span class="nv">ASTYLE</span><span class="o">=</span>astyle
+
+<span class="k">case</span> <span class="sb">`</span><span class="nv">$ASTYLE</span> --version 2&gt; /dev/null<span class="sb">`</span> in
+  Artistic*<span class="o">)</span>
+      ;;
+  default<span class="o">)</span>
+      <span class="nb">echo</span> <span class="s2">&quot;SDF3 git pre-commit hook:&quot;</span>
+      <span class="nb">echo</span> <span class="s2">&quot;Did not find astyle, please install it before continuing.&quot;</span>
+      <span class="nb">exit </span>1
+      ;;
+<span class="k">esac</span>
+
+<span class="nv">ASTYLE_PARAMETERS</span><span class="o">=</span><span class="s2">&quot;\</span>
+<span class="s2">    --indent=spaces=4 \</span>
+<span class="s2">    --style=allman \</span>
+<span class="s2">    --indent-labels \</span>
+<span class="s2">    --indent-preprocessor \</span>
+<span class="s2">    --indent-col1-comments \</span>
+<span class="s2">    --max-instatement-indent=60 \</span>
+<span class="s2">    --min-conditional-indent=0 \</span>
+<span class="s2">    --pad-oper \</span>
+<span class="s2">    --unpad-paren \</span>
+<span class="s2">    --pad-paren-in \</span>
+<span class="s2">    --break-closing-brackets \</span>
+<span class="s2">    --add-brackets \</span>
+<span class="s2">    --keep-one-line-blocks \</span>
+<span class="s2">    --keep-one-line-statements \</span>
+<span class="s2">    --convert-tabs \</span>
+<span class="s2">    --align-pointer=name \</span>
+<span class="s2">    --align-reference=name \</span>
+<span class="s2">    --suffix=none \</span>
+<span class="s2">    --options=none &quot;</span>
+
+<span class="nv">ASTYLE_PARAMETERS_JAVA</span><span class="o">=</span><span class="s2">&quot;\</span>
+<span class="s2">    --indent=spaces=4 \</span>
+<span class="s2">    --style=java \</span>
+<span class="s2">    --indent-labels \</span>
+<span class="s2">    --indent-preprocessor \</span>
+<span class="s2">    --indent-col1-comments \</span>
+<span class="s2">    --max-instatement-indent=60 \</span>
+<span class="s2">    --min-conditional-indent=0 \</span>
+<span class="s2">    --pad-oper \</span>
+<span class="s2">    --unpad-paren \</span>
+<span class="s2">    --pad-paren-in \</span>
+<span class="s2">    --break-closing-brackets \</span>
+<span class="s2">    --add-brackets \</span>
+<span class="s2">    --keep-one-line-blocks \</span>
+<span class="s2">    --keep-one-line-statements \</span>
+<span class="s2">    --convert-tabs \</span>
+<span class="s2">    --align-pointer=name \</span>
+<span class="s2">    --align-reference=name \</span>
+<span class="s2">    --suffix=none \</span>
+<span class="s2">    --options=none &quot;</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;--Formatting source code--&quot;</span>
+
+<span class="nv">files</span><span class="o">=</span><span class="sb">`</span>git-diff-index --diff-filter<span class="o">=</span>ACMR --name-only -r --cached <span class="nv">$against</span> --<span class="sb">`</span>
+<span class="k">for </span>file in <span class="nv">$files</span>; <span class="k">do</span>
+<span class="k">    </span><span class="nv">x</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$file</span> |grep -E <span class="s1">&#39;(\.c$|\.cc$|\.h$|\.cpp$|\.hpp$)&#39;</span><span class="sb">`</span>
+    <span class="k">if </span><span class="nb">test</span> <span class="s2">&quot;x$x&quot;</span> !<span class="o">=</span> <span class="s2">&quot;x&quot;</span>; <span class="k">then</span>
+      <span class="c"># Save a temp copy of the origin file</span>
+      cp <span class="nv">$file</span> <span class="k">${</span><span class="nv">file</span><span class="k">}</span>.orig
+      <span class="nv">$ASTYLE</span> <span class="k">${</span><span class="nv">ASTYLE_PARAMETERS</span><span class="k">}</span> <span class="nv">$file</span>
+      git add <span class="nv">$file</span>
+      <span class="c"># If the saved copy and the new file are the same</span>
+      <span class="c"># delete the temporary copy</span>
+      <span class="k">if </span>diff <span class="nv">$file</span> <span class="k">${</span><span class="nv">file</span><span class="k">}</span>.orig &gt;/dev/null ; <span class="k">then</span>
+<span class="k">         </span>rm <span class="k">${</span><span class="nv">file</span><span class="k">}</span>.orig
+      <span class="k">fi</span>
+<span class="k">    fi</span>
+
+<span class="k">    </span><span class="nv">x</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$file</span> |grep -E <span class="s1">&#39;(\.java$)&#39;</span><span class="sb">`</span>
+    <span class="k">if </span><span class="nb">test</span> <span class="s2">&quot;x$x&quot;</span> !<span class="o">=</span> <span class="s2">&quot;x&quot;</span>; <span class="k">then</span>
+      <span class="c"># Save a temp copy of the origin file</span>
+      cp <span class="nv">$file</span> <span class="k">${</span><span class="nv">file</span><span class="k">}</span>.orig
+      <span class="nv">$ASTYLE</span> <span class="k">${</span><span class="nv">ASTYLE_PARAMETERS_JAVA</span><span class="k">}</span> <span class="nv">$file</span>
+      git add <span class="nv">$file</span>
+      <span class="c"># If the saved copy and the new file are the same</span>
+      <span class="c"># delete the temporary copy</span>
+      <span class="k">if </span>diff <span class="nv">$file</span> <span class="k">${</span><span class="nv">file</span><span class="k">}</span>.orig &gt;/dev/null ; <span class="k">then</span>
+<span class="k">         </span>rm <span class="k">${</span><span class="nv">file</span><span class="k">}</span>.orig
+      <span class="k">fi</span>
+<span class="k">      </span>git add <span class="nv">$file</span>
+    <span class="k">fi</span>
+<span class="k">done</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;--Formatting source code done--&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="doxygen-for-documentation">
+<h2>Doxygen for documentation<a class="headerlink" href="#doxygen-for-documentation" title="Permalink to this headline">¶</a></h2>
+<p>Documenting the code is important for many reasons: it clarifies your thinking of what the
+software really does, reminds you later of the same thing, and allows others to use your code.
+Writing documents separately from your code is error-prone, and quite often the documentation
+lags behind and gets stale as the code evolves.  The solution is to automate as much of the
+process as possible, and tie the documentation and the program code together.
+<a class="reference external" href="http://www.doxygen.org/">Doxygen</a> is the right tool for this task.</p>
+<p>Let&#8217;s try using it: install doxygen, go to <tt class="docutils literal"><span class="pre">/tutorials/SimpleImageOpenCV_GL_Complete/jni</span></tt>, and run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">doxygen</span> <span class="o">-</span><span class="n">g</span>
+</pre></div>
+</div>
+<p>to generate a default <em>Doxyfile</em>, with default configuration that you can edit, and:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">doxygen</span>
+</pre></div>
+</div>
+<p>which generates the documentation.
+Then open <tt class="docutils literal"><span class="pre">html/index.html</span></tt>.  Click <em>Classes &gt; Engine</em>, and you&#8217;ll see the documentation for the <tt class="docutils literal"><span class="pre">Engine</span></tt> class.
+This piece of the header file</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/doxy_in.png"><img alt="_images/doxy_in.png" src="_images/doxy_in.png" style="width: 618.0px; height: 119.0px;" /></a>
+</div></blockquote>
+<p>has turned into this piece of documentation.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/doxy_out.png"><img alt="_images/doxy_out.png" src="_images/doxy_out.png" style="width: 499.0px; height: 165.0px;" /></a>
+</div></blockquote>
+<p>The trick is the special syntax of the comment, where the comment starts with <tt class="docutils literal"><span class="pre">/**</span></tt>.</p>
+<p>FCam documentation has been created using doxygen.  Open <a class="reference download internal" href="_downloads/fcam4tegra.zip"><tt class="xref download docutils literal"><span class="pre">fcam4tegra.zip</span></tt></a> and unzip it;
+then open <tt class="docutils literal"><span class="pre">modules/fcam/docs/html/index.html</span></tt> to see the documentation.</p>
+<p>You can create documentation at many levels.  If you open <tt class="docutils literal"><span class="pre">fcam/include/FCam/FCam.h</span></tt>, you see several types
+of tags.  One of them is <tt class="docutils literal"><span class="pre">\mainpage</span></tt>, which produces the main page of FCam documentation.  Various types
+of links are provided, and you can even include bitmap images.  Every file can be documented with the <tt class="docutils literal"><span class="pre">\file</span></tt> tag.
+If you open <tt class="docutils literal"><span class="pre">fcam/include/FCam/Image.h</span></tt>, you see that a comment before the class definition is used to provide an
+overview of the class, a comment before a method documents the method, and a comment before a member variable
+documents that.  There are keywords that support documenting function arguments and the return values.
+A <a class="reference external" href="http://www.stack.nl/~dimitri/doxygen/manual.html">detailed manual</a> is provided. Here is an example
+of documented code, from that manual (you should set JAVADOC_AUTOBRIEF to YES in Doxyfile with this example):</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> *  A test class. A more elaborate class description.</span>
+<span class="cm"> */</span>
+<span class="k">class</span> <span class="nc">Test</span>
+<span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="cm">/**</span>
+<span class="cm">     * An enum.</span>
+<span class="cm">     * More detailed enum description.</span>
+<span class="cm">     */</span>
+    <span class="k">enum</span> <span class="n">TEnum</span>
+    <span class="p">{</span>
+        <span class="n">TVal1</span><span class="p">,</span> <span class="cm">/**&lt; enum value TVal1. */</span>
+        <span class="n">TVal2</span><span class="p">,</span> <span class="cm">/**&lt; enum value TVal2. */</span>
+        <span class="n">TVal3</span>  <span class="cm">/**&lt; enum value TVal3. */</span>
+    <span class="p">}</span>
+    <span class="o">*</span><span class="n">enumPtr</span><span class="p">,</span> <span class="cm">/**&lt; enum pointer. Details. */</span>
+    <span class="n">enumVar</span><span class="p">;</span>  <span class="cm">/**&lt; enum variable. Details. */</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * A constructor.</span>
+<span class="cm">     * A more elaborate description of the constructor.</span>
+<span class="cm">     */</span>
+    <span class="n">Test</span><span class="p">();</span>
+    <span class="cm">/**</span>
+<span class="cm">     * A destructor.</span>
+<span class="cm">     * A more elaborate description of the destructor.</span>
+<span class="cm">     */</span>
+    <span class="o">~</span><span class="n">Test</span><span class="p">();</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * A normal member taking two arguments and returning an integer value.</span>
+<span class="cm">     * @param a an integer argument.</span>
+<span class="cm">     * @param s a constant character pointer.</span>
+<span class="cm">     * @see Test()</span>
+<span class="cm">     * @see ~Test()</span>
+<span class="cm">     * @see testMeToo()</span>
+<span class="cm">     * @see publicVar()</span>
+<span class="cm">     * @return The test results</span>
+<span class="cm">     */</span>
+    <span class="kt">int</span> <span class="nf">testMe</span><span class="p">(</span> <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s</span> <span class="p">);</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * A pure virtual member.</span>
+<span class="cm">     * @see testMe()</span>
+<span class="cm">     * @param c1 the first argument.</span>
+<span class="cm">     * @param c2 the second argument.</span>
+<span class="cm">     */</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">testMeToo</span><span class="p">(</span> <span class="kt">char</span> <span class="n">c1</span><span class="p">,</span> <span class="kt">char</span> <span class="n">c2</span> <span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * A public variable.</span>
+<span class="cm">     * Details.</span>
+<span class="cm">     */</span>
+    <span class="kt">int</span> <span class="n">publicVar</span><span class="p">;</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * A function variable.</span>
+<span class="cm">     * Details.</span>
+<span class="cm">     */</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">handler</span> <span class="p">)(</span> <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span> <span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>The output will look like <a class="reference external" href="http://www.stack.nl/~dimitri/doxygen/examples/jdstyle/html/class_test.html">this</a>.
+Click here for <a class="reference external" href="http://www.stack.nl/~dimitri/doxygen/docblocks.html">more details</a>.</p>
+<p>You can even include <a class="reference external" href="http://www.stack.nl/~dimitri/doxygen/formulas.html">LaTeX formulas</a>.
+Additional information, including quick-start guides, can be found <a class="reference external" href="http://www.stack.nl/~dimitri/doxygen/articles.html">here</a>.</p>
+</div>
+<div class="section" id="gtest-for-unit-testing">
+<h2>Gtest for unit testing<a class="headerlink" href="#gtest-for-unit-testing" title="Permalink to this headline">¶</a></h2>
+<p>Unit test is one of the most important stages in any devlopment project. Unit test will reduce the number of bugs, the cost of change of the existing code, and even improve the design of the project. Here are good articles that show why writing unit tests is necessary: <a class="reference external" href="http://onjava.com/pub/a/onjava/2003/04/02/javaxpckbk.html">Top 12 reasons to Write Unit Tests</a>, and <a class="reference external" href="http://www.petrikainulainen.net/programming/unit-testing/wrong-reasons-not-to-write-unit-tests/">Wrong reasons Not to Write Unit Tests</a></p>
+<p><a class="reference external" href="http://code.google.com/p/googletest/">Google&#8217;s C++ unit test framework</a> (we will call it as <em>Gtest</em> from now on) provides a variety of testing capabilities for C++ based projects. It supports automatic test discovery, a rich set of assertions, user-defined assertions, death tests, and various options for running the tests. In this tutorial, we show how to use <em>Gtest</em> library in an Android project.</p>
+<p>To make use in Android easy for you, we have already built the library, and added the library, header files, and Android.mk in <tt class="docutils literal"><span class="pre">tutorials/UnitTestDriver</span></tt>. You can still <a class="reference external" href="http://code.google.com/p/googletest/downloads/list">download Gtest source code</a>, then build it yourself if needed.</p>
+<p>Now let&#8217;s start by importing our unit test driver project, <tt class="docutils literal"><span class="pre">tutorials/UnitTestDriver</span></tt>
+(if you need help, see <a class="reference internal" href="opengles.html#import-existing-project-opengles"><em>importing a project into Eclipse</em></a>).</p>
+<p>Then, let&#8217;s first look into <tt class="docutils literal"><span class="pre">tutorials/UnitTestDriver/jni/gtest-1.6.0</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="n">include</span>
+<span class="n">libs</span>
+<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="n">Android</span><span class="o">.</span><span class="n">mk</span>
+</pre></div>
+</div>
+<p>There are other files inside the folder, but the pre-built library for Android, <tt class="docutils literal"><span class="pre">libgtest.a</span></tt>,
+can be found in <tt class="docutils literal"><span class="pre">gtest-1.6.0/libs/armeabi-v7a/</span></tt>.
+The paths for the library are defined in <tt class="docutils literal"><span class="pre">gtest-1.6.0/Android.mk</span></tt> as shown below.</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_PATH</span> <span class="o">:=</span> <span class="k">$(</span>call my-dir<span class="k">)</span>
+<span class="cp">include $(CLEAR_VARS)</span>
+
+<span class="nv">LOCAL_MODULE</span> <span class="o">:=</span> gtest
+<span class="hll"><span class="nv">LOCAL_EXPORT_C_INCLUDES</span> <span class="o">:=</span> <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/include
+</span><span class="hll"><span class="nv">LOCAL_SRC_FILES</span> <span class="o">:=</span> ./libs/<span class="k">$(</span>TARGET_ARCH_ABI<span class="k">)</span>/libgtest.a
+</span>
+<span class="hll"><span class="cp">include $(PREBUILT_STATIC_LIBRARY)</span>
+</span></pre></div>
+</div>
+<p>Now, let&#8217;s check out if we correctly include <tt class="docutils literal"><span class="pre">gtest.h</span></tt> at the beginning of <tt class="docutils literal"><span class="pre">unittestdriver.h</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#include &lt;gtest/gtest.h&gt;</span>
+</pre></div>
+</div>
+<p>Then, let&#8217;s open and look at <tt class="docutils literal"><span class="pre">unittestdriver.cpp</span></tt>.
+This file is a driver file that loads and initializes <tt class="docutils literal"><span class="pre">Gtest</span></tt>, and runs the testing code.
+Because Gtest internally prints out the result streams, the driver function handles the
+output of the testing streams from Gtest, and prints them out on the display in Android app.</p>
+<p>The following code shows the <tt class="docutils literal"><span class="pre">UnitTestDriver::run()</span></tt> function that runs unit test.</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="kt">void</span> <span class="n">UnitTestDriver</span><span class="o">::</span><span class="n">run</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[]</span> <span class="o">=</span>
+    <span class="p">{</span> <span class="p">(</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">)</span> <span class="s">&quot;UnitTestDriver&quot;</span> <span class="p">};</span>
+    <span class="kt">int</span> <span class="n">argc</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span> <span class="n">argv</span> <span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">);</span>
+
+    <span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;*** Starting Unit Test ***&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+
+    <span class="c1">// Initialize the testing framework</span>
+<span class="hll">    <span class="o">::</span><span class="n">testing</span><span class="o">::</span><span class="n">InitGoogleTest</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span> <span class="p">);</span>
+</span>
+    <span class="c1">// Add this class as an event listener</span>
+<span class="hll">    <span class="o">::</span><span class="n">testing</span><span class="o">::</span><span class="n">UnitTest</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">listeners</span><span class="p">().</span><span class="n">Append</span><span class="p">(</span> <span class="n">this</span> <span class="p">);</span>
+</span>
+    <span class="c1">// Run all the tests.</span>
+<span class="hll">    <span class="n">mTestResult</span> <span class="o">=</span> <span class="n">RUN_ALL_TESTS</span><span class="p">();</span>
+</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In the code above, we first set the initial argument with the name of the whole test,
+then added the current driver class as an event listener to the Gtest class.
+Finally, we run all the tests by calling <tt class="docutils literal"><span class="pre">RUN_ALL_TESTS()</span></tt> function.
+By calling this function, Gtest will search all types of unit test (<tt class="docutils literal"><span class="pre">TEST(string,</span> <span class="pre">string)</span></tt>)
+that are shown in any source files inside <tt class="docutils literal"><span class="pre">jni</span></tt> directory.</p>
+<p>Now we can write actual tests. In <tt class="docutils literal"><span class="pre">jni</span></tt> folder, we have added <tt class="docutils literal"><span class="pre">unittest.cpp</span></tt>.
+The following code shows some sample unit tests using Gtest.</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="hll"><span class="cp">#include&lt;gtest/gtest.h&gt;</span>
+</span>
+<span class="hll"><span class="kt">unsigned</span> <span class="kt">int</span> <span class="nf">Fibonacci</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">n</span> <span class="p">)</span>
+</span><span class="p">{</span>
+   <span class="k">if</span> <span class="p">(</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+   <span class="k">if</span> <span class="p">(</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+   <span class="k">return</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">)</span> <span class="o">+</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Tests Fibonacci of 0, 1</span>
+<span class="hll"><span class="n">TEST</span><span class="p">(</span><span class="n">FibonacciTest</span><span class="p">,</span> <span class="n">HandlesZeroInput</span><span class="p">)</span>
+</span><span class="p">{</span>
+    <span class="n">EXPECT_EQ</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Fibonacci</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">);</span>
+    <span class="n">EXPECT_EQ</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Fibonacci</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Tests Fibonacci of numbers greater than 1</span>
+<span class="hll"><span class="n">TEST</span><span class="p">(</span><span class="n">FibonacciTest</span><span class="p">,</span> <span class="n">HandlesGreaterThan1</span><span class="p">)</span>
+</span><span class="p">{</span>
+    <span class="n">EXPECT_EQ</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Fibonacci</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">);</span>
+    <span class="n">EXPECT_EQ</span><span class="p">(</span> <span class="mi">2</span><span class="p">,</span> <span class="n">Fibonacci</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">);</span>
+    <span class="n">EXPECT_EQ</span><span class="p">(</span> <span class="mi">21</span><span class="p">,</span> <span class="n">Fibonacci</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="p">);</span>
+    <span class="n">EXPECT_EQ</span><span class="p">(</span> <span class="mi">55</span><span class="p">,</span> <span class="n">Fibonacci</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We first define a testing module as a function, <tt class="docutils literal"><span class="pre">Fibonacci</span> <span class="pre">(unsigned</span> <span class="pre">int</span> <span class="pre">n)</span></tt> at the beginning,
+and call this module inside each testing function <tt class="docutils literal"><span class="pre">TEST()</span></tt>.
+In each test function, the first argument refers to the module, and the second one refers to each unit test.
+Many types of assertion and comparison functions are introduced in <a class="reference external" href="http://code.google.com/p/googletest/wiki/Primer#Basic_Assertions">GTest basic assertion page</a>.</p>
+<p>Next, modify <tt class="docutils literal"><span class="pre">jni/Android.mk</span></tt> as shown below.</p>
+<div class="highlight-make"><div class="highlight"><pre>   <span class="o">[</span>...<span class="o">]</span>
+
+<span class="c">   # Driver source files</span>
+   LOCAL_SRC_FILES :<span class="o">=</span> unittestdriver.cpp com_nvidia_unittest_UnitTestDriver.cpp
+
+<span class="c">   # Add your test files here</span>
+<span class="hll">   LOCAL_SRC_FILES +<span class="o">=</span> unittest.cpp
+</span>
+<span class="c">   # GTest required library</span>
+   LOCAL_STATIC_LIBRARIES :<span class="o">=</span> gtest
+
+<span class="c">   # Add your additional libraries here</span>
+   LOCAL_STATIC_LIBRARIES +<span class="o">=</span>
+
+   <span class="o">[</span>...<span class="o">]</span>
+
+   <span class="k">$(</span>call import-add-path, <span class="k">$(</span>LOCAL_PATH<span class="k">))</span>
+   <span class="k">$(</span>call import-module, gtest-1.6.0<span class="k">)</span>
+</pre></div>
+</div>
+<p>Now, let&#8217;s build and run the project. The following image shows the result.</p>
+<a class="reference internal image-reference" href="_images/unittest-fibo.png"><img alt="_images/unittest-fibo.png" src="_images/unittest-fibo.png" style="width: 499.0px; height: 180.0px;" /></a>
+<p>The results shows that the tests for Fibonacci function was successful.</p>
+<p>Now, you can test your own code by locating the source code at <tt class="docutils literal"><span class="pre">/jni</span></tt> folder. However, in practice, we may want to test existing codes from other projects. In next section, we will show how to construct a code organization to modulize the projects, then we will show that we can directly test the existing codes from each module.</p>
+</div>
+<div class="section" id="modular-code-organization-for-easy-deployment-and-testing">
+<h2>Modular code organization for easy deployment and testing<a class="headerlink" href="#modular-code-organization-for-easy-deployment-and-testing" title="Permalink to this headline">¶</a></h2>
+<p>Once you have decided that you want to have unit testing for your
+projects, you might find yourself tempted to just copy all your sources
+under the <tt class="docutils literal"><span class="pre">jni</span></tt> folder of the <tt class="docutils literal"><span class="pre">UnitTestDriver</span></tt> project and build your
+tests. Unfortunately, this approach is not good, you don&#8217;t want to have
+multiple copies of your sources, one for testing, and one for deployment.</p>
+<p>A good practice is to put the core modules of your work into
+libraries. Then, both your final application and your unit-test
+code link against the same library sharing the same source. We will
+briefly show one possible way of organizing your code for such
+purpose. We suggest you set up your source tree as follows:</p>
+<div class="highlight-python"><pre>/
+ work/
+      modules/
+              module1/
+                      Android.mk
+                      include/
+                      src/
+              module2/
+                      Android.mk
+                      include/
+                      src/
+              module3/
+                      Android.mk
+                      include/
+                      src/
+      apps/
+            app1/
+                 src/
+                 jni/
+                     Android.mk
+            app2/
+                 src/
+                 jni/
+                     Andorid.mk
+
+      unit-tests/
+                 tests-module1/
+                               src/
+                               jni/
+                                   Android.mk
+                 tests-module2/
+                               src/
+                               jni/
+                                   Android.mk
+                 tests-module3/
+                               src/
+                               jni/
+                                   Android.mk</pre>
+</div>
+<p>In the hierarchy shown above, we have separated the core functionality from
+the applications and the testing stubs. The Android makefile system allows
+us to define modules that can be imported from other modules, as we have
+done several times through this tutorial. In this section we will take a
+closer look at how to write the <tt class="docutils literal"><span class="pre">Android.mk</span></tt> files.</p>
+<p>First, we will take a look at the <tt class="docutils literal"><span class="pre">Android.mk</span></tt> for <tt class="docutils literal"><span class="pre">module1</span></tt>:</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_PATH</span> <span class="o">:=</span> <span class="k">$(</span>call my-dir<span class="k">)</span>
+<span class="cp">include $(CLEAR_VARS)</span>
+
+<span class="c">#</span>
+<span class="c"># LOCAL_ variables with instructions to build module:</span>
+<span class="c">#</span>
+<span class="nv">LOCAL_MODULE</span> <span class="o">:=</span> module1
+
+<span class="c"># Add all .c and .cpp files under ./src</span>
+<span class="nv">MY_PREFIX</span>           <span class="o">:=</span> <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>
+<span class="nv">MY_SOURCES</span>          <span class="o">:=</span> <span class="k">$(</span>wildcard <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/src/*.cpp<span class="k">)</span>
+<span class="nv">MY_SOURCES</span>          <span class="o">+=</span> <span class="k">$(</span>wildcard <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/src/*.c<span class="k">)</span>
+
+<span class="nv">LOCAL_SRC_FILES</span>     <span class="o">+=</span> <span class="k">$(</span>MY_SOURCES:<span class="k">$(</span>MY_PREFIX<span class="k">)</span>%<span class="o">=</span>%<span class="k">)</span>
+
+<span class="c"># Define include search path.</span>
+<span class="nv">LOCAL_C_INCLUDES</span>    <span class="o">:=</span> <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/include
+
+<span class="hll"><span class="c">#</span>
+</span><span class="hll"><span class="c"># LOCAL_EXPORT_ variables are appended to the corresponding LOCAL_</span>
+</span><span class="hll"><span class="c"># variable of the calling module</span>
+</span><span class="hll"><span class="c">#</span>
+</span><span class="hll">
+</span><span class="hll"><span class="nv">LOCAL_EXPORT_C_INCLUDES</span> <span class="o">:=</span> <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/include
+</span>
+<span class="cp">include $(BUILD_STATIC_LIBRARY)</span>
+</pre></div>
+</div>
+<p>The above make file looks very much like other makefiles we have written. But notice
+that in addition to defining sources and include paths it also has a <tt class="docutils literal"><span class="pre">LOCAL_EXPORT_C_INCLUDES</span></tt>.
+The value of this variable is appended to the corresponding local variable of
+the calling module, so that the calling module doesn&#8217;t need to know where the
+headers are located, for example.</p>
+<p>Another module (e.g. <tt class="docutils literal"><span class="pre">module2</span></tt>) can import this module by referring
+to <tt class="docutils literal"><span class="pre">module1</span></tt> under the <tt class="docutils literal"><span class="pre">LOCAL_STATIC_LIBRARIES</span></tt>:</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_PATH</span> <span class="o">:=</span> <span class="k">$(</span>call my-dir<span class="k">)</span>
+<span class="cp">include $(CLEAR_VARS)</span>
+
+<span class="c">#</span>
+<span class="c"># LOCAL_ variables with instructions to build module:</span>
+<span class="c">#</span>
+<span class="nv">LOCAL_MODULE</span> <span class="o">:=</span> module2
+
+<span class="c"># Add all .c and .cpp files under ./src</span>
+<span class="nv">MY_PREFIX</span>           <span class="o">:=</span> <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>
+<span class="nv">MY_SOURCES</span>          <span class="o">:=</span> <span class="k">$(</span>wildcard <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/src/*.cpp<span class="k">)</span>
+<span class="nv">MY_SOURCES</span>          <span class="o">+=</span> <span class="k">$(</span>wildcard <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/src/*.c<span class="k">)</span>
+
+<span class="nv">LOCAL_SRC_FILES</span>     <span class="o">+=</span> <span class="k">$(</span>MY_SOURCES:<span class="k">$(</span>MY_PREFIX<span class="k">)</span>%<span class="o">=</span>%<span class="k">)</span>
+
+<span class="c"># Define include search path.</span>
+<span class="nv">LOCAL_C_INCLUDES</span>    <span class="o">:=</span> <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/include
+
+<span class="hll"><span class="nv">LOCAL_STATIC_LIBRARIES</span> <span class="o">:=</span> module1
+</span></pre></div>
+</div>
+<p>By extension, any module that imports <tt class="docutils literal"><span class="pre">module2</span></tt> will need to link
+against <tt class="docutils literal"><span class="pre">module1</span></tt>. We define this under <tt class="docutils literal"><span class="pre">LOCAL_EXPORT_STATIC_LIBRARIES</span></tt>:</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="c">#</span>
+<span class="c"># LOCAL_EXPORT_ variables are appended to the corresponding LOCAL_</span>
+<span class="c"># variable of the calling module</span>
+<span class="c">#</span>
+
+<span class="nv">LOCAL_EXPORT_C_INCLUDES</span> <span class="o">:=</span> <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/include
+<span class="hll"><span class="nv">LOCAL_EXPORT_STATIC_LIBRARIES</span> <span class="o">:=</span> module1
+</span></pre></div>
+</div>
+<p>Finally, we have to import <tt class="docutils literal"><span class="pre">module1</span></tt>:</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="cp">include $(BUILD_STATIC_LIBRARY)</span>
+<span class="hll"><span class="k">$(</span>call import-module, module1<span class="k">)</span>
+</span></pre></div>
+</div>
+<p>It is <strong>very important</strong> that the <tt class="docutils literal"><span class="pre">$(call</span> <span class="pre">import-module,</span> <span class="pre">module)</span></tt>
+statement comes after <tt class="docutils literal"><span class="pre">include</span> <span class="pre">$(BUILD_....)</span></tt> to avoid variable
+conflicts and redefinitions between modules.</p>
+<p>The search path for modules is defined by the <em>NDK_MODULE_PATH</em>
+environment variable. Before you can build a module that has an
+import you must make sure <em>NDK_MODULE_PATH</em> is set correctly. No
+spaces are allowed in <em>NDK_MODULE_PATH</em>, use a <tt class="docutils literal"><span class="pre">:</span></tt> as a
+path separator, and under Windows, use <tt class="docutils literal"><span class="pre">/</span></tt> as the directory separator.
+For the source hierarchy shown earlier, we would define:</p>
+<div class="highlight-python"><pre>NDK_MODULE_PATH=/work/modules</pre>
+</div>
+<p>You can define <em>NDK_MODULE_PATH</em> as an environment variable in your development
+machine. In addition, you can define it as a build variable in Eclipse, if you
+would prefer not to pollute your environment. Go to
+<em>Window &gt; Preferences &gt; C / C++ &gt; Build &gt; Environment</em> and
+<em>Add</em> a new variable.</p>
+<p>Also, you might have noticed that on our modules source trees we don&#8217;t have a <tt class="docutils literal"><span class="pre">jni</span></tt>
+folder. That is correct, and what happens is that <tt class="docutils literal"><span class="pre">$(call</span> <span class="pre">import-module,</span> <span class="pre">module1)</span></tt>
+is just telling the system to read <tt class="docutils literal"><span class="pre">$(NDK_MODULE_PATH)/module1/Android.mk</span></tt>. So
+the <tt class="docutils literal"><span class="pre">module1</span></tt> in the import call defines a relative path with respect
+to a path in <em>NDK_MODULE_PATH</em> . The actual module name is defined by the
+<tt class="docutils literal"><span class="pre">LOCAL_MODULE</span> <span class="pre">:=</span> <span class="pre">module1</span></tt> inside Android.mk. In our case, both module name
+and directory name match, but this is not necessary. An <tt class="docutils literal"><span class="pre">Android.mk</span></tt> file
+could define multiple modules.</p>
+<p>Finally, we will take a look at <tt class="docutils literal"><span class="pre">unit-tests/tests-module1/jni/Android.mk</span></tt>;
+we assume this is a modified version of the UnitTestDriver presented earlier:</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_PATH</span> <span class="o">:=</span> <span class="k">$(</span>call my-dir<span class="k">)</span>
+<span class="cp">include $(CLEAR_VARS)</span>
+
+<span class="hll"><span class="nv">LOCAL_MODULE</span>    <span class="o">:=</span> tests-module1
+</span>
+<span class="c"># Driver source files</span>
+<span class="nv">LOCAL_SRC_FILES</span> <span class="o">:=</span> unittestdriver.cpp com_nvidia_unittest_UnitTestDriver.cpp
+
+<span class="c"># Add your test files here</span>
+<span class="hll"><span class="nv">LOCAL_SRC_FILES</span> <span class="o">+=</span> tests-module1.cpp
+</span>
+<span class="c"># GTest required library</span>
+<span class="nv">LOCAL_STATIC_LIBRARIES</span> <span class="o">:=</span> gtest
+
+<span class="c"># Add your additional libraries here</span>
+<span class="hll"><span class="nv">LOCAL_STATIC_LIBRARIES</span> <span class="o">+=</span> module1
+</span>
+<span class="c"># If you add shared libraries, don&#39;t forget to</span>
+<span class="c"># add a System.loadLibrary() call in UnitTestDriver.java</span>
+<span class="nv">LOCAL_SHARED_LIBRARIES</span> <span class="o">+=</span>
+
+<span class="nv">LOCAL_LDLIBS</span> <span class="o">:=</span> -landroid
+
+<span class="cp">include $(BUILD_SHARED_LIBRARY)</span>
+
+<span class="k">$(</span>call import-add-path, <span class="k">$(</span>LOCAL_PATH<span class="k">))</span>
+<span class="k">$(</span>call import-module, gtest-1.6.0<span class="k">)</span>
+<span class="hll"><span class="k">$(</span>call import-module, module1<span class="k">)</span>
+</span></pre></div>
+</div>
+<p>The shared library that is built using imports <tt class="docutils literal"><span class="pre">gtest-1.6.0</span></tt> and <tt class="docutils literal"><span class="pre">module1</span></tt>.
+We could even go further and move <tt class="docutils literal"><span class="pre">gtest-1.6.0</span></tt> out of the <tt class="docutils literal"><span class="pre">UnitTestDriver/jni</span></tt> folder
+and into a separate <tt class="docutils literal"><span class="pre">3rdparty-modules</span></tt> folder and have <tt class="docutils literal"><span class="pre">3rdparty-modules</span></tt>
+added to our <em>NDK_MODULE_PATH</em>, try it out!</p>
+<div class="admonition-see-also admonition">
+<p class="first admonition-title">See also</p>
+<p class="last">For more details, see <tt class="docutils literal"><span class="pre">android_ndk_r8c/docs/IMPORT_MODULE.html</span></tt>. Also
+take a look at <tt class="docutils literal"><span class="pre">android_ndk_r8c/docs/PREBUILTS.html</span></tt>, which shows
+how to create modules out of pre-built libraries. You can import
+a module that refers to a pre-built library, as we have done with
+<tt class="docutils literal"><span class="pre">gtest</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="unit-testing-from-the-modules-of-existing-codes">
+<h2>Unit testing from the modules of existing codes<a class="headerlink" href="#unit-testing-from-the-modules-of-existing-codes" title="Permalink to this headline">¶</a></h2>
+<p>In the above sections, we have shown how to perform unit testing, and to construct an organization of modules. Now we show how to test the modulized codes with our Gtest driver projects. First, let&#8217;s look at the organization of <tt class="docutils literal"><span class="pre">tutorials/UnitTestDriver_module</span></tt> folder.</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="hll"><span class="o">/</span><span class="n">tutorials</span><span class="o">/</span><span class="n">UnitTestDriver_module</span><span class="o">/</span>
+</span>                                <span class="o">/</span><span class="n">UnitTestDriver</span><span class="o">/</span>
+                                              <span class="n">jni</span><span class="o">/</span>
+                                                 <span class="n">Android</span><span class="p">.</span><span class="n">mk</span>
+                                <span class="o">/</span><span class="n">modules</span><span class="o">/</span>
+                                       <span class="n">OpenCVSupport</span><span class="o">/</span>
+                                                   <span class="n">include</span><span class="o">/</span>
+                                                   <span class="n">src</span><span class="o">/</span>
+                                                   <span class="n">Android</span><span class="p">.</span><span class="n">mk</span>
+                                       <span class="n">OpenCVSupport2</span><span class="o">/</span>
+                                                   <span class="n">include</span><span class="o">/</span>
+                                                   <span class="n">src</span><span class="o">/</span>
+                                                   <span class="n">Android</span><span class="p">.</span><span class="n">mk</span>
+</pre></div>
+</div>
+<p>There are two folders, <tt class="docutils literal"><span class="pre">UnitTestDriver</span></tt> and <tt class="docutils literal"><span class="pre">modules</span></tt> inside the main folder. The project <tt class="docutils literal"><span class="pre">UniTestDriver</span></tt> is the same driver project used in previous sections. In the <tt class="docutils literal"><span class="pre">module</span></tt> folder, there are two modules called <tt class="docutils literal"><span class="pre">OpenCVSupport</span></tt> and <tt class="docutils literal"><span class="pre">OpenCVSupport2</span></tt>, and we assume that these two modules are existing codes. In this tutorial, the main driver project calls each module, which is built as a seperate static library and runs Gtest for the functions in each module.
+The modules contain several functions using OpenCV, and we will test the modules by calling functions that detect FAST features in the image <a class="reference download internal" href="_downloads/lena.jpg"><tt class="xref download docutils literal"><span class="pre">lena.jpg</span></tt></a> (which is already used in the OpenCV tutorial) with fixed parameters. If you did not follow the OpenCV tutorial section and did not upload the image onto your Cardhu, please upload it now to <tt class="docutils literal"><span class="pre">/storage/sdcard0/DCIM</span></tt>.</p>
+<p>However, each module also includes an external library such as OpenCV, therefore, we have to set the project so that (1) the driver can acceess the functions in each module, (2) the driver can also use libarary functions that are included in the module (OpenCV), and (3) the build settings in <tt class="docutils literal"><span class="pre">Android.mk</span></tt> for each module should avoid loading the same libraries (i.e., OpenCV in this example).</p>
+<p>Let&#8217;s first import a unit testing driver projects from the folder in <tt class="docutils literal"><span class="pre">tutorials/UnitTestDriver_module/UnitTestDriver</span></tt> (if you need help, see <a class="reference internal" href="opengles.html#import-existing-project-opengles"><em>importing a project into Eclipse</em></a>).
+After importing the UnitTestDriver, open the <tt class="docutils literal"><span class="pre">Android.mk</span></tt> file in the <tt class="docutils literal"><span class="pre">/jni</span></tt> folder. Then, let&#8217;s specify the static libraries for unit testing. See the following example in <tt class="docutils literal"><span class="pre">Android.mk</span></tt>.</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_PATH</span> <span class="o">:=</span> <span class="k">$(</span>call my-dir<span class="k">)</span>
+
+<span class="cp">include $(CLEAR_VARS)</span>
+
+<span class="nv">LOCAL_MODULE</span>    <span class="o">:=</span> unittestdriver
+
+<span class="c"># Enable &lt;memory&gt;</span>
+<span class="nv">LOCAL_CFLAGS</span> <span class="o">+=</span> -std<span class="o">=</span>gnu++0x
+
+<span class="cp">ifeq (1, $(NDK_DEBUG))</span>
+<span class="nv">LOCAL_CFLAGS</span> <span class="o">+=</span> -DWAIT_FOR_DEBUGGER
+<span class="cp">endif</span>
+<span class="c"># Driver source files</span>
+<span class="nv">LOCAL_SRC_FILES</span> <span class="o">:=</span> unittestdriver.cpp com_nvidia_unittest_UnitTestDriver.cpp
+
+<span class="c"># Add your test files here</span>
+<span class="hll"><span class="nv">LOCAL_SRC_FILES</span> <span class="o">+=</span> unittest.cpp opencv_test.cpp
+</span>
+<span class="c"># GTest required library</span>
+<span class="nv">LOCAL_STATIC_LIBRARIES</span> <span class="o">+=</span> gtest
+
+<span class="c"># Add your additional libraries here</span>
+<span class="hll"><span class="nv">LOCAL_STATIC_LIBRARIES</span> <span class="o">+=</span> OpenCVSupportLib OpenCVSupportLib2
+</span>
+<span class="c"># If you add shared libraries, don&#39;t forget to</span>
+<span class="c"># add a System.loadLibrary() call in UnitTestDriver.java</span>
+<span class="nv">LOCAL_SHARED_LIBRARIES</span> <span class="o">+=</span>
+
+<span class="nv">LOCAL_LDLIBS</span> <span class="o">:=</span> ./obj/local/armeabi-v7a/libgnustl_static.a -landroid
+
+<span class="cp">include $(BUILD_SHARED_LIBRARY)</span>
+
+<span class="k">$(</span>call import-add-path, <span class="k">$(</span>LOCAL_PATH<span class="k">))</span>
+<span class="k">$(</span>call import-module, gtest-1.6.0<span class="k">)</span>
+<span class="c"># add here</span>
+<span class="hll"><span class="k">$(</span>call import-module, OpenCVSupport<span class="k">)</span>
+</span><span class="hll"><span class="k">$(</span>call import-module, OpenCVSupport2<span class="k">)</span>
+</span></pre></div>
+</div>
+<p>In the above example, <tt class="docutils literal"><span class="pre">LOCAL_SRC_FILES</span></tt> specifies a source file where the actual testing codes are located. Here <tt class="docutils literal"><span class="pre">opencv_test.cpp</span></tt> is supposed to call functions in module <tt class="docutils literal"><span class="pre">OpenCVSupport</span></tt> and <tt class="docutils literal"><span class="pre">OpenCVSupport2</span></tt>. The names of the libraries for both modules are then specified in <tt class="docutils literal"><span class="pre">LOCAL_STATAIC_LIBRARIES</span></tt>. At the end of the above code, we have also specified that we import these modules for testing.</p>
+<p>Because all sources insisde UnitTestDriver do not recognize the location of modules at this moment, we have to specify the location of them. In <em>Project &gt; Properties &gt; C/C++ Build &gt; Environment</em>, Click <em>Add</em> button, and define <tt class="docutils literal"><span class="pre">NDK_MODULE_PATH</span></tt> with the absolute paths for the <tt class="docutils literal"><span class="pre">module</span></tt> directory.</p>
+<p>Now open the <tt class="docutils literal"><span class="pre">opencv_test.cpp</span></tt> which was added to the <tt class="docutils literal"><span class="pre">/jni</span></tt> folder. The following codes are added in the file.</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="cp">#include&lt;gtest/gtest.h&gt;</span>
+<span class="hll"><span class="cp">#include&lt;OpenCVSupport/OpenCV_native.h&gt;</span>
+</span><span class="hll"><span class="cp">#include&lt;OpenCVSupport2/OpenCV_native2.h&gt;</span>
+</span>
+
+<span class="hll"><span class="n">TEST</span><span class="p">(</span><span class="n">OpenCVTest</span><span class="p">,</span> <span class="n">FeatureDetection</span><span class="p">)</span>
+</span><span class="p">{</span>
+    <span class="n">COpenCVSample</span> <span class="n">pCv</span><span class="p">;</span>
+<span class="hll">    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">pCv</span><span class="p">.</span><span class="n">FeatureDetecTest</span><span class="p">();</span>
+</span><span class="hll">    <span class="n">EXPECT_EQ</span><span class="p">(</span> <span class="mi">141</span><span class="p">,</span> <span class="n">i</span> <span class="p">)</span> <span class="o">&lt;&lt;</span><span class="s">&quot;number of features for this test1 = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">;</span>
+</span>
+<span class="p">}</span>
+
+<span class="hll"><span class="n">TEST</span><span class="p">(</span><span class="n">OpenCVTest</span><span class="p">,</span> <span class="n">FeatureDetection2</span><span class="p">)</span>
+</span><span class="p">{</span>
+    <span class="n">COpenCVSample2</span> <span class="n">pCv</span><span class="p">;</span>
+<span class="hll">    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">pCv</span><span class="p">.</span><span class="n">FeatureDetecTest</span><span class="p">();</span>
+</span><span class="hll">    <span class="n">EXPECT_EQ</span><span class="p">(</span> <span class="mi">141</span><span class="p">,</span> <span class="n">i</span> <span class="p">)</span> <span class="o">&lt;&lt;</span><span class="s">&quot;number of features for this test2 = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">;</span>
+</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the above code, we first include header files for our existing codes (<tt class="docutils literal"><span class="pre">OpenCV_native.h</span></tt> and <tt class="docutils literal"><span class="pre">OpenCV_native2.h</span></tt>) to test.
+Then two Gtest functions <tt class="docutils literal"><span class="pre">TEST(OpenCVTest,</span> <span class="pre">FeatureDetection)</span></tt> and <tt class="docutils literal"><span class="pre">TEST(OpenCVTest2,</span> <span class="pre">FeatureDetection2)</span></tt> are calling <tt class="docutils literal"><span class="pre">FeatureDetecTest()</span></tt> functions from both modules (for simplicity, we added the same function to both modules).
+Now the assertion function <tt class="docutils literal"><span class="pre">EXPECT_EQ(141,i)</span></tt> will print out &#8220;success&#8221; if the number of detected features in the image is equal to 141.</p>
+<p>Now the unit test is ready to test the modules as long as it can access each library for the modules. Let&#8217;s look at the settings for both modules now.</p>
+<p>The following code shows the settings for <tt class="docutils literal"><span class="pre">Android.mk</span></tt> in the module <tt class="docutils literal"><span class="pre">OpenCVSupport</span></tt> (which is almost identical to <tt class="docutils literal"><span class="pre">OpenCVSupport2</span></tt>).</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_PATH</span> <span class="o">:=</span> <span class="k">$(</span>call my-dir<span class="k">)</span>
+
+<span class="cp">include $(CLEAR_VARS)</span>
+
+<span class="hll"><span class="cp">ifeq ($(OPENCV_MODULES),)</span>
+</span><span class="hll">
+</span><span class="hll"><span class="nv">OPENCV_CAMERA_MODULES</span>  <span class="o">:=</span> on
+</span><span class="hll"><span class="nv">OPENCV_INSTALL_MODULES</span> <span class="o">:=</span> on
+</span><span class="hll"><span class="nv">OPENCV_LIB_TYPE</span>        <span class="o">:=</span> STATIC
+</span><span class="hll"><span class="cp">include $(NVPACK_PATH)/OpenCV-2.4.2-Tegra-sdk/sdk/native/jni/OpenCV-tegra3.mk</span>
+</span><span class="hll"><span class="nv">OPENCV_LOCAL_STATIC_LIBRARIES</span> <span class="o">:=</span> <span class="k">$(</span>LOCAL_STATIC_LIBRARIES<span class="k">)</span>
+</span><span class="hll"><span class="nv">OPENCV_LOCAL_LD_LIBS</span> <span class="o">:=</span> <span class="k">$(</span>LOCAL_LD_LIBS<span class="k">)</span>
+</span><span class="hll">
+</span><span class="hll"><span class="cp">endif</span>
+</span>
+<span class="hll"><span class="nv">LOCAL_MODULE</span> <span class="o">:=</span> OpenCVSupportLib
+</span>
+<span class="nv">MY_PREFIX</span>          <span class="o">:=</span> <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>
+<span class="nv">MY_SOURCES</span>         <span class="o">:=</span> <span class="k">$(</span>wildcard <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/src/*.cpp<span class="k">)</span>
+<span class="nv">MY_SOURCES</span>         <span class="o">+=</span> <span class="k">$(</span>wildcard <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/src/*.c<span class="k">)</span>
+<span class="nv">LOCAL_SRC_FILES</span>    <span class="o">+=</span> <span class="k">$(</span>MY_SOURCES:<span class="k">$(</span>MY_PREFIX<span class="k">)</span>%<span class="o">=</span>%<span class="k">)</span>
+<span class="nv">LOCAL_LDLIBS</span>           <span class="o">+=</span> -lc -lm -llog -landroid -ldl -lGLESv2 -lEGL
+<span class="hll"><span class="nv">LOCAL_C_INCLUDES</span>       <span class="o">:=</span> <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/include <span class="k">$(</span>OPENCV_LOCAL_C_INCLUDES<span class="k">)</span>
+</span>
+<span class="c"># for the module test</span>
+<span class="hll"><span class="nv">LOCAL_EXPORT_C_INCLUDES</span> <span class="o">:=</span> <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/include <span class="k">$(</span>OPENCV_LOCAL_C_INCLUDES<span class="k">)</span>
+</span><span class="hll"><span class="nv">LOCAL_EXPORT_STATIC_LIBRARIES</span> <span class="o">:=</span> <span class="k">$(</span>OPENCV_LOCAL_STATIC_LIBRARIES<span class="k">)</span>
+</span><span class="hll"><span class="nv">LOCAL_EXPORT_CFLAGS</span>    <span class="o">+=</span> -std<span class="o">=</span>gnu++0x <span class="k">$(</span>OPENCV_LOCAL_CFLAGS<span class="k">)</span>
+</span><span class="hll"><span class="nv">LOCAL_EXPORT_LDLIBS</span>    <span class="o">+=</span> <span class="k">$(</span>OPENCV_LOCAL_LD_LIBS<span class="k">)</span> -lc -lm -llog -landroid -ldl -lGLESv2 -lEGL -lz
+</span>
+<span class="cp">include $(BUILD_STATIC_LIBRARY)</span>
+</pre></div>
+</div>
+<p>In the above settings, we first set the OpenCV library at the begining, to avoid the multiple load of same library (in case when a main application loads several modules that are using OpenCV seperately) by adding the condition, <tt class="docutils literal"><span class="pre">ifeq($(OPENCV_MODULES),)</span></tt>. If the OpenCV libarary is not yet loaded, we set some flags used for OpenCV.mk, and specify the paths for the location of OpenCV library.
+Then, we specify the name of this module (<tt class="docutils literal"><span class="pre">LOCAL_MODULE</span></tt>), and also set the paths for sources and header files.</p>
+<p>Finally, we have to specify the exporting set up because this module is built as a static library, and will be used in other applications outside this module. We first specify the paths of the headers in this module, then we also need to <em>pass through</em> the OpenCV library (<tt class="docutils literal"><span class="pre">LOCAL_EXPORT_STATIC_LIBRARIES</span> <span class="pre">:=</span> <span class="pre">$(OPENCV_LOCAL_STATIC_LIBRARIES)</span></tt>) and its supporting libraries to the other applications.</p>
+<p>Now we are done with the settings for one module. We can also apply the same set up to <tt class="docutils literal"><span class="pre">OpenCVSupportLib2</span></tt>.</p>
+<p>Then, let&#8217;s build and run the <tt class="docutils literal"><span class="pre">UnitTestDriver</span></tt> application. After running the application, you will see the <em>SUCESS</em> message from both tests.</p>
+<a class="reference internal image-reference" href="_images/unittest-opencv.png"><img alt="_images/unittest-opencv.png" src="_images/unittest-opencv.png" style="width: 499.0px; height: 217.0px;" /></a>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="webinars.html" title="Developer Webinars"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="fcamerapro.html" title="The FCameraPro application"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, NVIDIA Research - Mobile Visual Computing.
+      Last updated on Jun 13, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

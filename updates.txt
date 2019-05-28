@@ -1,3 +1,3 @@
-Version 2019.05.07 is available now :) To take advantage of all the latest
+Version 2019.05.28 is available now :) To take advantage of all the latest
 features, improvments and bug fixes, we strongly recommend that you update
 this script to the latest version.

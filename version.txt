@@ -2,6 +2,6 @@
 由于目前 MIUICAMERA 主分支代码已经支持 Gradle 编译，MIUICAMERA BUILDER 现已经停止维护
 
 对于其他不支持 Gradle 编译的分支，建议使用 https://github.com/tonykwok/pymcb 进行编译
-- PYMCB 支持增量编译，编译速度比 MIUICAMERA BUILDER 更快
-- PYMCB 支持 Proguard，方便本地调试并修正 proguard.flag 文件中错误
+- PYMCB 支持增量编译，编译速度比 Bash 版本的 MIUICAMERA BUILDER 更快
+- PYMCB 支持 Proguard，方便本地调试并修正 proguard.flags 文件中错误
 - PYMCB 原生支持 macOS，感谢江禄同学的测试

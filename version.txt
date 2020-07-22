@@ -5,3 +5,5 @@
 - PYMCB 支持增量编译，编译速度比 Bash 版本的 MIUICAMERA BUILDER 更快
 - PYMCB 支持 Proguard，方便本地调试并修正 proguard.flags 文件中错误
 - PYMCB 原生支持 macOS，感谢江禄同学的测试
+
+7b:6d:c7:07:9c:34:73:9c:e8:11:59:71:9f:b5:eb:61:d2:a0:32:25

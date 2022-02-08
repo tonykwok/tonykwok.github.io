@@ -1,0 +1,1436 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction to Android development &mdash; FCam for Tegra 1.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FCam for Tegra 1.3 documentation" href="index.html" />
+    <link rel="next" title="OpenGL ES 2.0" href="opengles.html" />
+    <link rel="prev" title="Development tools" href="devtools.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: black; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/nvidia_logo.png" border="0" alt="NVIDIA logo"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="opengles.html" title="OpenGL ES 2.0"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="devtools.html" title="Development tools"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction to Android development</a><ul>
+<li><a class="reference internal" href="#c-project-on-your-development-machine">C++ project on your development machine</a></li>
+<li><a class="reference internal" href="#create-your-first-android-java-application">Create your first Android Java Application</a></li>
+<li><a class="reference internal" href="#debugging-with-the-debugger">Debugging with the debugger</a></li>
+<li><a class="reference internal" href="#printing-debug-messages-to-the-android-log">Printing debug messages to the Android log</a></li>
+<li><a class="reference internal" href="#writing-debug-messages-to-a-file">Writing debug messages to a file</a></li>
+<li><a class="reference internal" href="#adding-native-android-code">Adding Native Android code</a></li>
+<li><a class="reference internal" href="#debugging-your-native-application">Debugging your native application</a></li>
+<li><a class="reference internal" href="#printing-to-android-log-from-native-code">Printing to Android log from native code</a></li>
+<li><a class="reference internal" href="#logging-to-a-file-from-native-code">Logging to a file from native code</a></li>
+<li><a class="reference internal" href="#calling-java-functions-from-native-code">Calling Java functions from native code</a></li>
+<li><a class="reference internal" href="#creating-a-nativeactivity">Creating a NativeActivity</a></li>
+<li><a class="reference internal" href="#logging-to-a-file-within-a-nativeactivity">Logging to a file within a NativeActivity</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="devtools.html"
+                        title="previous chapter">Development tools</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="opengles.html"
+                        title="next chapter">OpenGL ES 2.0</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/devprocess.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction-to-android-development">
+<h1>Introduction to Android development<a class="headerlink" href="#introduction-to-android-development" title="Permalink to this headline">¶</a></h1>
+<p>We now describe the basics of developing
+applications with Eclipse. We begin with a short C++ example
+that you can build and run in your development machine; then
+we will port the example to run on the Android device, first
+using Java, then using Java + native code (C/C++), and finally using
+only native code.</p>
+<p>After you complete this topic you should be able to:</p>
+<ul class="simple">
+<li>Create Eclipse projects for host and Android devices.</li>
+<li>Run and debug C++ projects on your host machine.</li>
+<li>Run and debug Android Java Activities.</li>
+<li>Run and debug Android Java Activities that call native code.</li>
+<li>Run and debug Android Native Activities.</li>
+</ul>
+<div class="section" id="c-project-on-your-development-machine">
+<h2>C++ project on your development machine<a class="headerlink" href="#c-project-on-your-development-machine" title="Permalink to this headline">¶</a></h2>
+<p>We will now create our first C++ example program using Eclipse. The
+goal of this lesson is to get you familiarized with the Eclipse
+environment, so we will focus on a simple program that you
+will run on your desktop computer.</p>
+<ol class="arabic">
+<li><p class="first">To develop C/C++ projects, you must first open the C/C++ perspective.
+The <strong>Open Perspective</strong> toolbar icon is located on the top-right
+corner of your Eclipse IDE. Each perspective in Eclipse provides a
+different set of docking arrangements for viewing the content and
+semantics of your files and projects. The default is the Java perspective;
+there is also a Debug perspective, and a C++ perspective. Click on
+the <strong>Open Perspective</strong> icon, select <em>Other</em> and pick <em>C/C++</em>.</p>
+<a class="reference internal image-reference" href="_images/eclipse_change_perspective.png"><img alt="_images/eclipse_change_perspective.png" src="_images/eclipse_change_perspective.png" style="width: 263.0px; height: 227.0px;" /></a>
+<a class="reference internal image-reference" href="_images/eclipse_open_perspective.png"><img alt="_images/eclipse_open_perspective.png" src="_images/eclipse_open_perspective.png" style="width: 327.0px; height: 211.0px;" /></a>
+</li>
+<li><p class="first">Once on the C++ perspective, we will create the Fibonacci project.
+Select <em>File &gt; New &gt; C++ project</em> . Enter the project name, Fibonacci,
+and select <strong>Empty Project</strong>.</p>
+<a class="reference internal image-reference" href="_images/fibo_create_project.png"><img alt="_images/fibo_create_project.png" src="_images/fibo_create_project.png" style="width: 605.0px; height: 419.0px;" /></a>
+<p>The toolchain option allows you to select which compiler you will use
+for this project. This will be platform specific: on Linux select <em>Linux GCC</em>;
+on Windows either <em>MinGW GCC</em> or <em>Cygwin GCC</em>; on Mac select <em>MacOSX GCC</em>.
+Finally, click on <strong>Finish</strong>.</p>
+</li>
+<li><p class="first">Next, select the newly created Fibonacci project, and right-click
+to select <em>New &gt; Header File</em>. Enter Fibonacci.h under <em>Header File:</em>
+and hit <strong>Finish</strong>.</p>
+<a class="reference internal image-reference" href="_images/fibo_new_headerfile.png"><img alt="_images/fibo_new_headerfile.png" src="_images/fibo_new_headerfile.png" style="width: 604.0px; height: 243.0px;" /></a>
+</li>
+<li><p class="first">Add the declaration for our Fibonacci function, as shown
+below. Enter the text and save the file.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#ifndef FIBONACCI_H_</span>
+<span class="cp">#define FIBONACCI_H_</span>
+
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="nf">Fibonacci</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">n</span> <span class="p">);</span>
+
+<span class="cp">#endif </span><span class="cm">/* FIBONACCI_H_ */</span><span class="cp"></span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">It is time to create our main function. Right-click on the project
+name and select <em>New &gt; Source File</em> . Enter <tt class="docutils literal"><span class="pre">main.cpp</span></tt> in the <em>Source File:</em>
+entry.</p>
+<a class="reference internal image-reference" href="_images/fibo_new_sourcefile.png"><img alt="_images/fibo_new_sourcefile.png" src="_images/fibo_new_sourcefile.png" style="width: 608.0px; height: 237.0px;" /></a>
+</li>
+<li><p class="first">Our program entry point will call the Fibonacci function and print the
+result out to the console.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &quot;Fibonacci.h&quot;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[]</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Fibonacci(10) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="mi">10</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Now we will write the Fibonacci function. Create a new source file, name it
+Fibonacci.cpp and enter the text shown below.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &quot;Fibonacci.h&quot;</span>
+
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="nf">Fibonacci</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">n</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">)</span> <span class="o">+</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">The program is done, let&#8217;s build the executable. Right-click the project and select <em>Build Project</em>.
+In the <em>Console</em> tab you should see the build progressing and succeeding.</p>
+<a class="reference internal image-reference" href="_images/fibo_build_console.png"><img alt="_images/fibo_build_console.png" src="_images/fibo_build_console.png" style="width: 821.0px; height: 258.0px;" /></a>
+</li>
+<li><p class="first">Run the project. On the toolbar you will find two buttons, one for debugging and one for
+running the program.</p>
+<a class="reference internal image-reference" href="_images/eclipse_run_debug.png"><img alt="_images/eclipse_run_debug.png" src="_images/eclipse_run_debug.png" style="width: 82.0px; height: 52.0px;" /></a>
+<p>Hit the run button (with the white triangle) and watch the <em>Console</em> tab in Eclipse, which will show
+the results of the compilation and then the output of the execution of the
+program.</p>
+<a class="reference internal image-reference" href="_images/fibo_console.png"><img alt="_images/fibo_console.png" src="_images/fibo_console.png" style="width: 281.0px; height: 129.0px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you get an error message saying the binary couldn&#8217;t be found, go back to
+the previous step and make sure the project is built correctly.</p>
+</div>
+</li>
+<li><p class="first">After the program prints out the result of the Fibonacci call, it will exit.</p>
+</li>
+</ol>
+<p>We will now debug the program to trace its execution.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Debugging requires gdb to be in your PATH. On Windows, you will be either using
+Cygwin gdb or MinGW gdb. If you are using Cygwin as installed by TADP, gdb will be missing. Run
+<tt class="docutils literal"><span class="pre">setup.exe</span></tt> under NVPACK/cygwin, select &#8220;install from Internet&#8221;  and install the gdb package
+(under Devel section).</p>
+</div>
+<ol class="arabic">
+<li><p class="first">Open <tt class="docutils literal"><span class="pre">main.cpp</span></tt> and insert a breakpoint by double-clicking on the left margin as shown below. (Alternatively, right-click and select <em>Toggle Breakpoint</em>.)
+The blue dot is an indication that the breakpoint has been set.</p>
+<a class="reference internal image-reference" href="_images/fibo_breakpoint.png"><img alt="_images/fibo_breakpoint.png" src="_images/fibo_breakpoint.png" style="width: 575.0px; height: 100.0px;" /></a>
+</li>
+<li><p class="first">Now hit the debug button on the toolbar. When the program starts you may be
+asked if you want to open the Debug Perspective, select Yes.</p>
+<a class="reference internal image-reference" href="_images/eclipse_debug_perspective.png"><img alt="_images/eclipse_debug_perspective.png" src="_images/eclipse_debug_perspective.png" style="width: 603.0px; height: 278.0px;" /></a>
+</li>
+<li><p class="first">Once in the Debug perspective the program execution should stop at the
+breakpoint you have inserted.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If Eclipse complains that it can not find a source file, click on
+the locate <em>Locate File...</em> button and browse to the location of the file.</p>
+<blockquote class="last">
+<div><a class="reference internal image-reference" href="_images/fibo_debug_srcnotfound.png"><img alt="_images/fibo_debug_srcnotfound.png" src="_images/fibo_debug_srcnotfound.png" style="width: 890.0px; height: 218.0px;" /></a>
+</div></blockquote>
+</div>
+</li>
+<li><p class="first">The Debug toolbar allows you to select what to do next &#8212; continue running
+the program, step into, or step over the function.</p>
+<a class="reference internal image-reference" href="_images/eclipse_debug_toolbar.png"><img alt="_images/eclipse_debug_toolbar.png" src="_images/eclipse_debug_toolbar.png" style="width: 305.0px; height: 38.0px;" /></a>
+</li>
+<li><p class="first">We will step into the Fibonacci function to see it working. Select <strong>Step into</strong>
+or equivalently press <strong>F5</strong>. The execution will move into the Fibonacci
+function. The Debug Perspective shows a great deal of information: the calling stack,
+the current local variables, and the source code. In addition you can add watches, inspect
+memory, and even disassemble the code.</p>
+<a class="reference internal image-reference" href="_images/fibo_debug_view.png"><img alt="_images/fibo_debug_view.png" src="_images/fibo_debug_view.png" style="width: 827.25px; height: 378.75px;" /></a>
+</li>
+<li><p class="first">Instead of computing Fibonacci of 10, let&#8217;s compute Fibonacci of 15. In the local
+variables view, find the variable <strong>n</strong> and change its value from 10 to 15. After you
+are done, hit the <strong>Resume</strong> (F8) button.</p>
+</li>
+<li><p class="first">You can even make breakpoints conditional:
+add a breakpoint to the Fibonacci function, right-click it and select <em>Breakpoint Properties... &gt; Common</em>,
+set <em>Condition:</em> to <em>n==5</em>, and resume debugger (<strong>F8</strong>); now the debugger should stop
+when the function has been called with <em>n</em> equals 5.</p>
+</li>
+</ol>
+<p>In the previous steps, we left many details uncovered. Eclipse
+has an internal Makefile builder that creates the Makefile based on the sources that you
+add to the project. That is why we were able to build the program succesfully. In
+addition, Eclipse has different build configurations for a project. In this example, both
+Debug and Release configurations were created. The Debug configuration builds the
+program for debugging, while the Release turns on compiler optimizations for
+the final program. If you want to change the build properties, right-click on the
+project and press Alt + Enter (Linux) or Cmd + I (Mac) to bring up the properties sheet. Under <em>C/C++ Build</em> you
+will find the build options.</p>
+</div>
+<div class="section" id="create-your-first-android-java-application">
+<h2>Create your first Android Java Application<a class="headerlink" href="#create-your-first-android-java-application" title="Permalink to this headline">¶</a></h2>
+<p>We will now create a similar Android project to run on our device.</p>
+<ol class="arabic">
+<li><p class="first">Open the Java perspective. An Android project is always a Java
+project with the possible addition of native code.
+(Later we show projects that seem to be native-only, but in reality even they use
+Android Java runtime services.)</p>
+</li>
+<li><p class="first">Select <em>File &gt; New &gt; Android Application Project</em>.
+In <em>Application Name:</em>
+type <em>Fibonacci</em>. In <em>Project Name</em>, type <em>AndroidFibonacci</em>.
+This is the name of the project in Eclipse. We already have a Fibonacci project so we
+must choose a different name. Set the remaining properties as shown and
+click <strong>Next</strong>.</p>
+<a class="reference internal image-reference" href="_images/eclipse_new_android_app_page1.png"><img alt="_images/eclipse_new_android_app_page1.png" src="_images/eclipse_new_android_app_page1.png" style="width: 620.0px; height: 455.0px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Don&#8217;t use spaces in the project name, otherwise native debugging will fail
+to find the symbols.</p>
+</div>
+</li>
+<li><p class="first">An <em>Activity</em> is Android&#8217;s basic unit of user interaction. We will
+manually create an Activity, so uncheck the <em>Create Activity</em> box
+and click <strong>Finish</strong>.</p>
+<a class="reference internal image-reference" href="_images/eclipse_new_android_app_page2.png"><img alt="_images/eclipse_new_android_app_page2.png" src="_images/eclipse_new_android_app_page2.png" style="width: 617.0px; height: 388.0px;" /></a>
+</li>
+<li><p class="first">You now have a basic Android project skeleton.</p>
+<a class="reference internal image-reference" href="_images/android_fibo_project.png"><img alt="_images/android_fibo_project.png" src="_images/android_fibo_project.png" style="width: 309.0px; height: 328.0px;" /></a>
+</li>
+<li><p class="first">We will now create a new Java class. Right-click
+on <tt class="docutils literal"><span class="pre">src</span></tt> and select <em>New &gt; Class</em>. Fill out the class
+properties as shown &#8212; we want to create a class that inherits
+from <strong>android.app.Activity</strong> within the <em>package com.nvidia.example.fibonacci</em>.</p>
+<a class="reference internal image-reference" href="_images/android_fibo_new_class.png"><img alt="_images/android_fibo_new_class.png" src="_images/android_fibo_new_class.png" style="width: 651.0px; height: 622.0px;" /></a>
+</li>
+<li><p class="first">Open the <tt class="file docutils literal"><span class="pre">FibonacciActivity.java</span></tt> and add a Fibonacci function
+to the class skeleton. Java doesn&#8217;t have unsigned types, so we will
+use integers instead and handle negative numbers correctly.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">nvidia</span><span class="o">.</span><span class="na">example</span><span class="o">.</span><span class="na">fibonacci</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">android.app.Activity</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FibonacciActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
+
+    <span class="kt">int</span> <span class="nf">Fibonacci</span><span class="o">(</span> <span class="kt">int</span> <span class="n">n</span> <span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">if</span><span class="o">(</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="mi">1</span><span class="o">;</span> <span class="o">}</span>
+        <span class="k">if</span><span class="o">(</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="mi">0</span><span class="o">;</span> <span class="o">}</span>
+
+        <span class="k">return</span> <span class="nf">Fibonacci</span><span class="o">(</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">)</span> <span class="o">+</span> <span class="n">Fibonacci</span> <span class="o">(</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">);</span>
+    <span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">We now have to create a simple UI to display our output. For this, we create
+a <a class="reference external" href="http://developer.android.com/reference/android/widget/TextView.html">TextView</a>
+widget inside the <a class="reference external" href="http://developer.android.com/reference/android/app/Activity.html#onCreate(android.os.Bundle)">onCreate</a>
+method. Add following code for the &#8216;&#8217;onCreate&#8217;&#8217; method to the &#8216;&#8217;FibonacciActivity&#8217;&#8217; class:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span> <span class="n">Bundle</span> <span class="n">savedInstance</span> <span class="o">)</span> <span class="o">{</span>
+
+    <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstance</span><span class="o">);</span>
+
+    <span class="c1">// Create the TextView</span>
+    <span class="n">TextView</span> <span class="n">tv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TextView</span><span class="o">(</span> <span class="k">this</span> <span class="o">);</span>
+    <span class="n">tv</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span> <span class="s">&quot;Fibonacci(10) = &quot;</span> <span class="o">+</span> <span class="n">Fibonacci</span><span class="o">(</span> <span class="mi">10</span> <span class="o">)</span> <span class="o">);</span>
+    <span class="n">setContentView</span><span class="o">(</span> <span class="n">tv</span> <span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>After you copy and paste the code shown above, Eclipse will underline <tt class="docutils literal"><span class="pre">Bundle</span></tt> and <tt class="docutils literal"><span class="pre">TextView</span></tt>
+and note them as undefined classes. These are Android framework classes that require an <tt class="docutils literal"><span class="pre">import</span></tt>
+declaration. To add the imports for these, hover the cursor over the underlined text, and select the
+import option from the possible fixes or press the shortcut combination Ctrl-Shift-M (Linux, Windows) or
+CMD-SHFT-M (on Mac). You can of course just type the imports in, too.</p>
+<div class="last highlight-java"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">android.app.Activity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Bundle</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.TextView</span><span class="o">;</span>
+</pre></div>
+</div>
+</div>
+</li>
+<li><p class="first">All our code has been written. Now we need to specify in the manifest
+which activity to launch for this application. There can be more than one
+activity within an application, and one of those can be marked as the main entry point.
+We have created a single activity so far, this will be our MAIN and LAUNCHER activity.</p>
+<p>Open <tt class="docutils literal"><span class="pre">AndroidManifest.xml</span></tt>. Eclipse will open the manifest editor. Select the <em>AndroidManifest.xml</em>
+tab to view the xml file.</p>
+<a class="reference internal image-reference" href="_images/android_fibo_manifesttab.png"><img alt="_images/android_fibo_manifesttab.png" src="_images/android_fibo_manifesttab.png" style="width: 573.0px; height: 470.0px;" /></a>
+<p>Then replace the activity tag with the code shown below:</p>
+<div class="highlight-xml"><div class="highlight"><pre> <span class="nt">&lt;application</span> <span class="na">android:label=</span><span class="s">&quot;@string/app_name&quot;</span>
+     <span class="na">android:icon=</span><span class="s">&quot;@drawable/ic_launcher&quot;</span>
+     <span class="na">android:theme=</span><span class="s">&quot;@style/AppTheme&quot;</span><span class="nt">&gt;</span>
+
+<span class="hll">     <span class="nt">&lt;activity</span>
+</span><span class="hll">         <span class="na">android:name=</span><span class="s">&quot;.FibonacciActivity&quot;</span>
+</span><span class="hll">         <span class="na">android:label=</span><span class="s">&quot;@string/app_name&quot;</span><span class="nt">&gt;</span>
+</span><span class="hll">         <span class="nt">&lt;intent-filter&gt;</span>
+</span><span class="hll">             <span class="nt">&lt;action</span>   <span class="na">android:name=</span><span class="s">&quot;android.intent.action.MAIN&quot;</span> <span class="nt">/&gt;</span>
+</span><span class="hll">             <span class="nt">&lt;category</span> <span class="na">android:name=</span><span class="s">&quot;android.intent.category.LAUNCHER&quot;</span> <span class="nt">/&gt;</span>
+</span><span class="hll">         <span class="nt">&lt;/intent-filter&gt;</span>
+</span><span class="hll">     <span class="nt">&lt;/activity&gt;</span>
+</span> <span class="nt">&lt;/application&gt;</span>
+</pre></div>
+</div>
+<p>An <a class="reference external" href="http://developer.android.com/reference/android/content/Intent.html">Intent</a> describes
+an operation to be performed. Activities with certain intent filters can perform the operations
+described by the intents.</p>
+</li>
+<li><p class="first">Now we can run the application on the device! Make sure the device is connected an powered on.
+Right-click on the project name and select <em>Run As &gt; Android Application</em>. Alternatively, you
+can click the run button on the toolbar. The code will be built and packaged into an <tt class="file docutils literal"><span class="pre">.apk</span></tt>
+file that is pushed to the device and launched. The first time you ran the application you will be
+shown the &#8220;Auto Monitor Logcat&#8221; dialog. Choose <em>Yes</em>.</p>
+<a class="reference internal image-reference" href="_images/eclipse_automonitor_logcat.png"><img alt="_images/eclipse_automonitor_logcat.png" src="_images/eclipse_automonitor_logcat.png" style="width: 589.0px; height: 281.0px;" /></a>
+<p>Once the application is run you should see:</p>
+<a class="reference internal image-reference" href="_images/android_fibo_output.png"><img alt="_images/android_fibo_output.png" src="_images/android_fibo_output.png" style="width: 683.0px; height: 384.0px;" /></a>
+</li>
+</ol>
+<p>This concludes our simple Java application tutorial.</p>
+<div class="admonition-see-also admonition">
+<p class="first admonition-title">See also</p>
+<ol class="last arabic simple">
+<li>Google&#8217;s <a class="reference external" href="http://developer.android.com/training/basics/firstapp/index.html">building your first app</a> tutorial
+guides you through the steps required for creating a new Android Project in Eclipse,
+building, and running the application on the device.</li>
+<li>For an in-depth look at an Android application life cycle, please see the accompanying <a class="reference download internal" href="_downloads/AndroidLifecycleAppNote_v100.pdf"><tt class="xref download docutils literal"><span class="pre">PDF</span></tt></a>.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="debugging-with-the-debugger">
+<h2>Debugging with the debugger<a class="headerlink" href="#debugging-with-the-debugger" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have completed our first app, we will launch the debugger and trace
+execution of the Fibonacci function.</p>
+<ol class="arabic">
+<li><p class="first">To avoid debugging the String construction, modify the code slightly as shown below
+and set a breakpoint on the line that calls Fibonacci (double-click on the left of the line):</p>
+<div class="highlight-java"><div class="highlight"><pre>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span> <span class="n">Bundle</span> <span class="n">savedInstance</span> <span class="o">)</span> <span class="o">{</span>
+
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span> <span class="n">savedInstance</span> <span class="o">);</span>
+
+        <span class="c1">// Create the TextView</span>
+        <span class="n">TextView</span> <span class="n">tv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TextView</span><span class="o">(</span> <span class="k">this</span> <span class="o">);</span>
+<span class="hll">        <span class="kt">int</span> <span class="n">fibo</span> <span class="o">=</span> <span class="n">Fibonacci</span><span class="o">(</span> <span class="mi">10</span> <span class="o">);</span>
+</span>        <span class="n">tv</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span> <span class="s">&quot;Fibonacci(10) = &quot;</span> <span class="o">+</span> <span class="n">fibo</span> <span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span> <span class="n">tv</span> <span class="o">);</span>
+    <span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Click on the Debug button, and if prompted about the Debug Configuration, select
+<em>Android Application</em>. The application package will be recompiled and copied to the
+device. You might see a message saying the application is waiting for the debugger
+to connect, this is normal. You will be taken to the Debug Perspective and will see
+the application hit a breakpoint. Press <strong>F5</strong> to trace into the function call.
+(Note that you can click the images in this document to see them in full size.)</p>
+<a class="reference internal image-reference" href="_images/android_fibo_debug_view.png"><img alt="_images/android_fibo_debug_view.png" src="_images/android_fibo_debug_view.png" style="width: 576.5px; height: 316.5px;" /></a>
+</li>
+<li><p class="first">Try changing the the value of n and hit <strong>F8</strong> to continue running and see the displayed
+result.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="printing-debug-messages-to-the-android-log">
+<h2>Printing debug messages to the Android log<a class="headerlink" href="#printing-debug-messages-to-the-android-log" title="Permalink to this headline">¶</a></h2>
+<p>Android provides a system <a class="reference external" href="http://developer.android.com/reference/android/util/Log.html">log</a>
+mechanism for developers to use from their applcations. The log has different levels of information:</p>
+<blockquote>
+<div><ul class="simple">
+<li>V &#8212; verbose</li>
+<li>D &#8212; debug</li>
+<li>I &#8212; info</li>
+<li>W &#8212; warning</li>
+<li>E &#8212; error</li>
+<li>F &#8212; fatal</li>
+</ul>
+</div></blockquote>
+<p>All messages in the log include the process id that generated it. We will now add
+logging to our Fibonacci application.</p>
+<ol class="arabic">
+<li><p class="first">Open <tt class="file docutils literal"><span class="pre">FibonacciActivity.java</span></tt> and add the highlighted lines:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="hll"> <span class="kn">import</span> <span class="nn">android.util.Log</span><span class="o">;</span>
+</span>
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">FibonacciActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
+
+<span class="hll">     <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">TAG</span> <span class="o">=</span> <span class="s">&quot;Fibonacci&quot;</span><span class="o">;</span>
+</span>
+     <span class="nd">@Override</span>
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span> <span class="n">Bundle</span> <span class="n">savedInstance</span> <span class="o">)</span> <span class="o">{</span>
+
+<span class="hll">         <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span> <span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;onCreate called&quot;</span> <span class="o">);</span>
+</span>
+         <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span> <span class="n">savedInstance</span> <span class="o">);</span>
+
+         <span class="c1">// Create the TextView</span>
+         <span class="n">TextView</span> <span class="n">tv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TextView</span><span class="o">(</span> <span class="k">this</span> <span class="o">);</span>
+         <span class="kt">int</span> <span class="n">fibo</span> <span class="o">=</span> <span class="n">Fibonacci</span><span class="o">(</span> <span class="mi">10</span> <span class="o">);</span>
+         <span class="n">tv</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span> <span class="s">&quot;Fibonacci(10) = &quot;</span> <span class="o">+</span> <span class="n">fibo</span> <span class="o">);</span>
+         <span class="n">setContentView</span><span class="o">(</span> <span class="n">tv</span> <span class="o">);</span>
+    <span class="o">}</span>
+</pre></div>
+</div>
+<p>Each LOG message has a TAG that comes very handy for filtering messages out. A good
+TAG is a name that relates to your activity.</p>
+</li>
+<li id="ref-logcat"><p class="first">Run the application and open the LogCat view in Eclipse to see the message.
+Go to <em>Window &gt; Show View &gt; LogCat</em>. If you don&#8217;t see the <em>LogCat</em> option,
+go to <em>Window &gt; Show View &gt; Other...</em> and search for <em>LogCat</em>.
+The LogCat viewer can filter the messages by process or information level, and you can also
+search the log as it is being dumped.</p>
+<a class="reference internal image-reference" href="_images/android_fibo_logcat.png"><img alt="_images/android_fibo_logcat.png" src="_images/android_fibo_logcat.png" style="width: 772.5px; height: 156.75px;" /></a>
+</li>
+<li><p class="first">Alternatively, you can display the logcat in a console window by running adb, which can be found
+under the <tt class="file docutils literal"><span class="pre">androd-sdk-[linux|windows|mac]/platform-tools</span></tt> directory:</p>
+<div class="highlight-python"><pre>adb logcat -s Fibonacci:*</pre>
+</div>
+<p>The <em>-s</em> makes the default filter silent and the <em>Fibonacci:*</em> tells logcat to enable the
+Fibonacci tagged messages.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="writing-debug-messages-to-a-file">
+<h2>Writing debug messages to a file<a class="headerlink" href="#writing-debug-messages-to-a-file" title="Permalink to this headline">¶</a></h2>
+<p>If you would like to write debug messages to a file, you need to be aware that Android has
+every application running under a different user id and has a limited set of paths that
+are writable by the application and visible to the user. If you are using the Tegra 3
+Prototype, you can create directory under <tt class="file docutils literal"><span class="pre">data</span></tt> to store your log files. But on
+commercial devices, this location is usually protected and you will need to find a
+suitable user-accessible path. Android provides the means to do so. To keep it simple, let&#8217;s add
+logging to a file we create in <em>external storage</em>. Don&#8217;t get mislead by the word <em>external</em>
+here, the <em>external storage</em> may not be the SD card. Files you write to external
+storage are not deleted when the application is uninstalled.</p>
+<ol class="arabic">
+<li><p class="first">In <tt class="file docutils literal"><span class="pre">FibonacciActivity.java</span></tt>, we will add code to write to a log file. We will
+create a <em>logWriter</em> class instance variable that we will use to write text messages
+to a file we will create.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="hll"><span class="kd">private</span> <span class="n">FileWriter</span> <span class="n">logWriter</span><span class="o">;</span>
+</span>
+<span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span> <span class="n">Bundle</span> <span class="n">savedInstance</span> <span class="o">)</span> <span class="o">{</span>
+
+    <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span> <span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;onCreate called&quot;</span> <span class="o">);</span>
+
+    <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span> <span class="n">savedInstance</span> <span class="o">);</span>
+
+<span class="hll">    <span class="k">try</span> <span class="o">{</span>
+</span><span class="hll">        <span class="n">File</span> <span class="n">path</span> <span class="o">=</span> <span class="n">Environment</span><span class="o">.</span><span class="na">getExternalStorageDirectory</span><span class="o">();</span>
+</span><span class="hll">        <span class="n">File</span> <span class="n">logfile</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span> <span class="n">path</span><span class="o">,</span> <span class="s">&quot;fibo_log.txt&quot;</span> <span class="o">);</span>
+</span><span class="hll">
+</span><span class="hll">        <span class="n">logWriter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileWriter</span><span class="o">(</span> <span class="n">logfile</span> <span class="o">);</span>
+</span><span class="hll">
+</span><span class="hll">        <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span> <span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Writing log to &quot;</span> <span class="o">+</span> <span class="n">logfile</span> <span class="o">);</span>
+</span><span class="hll">    <span class="o">}</span>
+</span><span class="hll">    <span class="k">catch</span><span class="o">(</span> <span class="n">IOException</span> <span class="n">e</span> <span class="o">)</span> <span class="o">{</span>
+</span><span class="hll">        <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span> <span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Couldn&#39;t open log file - reason &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()</span> <span class="o">);</span>
+</span><span class="hll">    <span class="o">}</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="n">logMessage</span><span class="o">(</span> <span class="s">&quot;FibonacciActivity.onCreate\n&quot;</span> <span class="o">);</span>
+</span>
+    <span class="c1">// Create the TextView</span>
+    <span class="n">TextView</span> <span class="n">tv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TextView</span><span class="o">(</span> <span class="k">this</span> <span class="o">);</span>
+    <span class="kt">int</span> <span class="n">fibo</span> <span class="o">=</span> <span class="n">Fibonacci</span><span class="o">(</span> <span class="mi">10</span> <span class="o">);</span>
+    <span class="n">tv</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span> <span class="s">&quot;Fibonacci(10) = &quot;</span> <span class="o">+</span> <span class="n">fibo</span> <span class="o">);</span>
+    <span class="n">setContentView</span><span class="o">(</span> <span class="n">tv</span> <span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Now, let&#8217;s create the auxiliary function logMessage:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">private</span> <span class="kt">void</span> <span class="nf">logMessage</span><span class="o">(</span> <span class="n">String</span> <span class="n">msg</span> <span class="o">)</span> <span class="o">{</span>
+
+    <span class="k">if</span> <span class="o">(</span> <span class="n">logWriter</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">logWriter</span><span class="o">.</span><span class="na">write</span><span class="o">(</span> <span class="n">msg</span> <span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">catch</span><span class="o">(</span> <span class="n">IOException</span> <span class="n">e</span> <span class="o">)</span>
+        <span class="o">{</span>
+            <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span> <span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Couldn&#39;t write message to log file - reason &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()</span> <span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Finally, we need to flush the file and close the writer when the Activity is paused.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onPause</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">logMessage</span><span class="o">(</span> <span class="s">&quot;FibonacciActivity.onPause\n&quot;</span> <span class="o">);</span>
+
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">logWriter</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">catch</span><span class="o">(</span> <span class="n">IOException</span> <span class="n">e</span> <span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span> <span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Failed to close log file - reason: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()</span> <span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">super</span><span class="o">.</span><span class="na">onPause</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Modify the <tt class="file docutils literal"><span class="pre">AndroidManifest.xml</span></tt> and indicate that the application
+requests permission to write to external storage.</p>
+<div class="highlight-xml"><div class="highlight"><pre> <span class="c">&lt;!-- Before the application tag, add the requested permissions --&gt;</span>
+<span class="hll"> <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;</span> <span class="nt">/&gt;</span>
+</span>
+ <span class="nt">&lt;application</span> <span class="na">android:label=</span><span class="s">&quot;@string/app_name&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Run the application. Because each Android device might have a different path to the
+external storage, we print the location of the file to the system log.</p>
+<a class="reference internal image-reference" href="_images/android_fibo_logfilename.png"><img alt="_images/android_fibo_logfilename.png" src="_images/android_fibo_logfilename.png" style="width: 940.0px; height: 129.6px;" /></a>
+</li>
+<li><p class="first">To view the file, transfer it to the host computer from the command line using the
+command below (check the path from the log message). Note that in this implementation you
+have to pause the application so the file is closed so you can read the file.</p>
+<div class="highlight-python"><pre>adb pull /mnt/sdcard/fibo_log.txt</pre>
+</div>
+</li>
+</ol>
+<div class="admonition-see-also admonition">
+<p class="first admonition-title">See also</p>
+<p class="last">An explanation on <a class="reference external" href="http://developer.android.com/guide/topics/data/data-storage.html">Android storage</a>.</p>
+</div>
+</div>
+<div class="section" id="adding-native-android-code">
+<h2>Adding Native Android code<a class="headerlink" href="#adding-native-android-code" title="Permalink to this headline">¶</a></h2>
+<p>Using our <em>FibonacciActivity</em> as a starting point, we will add a native library
+that computes the Fibonacci function.</p>
+<ol class="arabic">
+<li><p class="first">We first tell the project to build both C++ and Java code. Right-click
+on the project name and select <em>Android Tools &gt; Add Native Support ...</em> Set
+the library name to libfibonacci.so, and click on <strong>Finish</strong>.</p>
+<a class="reference internal image-reference" href="_images/android_fibo_add_native.png"><img alt="_images/android_fibo_add_native.png" src="_images/android_fibo_add_native.png" style="width: 604.0px; height: 193.0px;" /></a>
+</li>
+<li><p class="first">You will notice that Eclipse has now changed to the C++ Perspective. In addition,
+there is a new folder in the project tree called <tt class="file docutils literal"><span class="pre">jni</span></tt> that contains
+<tt class="file docutils literal"><span class="pre">fibonacci.cpp</span></tt> and <tt class="file docutils literal"><span class="pre">Android.mk</span></tt></p>
+<a class="reference internal image-reference" href="_images/android_fibo_jni_folder.png"><img alt="_images/android_fibo_jni_folder.png" src="_images/android_fibo_jni_folder.png" style="width: 349.0px; height: 480.0px;" /></a>
+</li>
+<li><p class="first"><em>Android.mk</em> is a make file with the instructions on how to build
+our native sources.</p>
+<div class="highlight-makefile"><div class="highlight"><pre><span class="nv">LOCAL_PATH</span> <span class="o">:=</span> <span class="k">$(</span>call my-dir<span class="k">)</span>
+
+<span class="cp">include $(CLEAR_VARS)</span>
+
+<span class="nv">LOCAL_MODULE</span>    <span class="o">:=</span> fibonacci
+<span class="nv">LOCAL_SRC_FILES</span> <span class="o">:=</span> fibonacci.cpp
+
+<span class="cp">include $(BUILD_SHARED_LIBRARY)</span>
+</pre></div>
+</div>
+<p>The <em>LOCAL_MODULE</em> gives the module name which in turn is used for the
+output filename. <em>LOCAL_SRC_FILES</em> contains the list of files to build, and
+finally, the <em>include</em> command is used to include the rules for building a
+shared library. The output of the build will be <tt class="file docutils literal"><span class="pre">libfibonacci.so</span></tt>.
+This library needs to be explicitly loaded by the Java VM, as we show next.</p>
+</li>
+<li><p class="first">Create a new file under the <tt class="file docutils literal"><span class="pre">jni</span></tt> folder named <em>Application.mk</em>. Right-click
+on <tt class="file docutils literal"><span class="pre">jni</span></tt> and select <em>New &gt; File</em>.</p>
+<a class="reference internal image-reference" href="_images/android_fibo_add_application_mk.png"><img alt="_images/android_fibo_add_application_mk.png" src="_images/android_fibo_add_application_mk.png" style="width: 609.0px; height: 465.0px;" /></a>
+<p>While the <em>Android.mk</em> files defines module settings, the  <em>Application.mk</em> file
+is used to define per-application settings that apply to all modules. Set the
+contents of the new file as shown below:</p>
+<div class="highlight-makefile"><div class="highlight"><pre><span class="nv">APP_ABI</span> <span class="o">:=</span> armeabi-v7a
+<span class="nv">APP_PLATFORM</span> <span class="o">:=</span> android-8
+</pre></div>
+</div>
+<p>The <em>APP_ABI</em> line defines the target machine code instruction set to generate. The
+default is armeabi, which corresponds to an ARM ISA with no hardware floating point
+support. To support hardware FPU instructions of more recent ARM processors use
+armeabi-v7a. We also set the <em>APP_PLATFORM</em> to android-ver, where ver is the value
+of the &#8216;&#8217;android::minSdkVersion&#8217;&#8217; in the &#8216;&#8217;AndroidManifest.xml&#8217;&#8216;. A version above
+9 is required to support &#8216;&#8217;NativeActivity&#8217;&#8216;.</p>
+</li>
+<li><p class="first">Let&#8217;s now modify the <em>FibonacciActivity</em> class and mark the Fibonacci
+function as native. We will also add a static method that loads
+the native library.</p>
+<div class="highlight-java"><div class="highlight"><pre>    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">FibonacciActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
+
+       <span class="nd">@Override</span>
+       <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span> <span class="n">Bundle</span> <span class="n">savedInstance</span> <span class="o">)</span> <span class="o">{</span>
+
+           <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span> <span class="n">savedInstance</span> <span class="o">);</span>
+
+           <span class="c1">// Create the TextView</span>
+           <span class="n">TextView</span> <span class="n">tv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TextView</span><span class="o">(</span> <span class="k">this</span> <span class="o">);</span>
+           <span class="kt">int</span> <span class="n">fibo</span> <span class="o">=</span> <span class="n">Fibonacci</span><span class="o">(</span> <span class="mi">10</span> <span class="o">);</span>
+           <span class="n">tv</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span> <span class="s">&quot;Fibonacci(10) = &quot;</span> <span class="o">+</span> <span class="n">fibo</span> <span class="o">);</span>
+           <span class="n">setContentView</span><span class="o">(</span> <span class="n">tv</span> <span class="o">);</span>
+       <span class="o">}</span>
+
+       <span class="c1">// Our native Fibonacci function</span>
+<span class="hll">       <span class="kd">native</span> <span class="kt">int</span> <span class="nf">Fibonacci</span> <span class="o">(</span> <span class="kt">int</span> <span class="n">n</span> <span class="o">);</span>
+</span><span class="hll">
+</span><span class="hll">       <span class="kd">static</span> <span class="o">{</span>
+</span><span class="hll">           <span class="n">System</span><span class="o">.</span><span class="na">loadLibrary</span><span class="o">(</span> <span class="s">&quot;fibonacci&quot;</span> <span class="o">);</span>
+</span><span class="hll">       <span class="o">}</span>
+</span></pre></div>
+</div>
+<p>In our modified class the Fibonacci function doesn&#8217;t have an implementation,
+it is only marked as native.</p>
+</li>
+<li><p class="first">To link the Java native method with its actual implementation the Java VM
+machine relies on name mangling. You can use the <tt class="docutils literal"><span class="pre">javah</span></tt> utility to generate
+the function headers for you and avoid remembering the mangling rules. For
+this, you will first need to compile your project. Right-click on the project
+name and select <em>Build Project</em>.</p>
+<a class="reference internal image-reference" href="_images/android_fibo_build_project.png"><img alt="_images/android_fibo_build_project.png" src="_images/android_fibo_build_project.png" style="width: 575.0px; height: 315.0px;" /></a>
+<p>You will notice that even though the <tt class="file docutils literal"><span class="pre">fibonacci.cpp</span></tt> is empty, the C++ builder
+is invoked successfully. There is no error telling us that the native method has not
+been implemented. This kind of error will be a Java Exception raised by the virtual
+machine. You can see it for yourselft, try to run the application, it will crash. You
+can look at the error by browsing the <a class="reference internal" href="#ref-logcat"><em>logcat</em></a>:</p>
+<a class="reference internal image-reference" href="_images/android_fibo_unsatisfiedlinkererror.png"><img alt="_images/android_fibo_unsatisfiedlinkererror.png" src="_images/android_fibo_unsatisfiedlinkererror.png" style="width: 760.0px; height: 141.0px;" /></a>
+<p>If the LogCat window is too small, select the window and hit CTRL+M to expand the window, another CTRL+M
+brings back the other windows.  Double-clicking the tab also does the same thing.</p>
+</li>
+<li><p class="first">To generate the proper function header, open a console, go to your project directory
+(where the AndroidManifest.xml file is located) and run javah:</p>
+<div class="highlight-python"><pre>javah -classpath ./bin/classes -d jni com.nvidia.example.fibonacci.FibonacciActivity</pre>
+</div>
+<p>The output will be the file <tt class="file docutils literal"><span class="pre">jni/com_nvidia_example_fibonacci_FibonacciActivity.h</span></tt></p>
+<div class="admonition-if-it-doesn-t-work admonition">
+<p class="first admonition-title">If it doesn&#8217;t work...</p>
+<p>We found on some installations that <tt class="docutils literal"><span class="pre">javah</span></tt> from a previous, non-Android Java installation
+was on the path before the one from Android toolkit.  Type <tt class="docutils literal"><span class="pre">which</span> <span class="pre">javah</span></tt> to find which version
+is used if you get problem, it should return a path within NVPACK.  On cygwin, we fixed this by editing
+<tt class="docutils literal"><span class="pre">/home/&lt;user&gt;/.bash_profile</span></tt> by adding a line</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">PATH</span><span class="o">=</span><span class="s">&quot;/cygdrive/c/NVPACK/jdk1.6.0_24/bin:${PATH}&quot;</span>
+</pre></div>
+</div>
+</div>
+</li>
+<li><p class="first">Open the file <tt class="file docutils literal"><span class="pre">fibonacci.cpp</span></tt> to continue working on our implementation. Create
+the Fibonacci function as shown and add an include for the new header.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;jni.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">Fibonacci</span><span class="p">(</span> <span class="kt">int</span> <span class="n">n</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">)</span> <span class="o">+</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Copy and paste the function declaration from <tt class="file docutils literal"><span class="pre">jni/com_nvidia_example_fibonacci_FibonacciActivity.h</span></tt> into
+<tt class="file docutils literal"><span class="pre">fibonacci.cpp</span></tt>.  If you can&#8217;t see the file in the <tt class="docutils literal"><span class="pre">jni</span></tt> folder, click the folder and press <strong>F5</strong> to refresh.
+Our jni function will simply be a wrapper around the Fibonacci function.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#ifdef __cplusplus</span>
+<span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
+<span class="cp">#endif</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Class:     com_nvidia_example_fibonacci_FibonacciActivity</span>
+<span class="cm"> * Method:    Fibonacci</span>
+<span class="cm"> * Signature: (I)I</span>
+<span class="cm"> */</span>
+<span class="n">JNIEXPORT</span> <span class="n">jint</span> <span class="n">JNICALL</span> <span class="n">Java_com_nvidia_example_fibonacci_FibonacciActivity_Fibonacci</span>
+  <span class="p">(</span> <span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">obj</span><span class="p">,</span> <span class="n">jint</span> <span class="n">n</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="p">}</span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">That&#8217;s it! Build the project and click the run button to see it running on the device.</p>
+</li>
+</ol>
+<div class="admonition-see-also admonition">
+<p class="first admonition-title">See also</p>
+<ol class="last arabic simple">
+<li>The Android NDK documentation is located in your installed NDK under <tt class="file docutils literal"><span class="pre">android-ndk-r8e/doc</span></tt>.
+The documentation is extensive and covers in detail the Android.mk and Application.mk files, plus
+creation of reusable modules and prebuilt libraries to use on other projects.</li>
+<li>There are multiple JNI tutorials available on the web that expand on the basic information
+we have presented here. In the next examples we will expand more on JNI.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="debugging-your-native-application">
+<span id="debugging-native-app"></span><h2>Debugging your native application<a class="headerlink" href="#debugging-your-native-application" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have built and deployed our mixed Java and native code Activity we
+will show how to debug it. There are two Debug configurations that we can use.
+To debug Java code, we will debug as we did previously, by selecting <em>Debug As &gt; Android Application</em>.
+This configuration launches a debugger that attaches to the Java VM. For native code,
+we will instead use <em>Debug As &gt; Android Native Application</em>. This configuration now
+launches a gdbserver instance on the device that attaches to the application process.</p>
+<ol class="arabic">
+<li><p class="first">To generate a binary library that is debugging-friendly we need to modify the build
+command. Right-click on the <em>AndroidFibonacci</em> project, and select <em>Properties &gt; C/C++ Build</em>.
+Uncheck the <em>Use default build command option</em> and add the NDK_DEBUG=1 option to the  build
+command.</p>
+<a class="reference internal image-reference" href="_images/android_fibo_build_ndkdebug.png"><img alt="_images/android_fibo_build_ndkdebug.png" src="_images/android_fibo_build_ndkdebug.png" style="width: 612.0px; height: 286.0px;" /></a>
+<div class="admonition-more-on-configurations admonition">
+<p class="first admonition-title">More on configurations</p>
+<blockquote>
+<div><p>To make switching between <em>Release</em> and <em>Debug</em> mode faster, you can use <em>Build Configurations</em>.
+Right now you only have a configuration called <em>Default</em> which is basically a <em>Release</em> build
+configuration created for you by Eclipse. Right-click on the project name in the
+Project Explorer pane, then <em>Build Configurations</em>, and you should see it:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/BuildConfDefault.png"><img alt="_images/BuildConfDefault.png" src="_images/BuildConfDefault.png" style="width: 654.0px; height: 158.0px;" /></a>
+</div></blockquote>
+<p>Let&#8217;s create our Debug configuration. In the menu shown above, choose <em>Manage...</em> instead of
+<em>Set Active</em>. In the new window click <strong>New</strong>. In the field <em>Name</em> of the window that just
+opened type &#8220;Debug&#8221; and hit <strong>OK</strong>. If you go to the project&#8217;s properties now, in the C/C++ Build
+you should be able to pull down the Configuration menu and see your Debug configuration:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/BuildConfProperties.png"><img alt="_images/BuildConfProperties.png" src="_images/BuildConfProperties.png" style="width: 848.0px; height: 212.0px;" /></a>
+</div></blockquote>
+</div></blockquote>
+<p>Select it and set the NDK_DEBUG=1 option as shown above. Hit <strong>OK</strong>.
+You can now switch between configurations by right-clicking the project&#8217;s name and then
+<em>Build Configuration &gt; Set Active</em>:</p>
+<blockquote class="last">
+<div><a class="reference internal image-reference" href="_images/BuildConfSet.png"><img alt="_images/BuildConfSet.png" src="_images/BuildConfSet.png" style="width: 668.0px; height: 157.0px;" /></a>
+</div></blockquote>
+</div>
+</li>
+<li><p class="first">The debugger attaches to the application process asynchronously, which means that the
+application will start and run until the point when gdbserver attaches to the process.
+As a consequence, if you are trying to put a breakpoint in code that runs early in your
+application, the program flow might have already gone by that point when the debugger is
+finally attached. To debug our Fibonacci function that is called when the
+application starts, we will modify fibonacci.cpp:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#ifdef __cplusplus</span>
+<span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#define WAIT_FOR_DEBUGGER</span>
+
+<span class="n">jint</span> <span class="n">JNI_OnLoad</span><span class="p">(</span> <span class="n">JavaVM</span> <span class="o">*</span><span class="n">vm</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">reserved</span> <span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#if defined(WAIT_FOR_DEBUGGER)</span>
+    <span class="k">volatile</span> <span class="kt">int</span> <span class="n">_dbg</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span> <span class="n">_dbg</span> <span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="cp">#endif</span>
+
+    <span class="k">return</span> <span class="n">JNI_VERSION_1_2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="p">}</span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+<p>We have added a new function <strong>JNI_OnLoad</strong> with an infinite loop in it. <strong>JNI_OnLoad</strong> is
+called when the Java VM loads the library. The infinite loop will stall execution until the
+debugger is attached and we manually change the value of <em>_dbg</em>.  It is marked <em>volatile</em>
+to make sure the compiler does not optimize the variable away so we can clear it from the
+debugger.</p>
+</li>
+<li><p class="first">Launch the application for Native debugging by right-clicking on the project and selecting
+<em>Debug As &gt; Android Native Application</em>. You will see the application starts but there is no
+output on the screen. At the same time Eclipse will change to the Debug Perspective.</p>
+</li>
+<li><p class="first">When the Debug perspective is open, hit the Suspend button (two yellow vertical bars). In the <em>Variables</em> tab change
+the value of _dbg from 1 to 0; also set a breakpoint on the call to Fibonacci. Finally,
+let the program continue running by pressing <strong>F8</strong>; you should immediately hit the breakpoint
+you have just set.</p>
+<a class="reference internal image-reference" href="_images/android_fibo_native_debug_view.png"><img alt="_images/android_fibo_native_debug_view.png" src="_images/android_fibo_native_debug_view.png" style="width: 617.4px; height: 421.2px;" /></a>
+</li>
+<li><p class="first">You can now trace into the function by pressing <strong>F5</strong> or step over it by pressing <strong>F6</strong>.
+Change the value of n and press <strong>F8</strong> to continue with the execution.</p>
+</li>
+</ol>
+<p>We are done! You have now seen the basics on how to do Java and native code
+debugging of Android applications running on the device from Eclipse.</p>
+</div>
+<div class="section" id="printing-to-android-log-from-native-code">
+<span id="native-log"></span><h2>Printing to Android log from native code<a class="headerlink" href="#printing-to-android-log-from-native-code" title="Permalink to this headline">¶</a></h2>
+<p>We can print debugging messages to the Android log from
+native code using the <em>__android_log_print</em> function.</p>
+<ol class="arabic">
+<li><p class="first">Open <tt class="file docutils literal"><span class="pre">fibonacci.cpp</span></tt> and add the following code at
+the top of the file.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#if !defined(LOG_TAG)</span>
+<span class="cp">#define LOG_TAG &quot;Fibonacci&quot;</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)</span>
+<span class="cp">#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG  , LOG_TAG, __VA_ARGS__)</span>
+<span class="cp">#define LOGI(...) __android_log_print(ANDROID_LOG_INFO   , LOG_TAG, __VA_ARGS__)</span>
+<span class="cp">#define LOGW(...) __android_log_print(ANDROID_LOG_WARN   , LOG_TAG, __VA_ARGS__)</span>
+<span class="cp">#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR  , LOG_TAG, __VA_ARGS__)</span>
+
+<span class="cp">#include &lt;android/log.h&gt;</span>
+</pre></div>
+</div>
+<p>These are convenient macros that write to the log at the different information
+levels.</p>
+</li>
+<li><p class="first">Add the following line to print the result of the Fibonacci function to the log.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">JNIEXPORT</span> <span class="n">jint</span> <span class="n">JNICALL</span> <span class="nf">Java_com_nvidia_example_fibonacci_FibonacciActivity_Fibonacci</span>
+<span class="p">(</span> <span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">obj</span><span class="p">,</span> <span class="n">jint</span> <span class="n">n</span> <span class="p">)</span>
+<span class="p">{</span>
+<span class="hll">    <span class="n">LOGV</span><span class="p">(</span> <span class="s">&quot;Fibonaci(%d) = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="p">)</span> <span class="p">);</span>
+</span>    <span class="k">return</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Finally, we need to modify the <tt class="file docutils literal"><span class="pre">Android.mk</span></tt> to link the log library into the project.</p>
+<div class="highlight-makefile"><div class="highlight"><pre><span class="nv">LOCAL_PATH</span> <span class="o">:=</span> <span class="k">$(</span>call my-dir<span class="k">)</span>
+
+<span class="cp">include $(CLEAR_VARS)</span>
+
+<span class="nv">LOCAL_MODULE</span>    <span class="o">:=</span> fibonacci
+<span class="nv">LOCAL_SRC_FILES</span> <span class="o">:=</span> fibonacci.cpp
+<span class="hll"><span class="nv">LOCAL_LDLIBS</span>    <span class="o">:=</span> -llog
+</span>
+<span class="cp">include $(BUILD_SHARED_LIBRARY)</span>
+</pre></div>
+</div>
+<p>The <em>LOCAL_LDLIBS</em> directive specifies a list of system libraries provided by the NDK that
+we can link into our project. In the above example, the log library defines <em>__android_log_print</em>.</p>
+</li>
+<li><p class="first">Comment out the definition of WAIT_FOR_DEBUGGER of the previous section (so you don&#8217;t stay in the
+infinite loop), run the project, and verify that you can see the log message.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="logging-to-a-file-from-native-code">
+<h2>Logging to a file from native code<a class="headerlink" href="#logging-to-a-file-from-native-code" title="Permalink to this headline">¶</a></h2>
+<p>When logging to a file from native code we are still bound by
+the same restrictions we mentioned regarding user-accessible paths.
+Additionally, there is no native version of <em>Environment.getExternalStorageDirectory()</em>
+in the NDK, so we will have to pass the directory information from Java.</p>
+<ol class="arabic">
+<li><p class="first">In <tt class="file docutils literal"><span class="pre">FibonacciActivity.java</span></tt>, add a new native method that will enable
+native code logging into the specified file.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// Enable native logging to the given filename</span>
+<span class="kd">native</span> <span class="kt">void</span> <span class="nf">enableNativeLogging</span><span class="o">(</span> <span class="n">String</span> <span class="n">filename</span> <span class="o">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">In <em>onCreate</em> we will call <em>enableNativeLogging</em> :</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span> <span class="n">Bundle</span> <span class="n">savedInstance</span> <span class="o">)</span>
+<span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span> <span class="n">savedInstance</span> <span class="o">);</span>
+
+    <span class="o">[...]</span>
+
+<span class="hll">    <span class="n">enableNativeLogging</span><span class="o">(</span> <span class="n">Environment</span><span class="o">.</span><span class="na">getExternalStorageDirectory</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;/fibo_native_log.txt&quot;</span> <span class="o">);</span>
+</span><span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Now, let&#8217;s implement the native side of <em>enableNativeLogging</em>.
+First, in the file <tt class="docutils literal"><span class="pre">fibonacci.cpp</span></tt> we create an <tt class="docutils literal"><span class="pre">ofstream</span></tt>
+with the scope of the entire source file to hold
+a handle to the log file (and include <tt class="docutils literal"><span class="pre">fstream</span></tt>):</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;fstream&gt;</span>
+
+<span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">gLogFile</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Second, we implement <em>enableNativeLogging</em>; this function
+calls into JNI to convert the Java string into a C-style string, opens the file,
+and then releases the allocated C-style string:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm"> * Class:     com_nvidia_example_fibonacci_FibonacciActivity</span>
+<span class="cm"> * Method:    enableNativeLogging</span>
+<span class="cm"> * Signature: (Ljava/lang/String;)V</span>
+<span class="cm"> */</span>
+<span class="n">JNIEXPORT</span> <span class="kt">void</span> <span class="n">JNICALL</span> <span class="nf">Java_com_nvidia_example_fibonacci_FibonacciActivity_enableNativeLogging</span>
+    <span class="p">(</span> <span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">obj</span><span class="p">,</span> <span class="n">jstring</span> <span class="n">jfilename</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">gLogFile</span><span class="p">.</span><span class="n">is_open</span><span class="p">()</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">gLogFile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Call JNI to convert the jstring into UTF 8 bit characters</span>
+    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetStringUTFChars</span><span class="p">(</span> <span class="n">jfilename</span><span class="p">,</span> <span class="nb">NULL</span> <span class="p">);</span>
+
+    <span class="c1">// If filename is non-empty, open the file.</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">filename</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Open the file</span>
+        <span class="n">gLogFile</span><span class="p">.</span><span class="n">open</span><span class="p">(</span> <span class="n">filename</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Release the string allocated by JNI.</span>
+    <span class="n">env</span><span class="o">-&gt;</span><span class="n">ReleaseStringUTFChars</span><span class="p">(</span> <span class="n">jfilename</span><span class="p">,</span> <span class="n">filename</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you call the function a second time with an empty string, the file will be closed.
+In addition, because we are using <tt class="docutils literal"><span class="pre">ofstream</span></tt>, when the program exits the <tt class="docutils literal"><span class="pre">gLogFile</span></tt>
+object will go out of scope and the file will be closed. Alternatively, you could
+add <tt class="docutils literal"><span class="pre">enableNativeLogging(</span> <span class="pre">&quot;&quot;</span> <span class="pre">);</span></tt> in the <tt class="docutils literal"><span class="pre">onPause()</span></tt> method in the Java side.</p>
+<p>Note that we repeated the step described above to generate the proper function header: in a console,
+go to your project directory and run javah:</p>
+<div class="highlight-python"><pre>javah -classpath ./bin/classes -d jni com.nvidia.example.fibonacci.FibonacciActivity</pre>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="calling-java-functions-from-native-code">
+<h2>Calling Java functions from native code<a class="headerlink" href="#calling-java-functions-from-native-code" title="Permalink to this headline">¶</a></h2>
+<p>We will extend our Fibonacci example further by showing how to call Java methods
+from the native code. We will add the ability to log messages into the TextView
+to mimic the behavior of a console application.</p>
+<ol class="arabic">
+<li><p class="first">Open the file <tt class="file docutils literal"><span class="pre">FibonacciActivity.java</span></tt>. Copy the new code
+for the FibonacciActivity class. We have moved the <tt class="docutils literal"><span class="pre">TextView</span></tt> to
+class member scope and we have added a function called <tt class="docutils literal"><span class="pre">printToConsole</span></tt>
+that we can call to append text to this <tt class="docutils literal"><span class="pre">TextView</span></tt>. In addition, we
+have a new native function called <tt class="docutils literal"><span class="pre">FibonacciSequence</span></tt>.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FibonacciActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">TextView</span> <span class="n">mConsoleText</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span> <span class="n">Bundle</span> <span class="n">savedInstance</span> <span class="o">)</span> <span class="o">{</span>
+
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span> <span class="n">savedInstance</span> <span class="o">);</span>
+
+        <span class="c1">// Create the TextView.</span>
+        <span class="n">mConsoleText</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TextView</span><span class="o">(</span> <span class="k">this</span> <span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span> <span class="n">mConsoleText</span> <span class="o">);</span>
+
+        <span class="c1">// Generate the Fibonacci sequence up to 10.</span>
+        <span class="n">FibonacciSequence</span><span class="o">(</span> <span class="mi">10</span> <span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Append new text to the consoleText TextView.</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">printToConsole</span><span class="o">(</span> <span class="n">String</span> <span class="n">text</span> <span class="o">)</span> <span class="o">{</span>
+        <span class="n">mConsoleText</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span> <span class="n">mConsoleText</span><span class="o">.</span><span class="na">getText</span><span class="o">()</span> <span class="o">+</span> <span class="n">text</span> <span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Native Fibonacci function - returns the nth Fibonacci number.</span>
+    <span class="kd">native</span> <span class="kt">int</span> <span class="nf">Fibonacci</span> <span class="o">(</span> <span class="kt">int</span> <span class="n">n</span> <span class="o">);</span>
+
+    <span class="c1">// Computes the Fibonacci sequence up to n and prints</span>
+    <span class="c1">// it through the print function.</span>
+    <span class="kd">native</span> <span class="kt">void</span> <span class="nf">FibonacciSequence</span><span class="o">(</span> <span class="kt">int</span> <span class="n">n</span> <span class="o">);</span>
+
+    <span class="kd">static</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">loadLibrary</span><span class="o">(</span> <span class="s">&quot;fibonacci&quot;</span> <span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Since we have added a new native method we need to recreate the jni headers.
+First, build the project (this is necessary to compile the new Java code). Then,
+as we did in our previous tutorial, run javah:</p>
+<div class="highlight-python"><pre>javah -classpath ./bin/classes -d jni com.nvidia.example.fibonacci.FibonacciActivity</pre>
+</div>
+<p>File <tt class="file docutils literal"><span class="pre">jni/com_nvidia-example_fibonacci_FibonacciActivity.h</span></tt> will be regenerated.</p>
+</li>
+<li><p class="first">Now we need to add the new method to our native library. Open <tt class="file docutils literal"><span class="pre">fibonacci.cpp</span></tt> and
+copy and paste the newly added function header from <tt class="file docutils literal"><span class="pre">com_nvidia-example_fibonacci_FibonacciActivity.h</span></tt>.
+Our implementation of FibonacciSequence will compute the Fibonacci numbers and print them
+to the TextView by calling the Java <em>printToConsole</em> method. The function code looks like
+this:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;sstream&gt;</span>
+
+<span class="p">[...]</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Class:     com_nvidia_example_fibonacci_FibonacciActivity</span>
+<span class="cm"> * Method:    FibonacciSequence</span>
+<span class="cm"> * Signature: (I)V</span>
+<span class="cm"> */</span>
+ <span class="n">JNIEXPORT</span> <span class="kt">void</span> <span class="n">JNICALL</span> <span class="n">Java_com_nvidia_example_fibonacci_FibonacciActivity_FibonacciSequence</span>
+ <span class="p">(</span> <span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">obj</span><span class="p">,</span> <span class="n">jint</span> <span class="n">n</span> <span class="p">)</span>
+ <span class="p">{</span>
+     <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">methodName</span>      <span class="o">=</span> <span class="s">&quot;printToConsole&quot;</span><span class="p">;</span>
+     <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">methodSignature</span> <span class="o">=</span> <span class="s">&quot;(Ljava/lang/String;)V&quot;</span><span class="p">;</span>
+
+     <span class="n">jclass</span>    <span class="n">objClass</span> <span class="o">=</span> <span class="p">(</span> <span class="n">jclass</span> <span class="p">)</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetObjectClass</span><span class="p">(</span> <span class="n">obj</span> <span class="p">);</span>
+     <span class="n">jmethodID</span> <span class="n">methodId</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span> <span class="n">objClass</span><span class="p">,</span> <span class="n">methodName</span><span class="p">,</span> <span class="n">methodSignature</span> <span class="p">);</span>
+
+     <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+     <span class="p">{</span>
+         <span class="c1">// Our string buffer for the output message.</span>
+         <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">msg</span><span class="p">;</span>
+
+         <span class="c1">// Compute the current Fibonacci number.</span>
+         <span class="kt">int</span> <span class="n">fibo</span> <span class="o">=</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="n">i</span> <span class="p">);</span>
+
+         <span class="c1">// Create the msg to print.</span>
+         <span class="n">msg</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Fibonacci(&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">fibo</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+         <span class="c1">// Create a jstring to send the message to the Java VM.</span>
+         <span class="n">jstring</span> <span class="n">jtext</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">NewStringUTF</span><span class="p">(</span> <span class="n">msg</span><span class="p">.</span><span class="n">str</span><span class="p">().</span><span class="n">c_str</span><span class="p">()</span> <span class="p">);</span>
+
+         <span class="c1">// Call the Java class printToConsole method.</span>
+         <span class="n">env</span><span class="o">-&gt;</span><span class="n">CallVoidMethod</span><span class="p">(</span> <span class="n">obj</span><span class="p">,</span> <span class="n">methodId</span><span class="p">,</span> <span class="n">jtext</span> <span class="p">);</span>
+
+         <span class="c1">// Delete the local reference created by NewStringUTF</span>
+         <span class="c1">// to allow the Java VM to garbage collect the jstring object.</span>
+         <span class="n">env</span><span class="o">-&gt;</span><span class="n">DeleteLocalRef</span><span class="p">(</span> <span class="n">jtext</span> <span class="p">);</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+<p>In order to call the <em>printToConsole</em> method on the passed Java object, we need to obtain
+its method ID from the Java VM. First we ask for the <strong>jclass</strong> of the passed object by
+calling <em>GetObjectClass</em>. Then we obtain the <strong>jmethodID</strong> by calling <em>GetMethodID</em> and
+passing the corresponding <strong>jclass</strong> identifier, the method name, and the method signature.
+The method name is <em>printToConsole</em> and the signature <em>&#8220;(Ljava/lang/String;)V</em>, which
+stands for a method returning void that takes an argument of type java.Lang.String.</p>
+<p>When we call the retrieved method we can&#8217;t pass a pointer to char as an argument, we
+need to pass it a String object. The JNI environment has a helper function to do this.
+The <em>newStringUTF</em> function takes a <strong>char *</strong> and returns a <strong>jstring</strong> instance.
+We can then call the Java function using the <em>CallVoidMethod</em> and passing the obj,
+the method ID and the string.</p>
+</li>
+<li><p class="first">The Android NDK provides different C++ STL implementations. To default system STL is
+very limited. To enable the GNU STL implementation, and use the <tt class="docutils literal"><span class="pre">ofstream</span></tt>
+object we need to modify the <tt class="docutils literal"><span class="pre">Application.mk</span></tt> file. By adding the following line
+to the <tt class="docutils literal"><span class="pre">Application.mk</span></tt> the NDK build system will set the include path for the
+headers and add the static library.</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="c"># APP_STL</span>
+<span class="c">#    By default, the NDK build system provides C++ headers for the minimal</span>
+<span class="c">#    C++ runtime library (/system/lib/libstdc++.so) provided by the Android</span>
+<span class="c">#    system.</span>
+<span class="c">#</span>
+<span class="c">#    However, the NDK comes with alternative C++ implementations that you can</span>
+<span class="c">#    use or link to in your own applications. Define APP_STL to select one of</span>
+<span class="c">#    them. Examples are:</span>
+<span class="c">#</span>
+<span class="c">#       APP_STL := stlport_static    --&gt; static STLport library</span>
+<span class="c">#       APP_STL := stlport_shared    --&gt; shared STLport library</span>
+<span class="c">#       APP_STL := system            --&gt; default C++ runtime library</span>
+
+<span class="nv">APP_STL</span> <span class="o">:=</span> gnustl_static
+</pre></div>
+</div>
+</li>
+<li><p class="first">Comment out the #define WAIT_FOR DEBUGGER; we will not be attaching the debugger for this run.</p>
+</li>
+<li><p class="first">Build the program and run it. You will see the following output:</p>
+<a class="reference internal image-reference" href="_images/android_fibo_sequence_output.png"><img alt="_images/android_fibo_sequence_output.png" src="_images/android_fibo_sequence_output.png" style="width: 683.0px; height: 384.0px;" /></a>
+</li>
+</ol>
+</div>
+<div class="section" id="creating-a-nativeactivity">
+<span id="id1"></span><h2>Creating a NativeActivity<a class="headerlink" href="#creating-a-nativeactivity" title="Permalink to this headline">¶</a></h2>
+<p>Android provides a NativeActivity framework that can be used to run applications that are
+written entirely in native code. A NativeActivity can have event loops to receive user
+input, but will have no UI building blocks; it was developed for game developers and it is
+expected that the UI is built using OpenGL ES rendering.</p>
+<p>As an introduction to NativeActivity, we will write our Fibonacci example using this
+framework. Since there is no Java code, let&#8217;s start with a new project. The
+following steps assume you have already performed all the previous tutorials.</p>
+<ol class="arabic">
+<li><p class="first">From the Java perspective, create a new Android Application project as we did before.
+Set the Application, Project, and package names, and the minimum Android SDK version to 9.</p>
+</li>
+<li><p class="first">Add Android Native Support. Set the <em>Library Name</em> to <tt class="file docutils literal"><span class="pre">libfibonacci.so</span></tt>.</p>
+</li>
+<li><p class="first">Create the <tt class="file docutils literal"><span class="pre">jni/Application.mk</span></tt> file and set the <strong>APP_ABI</strong> to armeabi-v7a
+and the android platform to 14 (this is the first platform to support the NativeActivity).
+Also, set <strong>APP_STL</strong> to <tt class="docutils literal"><span class="pre">gnustl_static</span></tt>.</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">APP_ABI</span>        <span class="o">:=</span> armeabi-v7a
+<span class="nv">APP_PLATFORM</span>   <span class="o">:=</span> android-9
+<span class="nv">APP_STL</span>        <span class="o">:=</span> gnustl_static
+</pre></div>
+</div>
+</li>
+<li><p class="first">Now we have to setup the <tt class="file docutils literal"><span class="pre">AndroidManifest.xml</span></tt>, which has a few extra settings for the
+NativeActivity. In the application section we specify the app doesn&#8217;t have any Java code.</p>
+<div class="highlight-xml"><div class="highlight"><pre>  <span class="c">&lt;!-- We do not have Java code. Therefore android:hasCode is set to false. --&gt;</span>
+  <span class="nt">&lt;application</span> <span class="na">android:label=</span><span class="s">&quot;@string/app_name&quot;</span>
+<span class="hll">               <span class="na">android:hasCode=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+</span></pre></div>
+</div>
+<p>In the activity block (within the application block) we also need to add a few new items. First, the activity name
+needs to be set to <strong>android.app.NativeActivity</strong>. This is an actual Java class that
+exists in the Android SDK and that provides the glue for the native code. Then we
+configure the application to be fullscreen. And finally, we add a meta-data tag
+to indicate the name of the library containing the native code.</p>
+<div class="highlight-xml"><div class="highlight"><pre>  <span class="c">&lt;!-- Our activity is the built-in NativeActivity framework class.</span>
+<span class="c">       This will take care of integrating with our NDK code. --&gt;</span>
+<span class="hll">  <span class="nt">&lt;activity</span> <span class="na">android:name=</span><span class="s">&quot;android.app.NativeActivity&quot;</span>
+</span>          <span class="na">android:label=</span><span class="s">&quot;@string/app_name&quot;</span>
+<span class="hll">          <span class="na">android:configChanges=</span><span class="s">&quot;orientation|keyboard|keyboardHidden&quot;</span>
+</span><span class="hll">          <span class="na">android:theme=</span><span class="s">&quot;@android:style/Theme.NoTitleBar.Fullscreen&quot;</span><span class="nt">&gt;</span>
+</span>
+      <span class="c">&lt;!-- Tell NativeActivity the name of or .so --&gt;</span>
+<span class="hll">      <span class="nt">&lt;meta-data</span> <span class="na">android:name=</span><span class="s">&quot;android.app.lib_name&quot;</span>
+</span><span class="hll">              <span class="na">android:value=</span><span class="s">&quot;fibonacci&quot;</span> <span class="nt">/&gt;</span>
+</span>
+      <span class="nt">&lt;intent-filter&gt;</span>
+          <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">&quot;android.intent.action.MAIN&quot;</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;category</span> <span class="na">android:name=</span><span class="s">&quot;android.intent.category.LAUNCHER&quot;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/intent-filter&gt;</span>
+
+  <span class="nt">&lt;/activity&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Open the <tt class="file docutils literal"><span class="pre">Android.mk</span></tt>. Our library needs to statically link with the
+<tt class="docutils literal"><span class="pre">android_native_app_glue</span></tt> library, which is provided as a separate module,
+and against the shared system <tt class="docutils literal"><span class="pre">log</span></tt> and <tt class="docutils literal"><span class="pre">android</span></tt> libraries.</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_PATH</span> <span class="o">:=</span> <span class="k">$(</span>call my-dir<span class="k">)</span>
+
+<span class="cp">include $(CLEAR_VARS)</span>
+
+<span class="nv">LOCAL_MODULE</span>    <span class="o">:=</span> fibonacci
+<span class="nv">LOCAL_SRC_FILES</span> <span class="o">:=</span> fibonacci.cpp
+<span class="nv">LOCAL_LDLIBS</span>    <span class="o">:=</span> -llog -landroid
+<span class="nv">LOCAL_STATIC_LIBRARIES</span> <span class="o">:=</span> android_native_app_glue
+
+<span class="cp">include $(BUILD_SHARED_LIBRARY)</span>
+
+<span class="k">$(</span>call import-module,android/native_app_glue<span class="k">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Now open <tt class="file docutils literal"><span class="pre">fibonacci.cpp</span></tt> and add the following code:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#if !defined(LOG_TAG)</span>
+<span class="cp">#define LOG_TAG &quot;Fibonacci&quot;</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)</span>
+<span class="cp">#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG  , LOG_TAG, __VA_ARGS__)</span>
+<span class="cp">#define LOGI(...) __android_log_print(ANDROID_LOG_INFO   , LOG_TAG, __VA_ARGS__)</span>
+<span class="cp">#define LOGW(...) __android_log_print(ANDROID_LOG_WARN   , LOG_TAG, __VA_ARGS__)</span>
+<span class="cp">#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR  , LOG_TAG, __VA_ARGS__)</span>
+
+<span class="hll"><span class="cp">#include &lt;android/log.h&gt;</span>
+</span><span class="hll"><span class="cp">#include &lt;android_native_app_glue.h&gt;</span>
+</span>
+<span class="kt">int</span> <span class="nf">Fibonacci</span><span class="p">(</span> <span class="kt">int</span> <span class="n">n</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">)</span> <span class="o">+</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * This is the main entry point of a native application that is using</span>
+<span class="cm"> * android_native_app_glue.  It runs in its own thread, with its own</span>
+<span class="cm"> * event loop for receiving input events and doing other things.</span>
+<span class="cm"> */</span>
+<span class="hll"><span class="kt">void</span> <span class="nf">android_main</span><span class="p">(</span> <span class="k">struct</span> <span class="n">android_app</span> <span class="o">*</span><span class="n">state</span> <span class="p">)</span>
+</span><span class="hll"><span class="p">{</span>
+</span><span class="hll">    <span class="c1">// Make sure glue isn&#39;t stripped.</span>
+</span><span class="hll">    <span class="n">app_dummy</span><span class="p">();</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="n">LOGV</span><span class="p">(</span> <span class="s">&quot;Fibonacci(10) = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="mi">10</span> <span class="p">)</span> <span class="p">);</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="c1">// Event loop manager.</span>
+</span><span class="hll">    <span class="c1">// This is an empty event loop manager that waits for the user</span>
+</span><span class="hll">    <span class="c1">// to destroy the activity.</span>
+</span><span class="hll">    <span class="k">while</span><span class="p">(</span> <span class="mi">1</span> <span class="p">)</span>
+</span><span class="hll">    <span class="p">{</span>
+</span><span class="hll">        <span class="c1">// Read all pending events.</span>
+</span><span class="hll">        <span class="kt">int</span> <span class="n">ident</span><span class="p">;</span>
+</span><span class="hll">        <span class="kt">int</span> <span class="n">events</span><span class="p">;</span>
+</span><span class="hll">        <span class="k">struct</span> <span class="n">android_poll_source</span> <span class="o">*</span><span class="n">source</span><span class="p">;</span>
+</span><span class="hll">
+</span><span class="hll">        <span class="c1">// Wait indefinitely for an event to occur.</span>
+</span><span class="hll">        <span class="k">while</span><span class="p">(</span> <span class="p">(</span> <span class="n">ident</span> <span class="o">=</span> <span class="n">ALooper_pollAll</span><span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">events</span><span class="p">,</span>
+</span><span class="hll">                                          <span class="p">(</span> <span class="kt">void</span> <span class="o">**</span> <span class="p">)</span><span class="o">&amp;</span><span class="n">source</span> <span class="p">)</span> <span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="p">)</span>
+</span><span class="hll">        <span class="p">{</span>
+</span><span class="hll">
+</span><span class="hll">            <span class="c1">// Process this event.</span>
+</span><span class="hll">            <span class="k">if</span><span class="p">(</span> <span class="n">source</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="p">)</span>
+</span><span class="hll">            <span class="p">{</span>
+</span><span class="hll">                <span class="n">source</span><span class="o">-&gt;</span><span class="n">process</span><span class="p">(</span> <span class="n">state</span><span class="p">,</span> <span class="n">source</span> <span class="p">);</span>
+</span><span class="hll">            <span class="p">}</span>
+</span><span class="hll">
+</span><span class="hll">            <span class="c1">// Check if we are exiting.</span>
+</span><span class="hll">            <span class="k">if</span><span class="p">(</span> <span class="n">state</span><span class="o">-&gt;</span><span class="n">destroyRequested</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">)</span>
+</span><span class="hll">            <span class="p">{</span>
+</span><span class="hll">                <span class="k">return</span><span class="p">;</span>
+</span><span class="hll">            <span class="p">}</span>
+</span><span class="hll">        <span class="p">}</span>
+</span><span class="hll">    <span class="p">}</span>
+</span><span class="hll"><span class="p">}</span>
+</span></pre></div>
+</div>
+<p>The new code includes <tt class="file docutils literal"><span class="pre">android_native_app_glue.h</span></tt> which provides the callbacks
+for notification of Activity life cycle events. In addition, the native application glue also
+requires an <em>android_main</em> function to be defined as the entry point for the application.</p>
+<p>To keep our sample short, we haven&#8217;t created any UI, so we simply print to the Android log
+the result of <tt class="docutils literal"><span class="pre">Fibonacci(10)</span></tt>. In addition, we do have to process application events for
+the Activity to remain responsive. This is done inside the event manager loop, where we
+process all events until the user requests the app to exit.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As the comment says, <tt class="docutils literal"><span class="pre">app_dummy()</span></tt> is needed to make sure that the glue
+module is not stripped. Without it, none of the methods the module
+would be called directly in the code, as the glue module is basically a bunch of
+callbacks, and the linker would strip the module, thus causing a
+RuntimeExeption.</p>
+</div>
+<p>Try running the application. The screen will remain blank. Check the log message for the output.
+A handy way to find it quickly is to type in the LogCat search line <tt class="docutils literal"><span class="pre">tag:fib</span></tt>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="logging-to-a-file-within-a-nativeactivity">
+<h2>Logging to a file within a NativeActivity<a class="headerlink" href="#logging-to-a-file-within-a-nativeactivity" title="Permalink to this headline">¶</a></h2>
+<p>In an earlier example we showed how we could log into a file from native code, with
+the full path filename being provided by the Java application. When running
+a NativeActivity, we will find the path available to the application using
+the <em>externalDataPath</em> member of the <em>ANativeActivity</em> struct.</p>
+<ol class="arabic">
+<li><p class="first">Open <tt class="file docutils literal"><span class="pre">fibonacci.cpp</span></tt> and add the following includes and static declarations.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;fstream&gt;</span>
+<span class="cp">#include &lt;sstream&gt;</span>
+<span class="cp">#include &lt;sys/stat.h&gt;</span>
+<span class="cp">#include &lt;errno.h&gt;</span>
+
+<span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">gLogFile</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Then add the following code to the <tt class="docutils literal"><span class="pre">android_main</span></tt> function to
+create and open the file. As opposed to what we have seen in the
+Java framework, the path might not exist, so we will need to
+create it. For this, we have developed an auxiliary function
+makepath that we will present shortly.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">android_main</span><span class="p">(</span> <span class="k">struct</span> <span class="n">android_app</span> <span class="o">*</span><span class="n">state</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Make sure glue isn&#39;t stripped.</span>
+    <span class="n">app_dummy</span><span class="p">();</span>
+
+    <span class="n">LOGV</span><span class="p">(</span> <span class="s">&quot;Fibonacci(10) = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">Fibonacci</span><span class="p">(</span> <span class="mi">10</span> <span class="p">)</span> <span class="p">);</span>
+
+<span class="hll">    <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">filename</span><span class="p">;</span>
+</span><span class="hll">    <span class="n">filename</span> <span class="o">&lt;&lt;</span> <span class="n">state</span><span class="o">-&gt;</span><span class="n">activity</span><span class="o">-&gt;</span><span class="n">externalDataPath</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;/&quot;</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;fibo_native_log.txt&quot;</span><span class="p">;</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="n">MakePath</span><span class="p">(</span> <span class="n">state</span><span class="o">-&gt;</span><span class="n">activity</span><span class="o">-&gt;</span><span class="n">externalDataPath</span><span class="p">,</span> <span class="mo">0770</span> <span class="p">);</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="c1">// Open the log file for output</span>
+</span><span class="hll">    <span class="n">gLogFile</span><span class="p">.</span><span class="n">open</span><span class="p">(</span> <span class="n">filename</span><span class="p">.</span><span class="n">str</span><span class="p">().</span><span class="n">c_str</span><span class="p">()</span> <span class="p">);</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="k">if</span><span class="p">(</span> <span class="n">gLogFile</span><span class="p">.</span><span class="n">is_open</span><span class="p">()</span> <span class="p">)</span>
+</span><span class="hll">    <span class="p">{</span>
+</span><span class="hll">        <span class="n">LOGI</span><span class="p">(</span> <span class="s">&quot;Opened log file %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">.</span><span class="n">str</span><span class="p">().</span><span class="n">c_str</span><span class="p">()</span> <span class="p">);</span>
+</span><span class="hll">        <span class="n">gLogFile</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;FibonacciActivity Native log file &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">filename</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class="hll">    <span class="p">}</span>
+</span><span class="hll">    <span class="k">else</span>
+</span><span class="hll">    <span class="p">{</span>
+</span><span class="hll">        <span class="n">LOGE</span><span class="p">(</span> <span class="s">&quot;Couldn&#39;t open the log file %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">.</span><span class="n">str</span><span class="p">().</span><span class="n">c_str</span><span class="p">()</span> <span class="p">);</span>
+</span><span class="hll">    <span class="p">}</span>
+</span></pre></div>
+</div>
+</li>
+<li><p class="first">Add the <em>MakePath</em>  and <em>MakeDir</em> functions before <em>android_main</em>:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="k">static</span> <span class="kt">int</span> <span class="nf">MakeDir</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="k">const</span> <span class="o">&amp;</span><span class="n">path</span><span class="p">,</span> <span class="kt">mode_t</span> <span class="n">mode</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="n">stat</span> <span class="n">st</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">stat</span><span class="p">(</span> <span class="n">path</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">st</span> <span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span> <span class="n">mkdir</span><span class="p">(</span> <span class="n">path</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">mode</span> <span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">errno</span> <span class="o">!=</span> <span class="n">EEXIST</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">S_ISDIR</span><span class="p">(</span> <span class="n">st</span><span class="p">.</span><span class="n">st_mode</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">errno</span> <span class="o">=</span> <span class="n">ENOTDIR</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">bool</span> <span class="nf">MakePath</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="k">const</span> <span class="o">&amp;</span><span class="n">path</span><span class="p">,</span> <span class="kt">mode_t</span> <span class="n">mode</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">cstr</span><span class="p">(</span> <span class="n">path</span> <span class="p">);</span>
+
+    <span class="kt">int</span> <span class="n">cpos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ppos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">success</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span> <span class="n">success</span> <span class="o">&amp;&amp;</span> <span class="p">(</span> <span class="n">cpos</span> <span class="o">=</span> <span class="n">cstr</span><span class="p">.</span><span class="n">find_first_of</span><span class="p">(</span> <span class="s">&quot;/&quot;</span><span class="p">,</span> <span class="n">ppos</span> <span class="p">)</span> <span class="p">)</span> <span class="o">!=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">::</span><span class="n">npos</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span> <span class="n">cpos</span> <span class="o">!=</span> <span class="n">ppos</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="cm">/* Neither root nor double slash in path */</span>
+            <span class="n">cstr</span><span class="p">[</span><span class="n">cpos</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+            <span class="n">success</span> <span class="o">=</span> <span class="n">MakeDir</span><span class="p">(</span> <span class="n">cstr</span><span class="p">,</span> <span class="n">mode</span> <span class="p">);</span>
+            <span class="n">cstr</span><span class="p">[</span><span class="n">cpos</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;/&#39;</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">ppos</span> <span class="o">=</span> <span class="n">cpos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span><span class="p">(</span> <span class="n">success</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="n">MakeDir</span><span class="p">(</span> <span class="n">path</span><span class="p">,</span> <span class="n">mode</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">success</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Modify the manifest to give the app the rights to write to external storage.</p>
+</li>
+<li><p class="first">Try it out.</p>
+</li>
+</ol>
+<div class="admonition-see-also admonition">
+<p class="first admonition-title">See also</p>
+<ol class="last arabic simple">
+<li>The NDK <tt class="docutils literal"><span class="pre">native-activity</span></tt> sample. You can find it under <tt class="docutils literal"><span class="pre">android-ndk-r8e/samples/native-activity</span></tt></li>
+<li>The OpenGL ES tutorial section. We will provide a framework for drawing from a NativeActivity and
+interacting with touch and other events.</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="opengles.html" title="OpenGL ES 2.0"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="devtools.html" title="Development tools"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, NVIDIA Research - Mobile Visual Computing.
+      Last updated on Jun 13, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

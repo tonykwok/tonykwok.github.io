@@ -1,0 +1,203 @@
+{
+  "componentChunkName": "component---src-pages-work-js",
+  "path": "/work/",
+  "result": {
+    "data": {
+      "site": {
+        "siteMetadata": {
+          "author": { "name": "Tony Guo", "url": "https://kwapoong.github.io" }
+        }
+      },
+      "allMarkdownRemark": {
+        "edges": [
+          {
+            "node": {
+              "id": "58de9813-d9cc-5b1f-aa8e-16b0f1fef71c",
+              "excerpt": "<p>TODO</p>",
+              "timeToRead": 1,
+              "frontmatter": {
+                "title": "2 Little Rosebuds",
+                "date": "January 21, 2020",
+                "path": "/work/2-little-rosebuds/",
+                "author": null,
+                "excerpt": "Creative and site development for 2 Little Rosebuds — a blog all about subscription boxes.",
+                "featured": null,
+                "categories": ["work"],
+                "image": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1.7857142857142858,
+                      "src": "/static/ab2790e0c90f736bffa60842de98ef88/da113/2-little-rosebuds-feature.jpg",
+                      "srcSet": "/static/ab2790e0c90f736bffa60842de98ef88/3f132/2-little-rosebuds-feature.jpg 100w,\n/static/ab2790e0c90f736bffa60842de98ef88/8850c/2-little-rosebuds-feature.jpg 200w,\n/static/ab2790e0c90f736bffa60842de98ef88/da113/2-little-rosebuds-feature.jpg 400w,\n/static/ab2790e0c90f736bffa60842de98ef88/7223d/2-little-rosebuds-feature.jpg 600w,\n/static/ab2790e0c90f736bffa60842de98ef88/f2cbb/2-little-rosebuds-feature.jpg 800w,\n/static/ab2790e0c90f736bffa60842de98ef88/236a8/2-little-rosebuds-feature.jpg 1580w",
+                      "sizes": "(max-width: 400px) 100vw, 400px"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "node": {
+              "id": "c588bcd7-94cd-5e3e-ae49-0ef86ce7db85",
+              "excerpt": "",
+              "timeToRead": 1,
+              "frontmatter": {
+                "title": "PaperFaces iPad project",
+                "date": "November 06, 2018",
+                "path": "/paperfaces/",
+                "author": null,
+                "excerpt": "Portraits painted digitally on an iPad with Paper for iOS.",
+                "featured": null,
+                "categories": ["work"],
+                "image": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1.7857142857142858,
+                      "src": "/static/f3691df6c0e8169e366d8b1f7acbfa7b/da113/paperfaces-project-feature.jpg",
+                      "srcSet": "/static/f3691df6c0e8169e366d8b1f7acbfa7b/3f132/paperfaces-project-feature.jpg 100w,\n/static/f3691df6c0e8169e366d8b1f7acbfa7b/8850c/paperfaces-project-feature.jpg 200w,\n/static/f3691df6c0e8169e366d8b1f7acbfa7b/da113/paperfaces-project-feature.jpg 400w,\n/static/f3691df6c0e8169e366d8b1f7acbfa7b/7223d/paperfaces-project-feature.jpg 600w,\n/static/f3691df6c0e8169e366d8b1f7acbfa7b/f2cbb/paperfaces-project-feature.jpg 800w,\n/static/f3691df6c0e8169e366d8b1f7acbfa7b/9352a/paperfaces-project-feature.jpg 1600w",
+                      "sizes": "(max-width: 400px) 100vw, 400px"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "node": {
+              "id": "6f11c9b4-b673-569f-b566-253e6e234dd1",
+              "excerpt": "",
+              "timeToRead": 1,
+              "frontmatter": {
+                "title": "Procreate iPad paintings",
+                "date": "May 01, 2017",
+                "path": "/procreate-paintings/",
+                "author": null,
+                "excerpt": "Portraits painted digitally on an iPad with Procreate for iOS.",
+                "featured": null,
+                "categories": ["work"],
+                "image": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1.7857142857142858,
+                      "src": "/static/09d1a0b9d7ad4232d80cae6fcf2d0b72/da113/procreate-paintings-feature.jpg",
+                      "srcSet": "/static/09d1a0b9d7ad4232d80cae6fcf2d0b72/3f132/procreate-paintings-feature.jpg 100w,\n/static/09d1a0b9d7ad4232d80cae6fcf2d0b72/8850c/procreate-paintings-feature.jpg 200w,\n/static/09d1a0b9d7ad4232d80cae6fcf2d0b72/da113/procreate-paintings-feature.jpg 400w,\n/static/09d1a0b9d7ad4232d80cae6fcf2d0b72/7223d/procreate-paintings-feature.jpg 600w,\n/static/09d1a0b9d7ad4232d80cae6fcf2d0b72/f2cbb/procreate-paintings-feature.jpg 800w,\n/static/09d1a0b9d7ad4232d80cae6fcf2d0b72/9352a/procreate-paintings-feature.jpg 1600w",
+                      "sizes": "(max-width: 400px) 100vw, 400px"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "node": {
+              "id": "c2b6e5ec-9492-5ca0-90aa-ae6d52512430",
+              "excerpt": "",
+              "timeToRead": 1,
+              "frontmatter": {
+                "title": "Tiny paintings",
+                "date": "April 08, 2017",
+                "path": "/tiny-paintings/",
+                "author": null,
+                "excerpt": "Miniature watercolor portraits painted at really small sizes.",
+                "featured": null,
+                "categories": ["work"],
+                "image": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1.7857142857142858,
+                      "src": "/static/0a60255b10bab55ffe87c6105696b174/da113/tiny-paintings.jpg",
+                      "srcSet": "/static/0a60255b10bab55ffe87c6105696b174/3f132/tiny-paintings.jpg 100w,\n/static/0a60255b10bab55ffe87c6105696b174/8850c/tiny-paintings.jpg 200w,\n/static/0a60255b10bab55ffe87c6105696b174/da113/tiny-paintings.jpg 400w,\n/static/0a60255b10bab55ffe87c6105696b174/7223d/tiny-paintings.jpg 600w,\n/static/0a60255b10bab55ffe87c6105696b174/f2cbb/tiny-paintings.jpg 800w,\n/static/0a60255b10bab55ffe87c6105696b174/356ef/tiny-paintings.jpg 1280w",
+                      "sizes": "(max-width: 400px) 100vw, 400px"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "githubData": {
+        "data": {
+          "viewer": {
+            "repositories": {
+              "nodes": [
+                {
+                  "name": "arpt",
+                  "description": "Android Resource Pruning Tool",
+                  "homepageUrl": "",
+                  "resourcePath": "/tonykwok/arpt",
+                  "updatedAt": "2022-01-21",
+                  "languages": {
+                    "edges": [
+                      { "node": { "name": "Java", "color": "#b07219" } }
+                    ]
+                  },
+                  "licenseInfo": { "name": "Apache License 2.0" },
+                  "stargazers": { "totalCount": 0 }
+                },
+                {
+                  "name": "VendorTagHelper",
+                  "description": "Android Camera API2 VendorTag Helper",
+                  "homepageUrl": "",
+                  "resourcePath": "/tonykwok/VendorTagHelper",
+                  "updatedAt": "2022-01-21",
+                  "languages": {
+                    "edges": [
+                      { "node": { "name": "Java", "color": "#b07219" } }
+                    ]
+                  },
+                  "licenseInfo": { "name": "Apache License 2.0" },
+                  "stargazers": { "totalCount": 0 }
+                },
+                {
+                  "name": "aerith",
+                  "description": "A Filthy Rich Swing Demo by Romain Guy at JavaOne 2006",
+                  "homepageUrl": "https://java.net/projects/aerith/",
+                  "resourcePath": "/tonykwok/aerith",
+                  "updatedAt": "2017-09-26",
+                  "languages": {
+                    "edges": [
+                      { "node": { "name": "Java", "color": "#b07219" } }
+                    ]
+                  },
+                  "licenseInfo": null,
+                  "stargazers": { "totalCount": 1 }
+                },
+                {
+                  "name": "regex4j",
+                  "description": "A Regular Expression Engine ported from Microsoft's .Net Core Libraries for Java platform",
+                  "homepageUrl": "",
+                  "resourcePath": "/tonykwok/regex4j",
+                  "updatedAt": "2020-05-12",
+                  "languages": {
+                    "edges": [
+                      { "node": { "name": "Java", "color": "#b07219" } }
+                    ]
+                  },
+                  "licenseInfo": null,
+                  "stargazers": { "totalCount": 1 }
+                },
+                {
+                  "name": "swingfx",
+                  "description": "SwingFX is a suite of effects, components, and more that are written in Java, typically using Java2D and Swing.",
+                  "homepageUrl": null,
+                  "resourcePath": "/tonykwok/swingfx",
+                  "updatedAt": "2021-11-02",
+                  "languages": {
+                    "edges": [
+                      { "node": { "name": "Java", "color": "#b07219" } }
+                    ]
+                  },
+                  "licenseInfo": null,
+                  "stargazers": { "totalCount": 2 }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "pageContext": {}
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

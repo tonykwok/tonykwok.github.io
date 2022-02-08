@@ -1,0 +1,46 @@
+{
+  "polyfill": ["/polyfill-02643d2ff09a53935853.js"],
+  "app": ["/app-83b8715d162b5b300350.js"],
+  "component---src-pages-404-js": [
+    "/component---src-pages-404-js-fdeca9b215cae55a6928.js"
+  ],
+  "component---src-pages-author-js": [
+    "/component---src-pages-author-js-95ff9f4ad11b54159b51.js"
+  ],
+  "component---src-pages-faqs-index-js": [
+    "/component---src-pages-faqs-index-js-255cdbb2e2faf15a0c9f.js"
+  ],
+  "component---src-pages-index-js": [
+    "/component---src-pages-index-js-dc08cd93d407cd7e2883.js"
+  ],
+  "component---src-pages-paperfaces-js": [
+    "/component---src-pages-paperfaces-js-20d38b5625363fe09026.js"
+  ],
+  "component---src-pages-procreate-paintings-js": [
+    "/component---src-pages-procreate-paintings-js-b0b19d7cff80d3f5eee3.js"
+  ],
+  "component---src-pages-tag-js": [
+    "/component---src-pages-tag-js-10169ea4139db7d1a4a2.js"
+  ],
+  "component---src-pages-tiny-paintings-js": [
+    "/component---src-pages-tiny-paintings-js-97ab8714d47186adab2c.js"
+  ],
+  "component---src-pages-work-js": [
+    "/component---src-pages-work-js-ed1e16b607ff3668320d.js"
+  ],
+  "component---src-templates-authors-js": [
+    "/component---src-templates-authors-js-cb756db779615c8e3df2.js"
+  ],
+  "component---src-templates-categories-js": [
+    "/component---src-templates-categories-js-082838275a8ab8847f9b.js"
+  ],
+  "component---src-templates-page-js": [
+    "/component---src-templates-page-js-4e213db66a102f3df615.js"
+  ],
+  "component---src-templates-post-js": [
+    "/component---src-templates-post-js-4ec2f3b6033828092b5b.js"
+  ],
+  "component---src-templates-tags-js": [
+    "/component---src-templates-tags-js-2b803c3e298f40e89c53.js"
+  ]
+}

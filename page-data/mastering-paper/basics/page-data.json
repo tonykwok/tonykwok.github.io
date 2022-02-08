@@ -1,0 +1,360 @@
+{
+  "componentChunkName": "component---src-templates-post-js",
+  "path": "/mastering-paper/basics/",
+  "result": {
+    "data": {
+      "markdownRemark": {
+        "frontmatter": {
+          "title": "Mastering Paper for iOS: back to the basics",
+          "authors": [{ "id": "mmistakes", "name": "Michael Rose" }],
+          "date": "2014-02-09T00:00:00.000Z",
+          "date_pretty": "February 9th, 2014",
+          "date_from_now": "8 years ago",
+          "last_modified_at": "2019-09-12T20:07:27.000Z",
+          "last_modified_at_from_now": "2 years ago",
+          "path": "/mastering-paper/basics/",
+          "author": null,
+          "excerpt": "A refresher tutorial on Paper for iOS drawing and painting techniques, along with color theory principles for good measure.",
+          "tags": ["Paper for iOS", "tutorial", "Apple"],
+          "image": {
+            "childImageSharp": {
+              "fluid": {
+                "aspectRatio": 1.7741935483870968,
+                "src": "/static/56f71a1f107d6e3f300192eb73acd1d3/fc20c/paper-53-basics-feature.jpg",
+                "srcSet": "/static/56f71a1f107d6e3f300192eb73acd1d3/6e883/paper-53-basics-feature.jpg 275w,\n/static/56f71a1f107d6e3f300192eb73acd1d3/a09ef/paper-53-basics-feature.jpg 550w,\n/static/56f71a1f107d6e3f300192eb73acd1d3/fc20c/paper-53-basics-feature.jpg 1100w,\n/static/56f71a1f107d6e3f300192eb73acd1d3/9352a/paper-53-basics-feature.jpg 1600w",
+                "sizes": "(max-width: 1100px) 100vw, 1100px"
+              },
+              "fixed": {
+                "src": "/static/56f71a1f107d6e3f300192eb73acd1d3/fc20c/paper-53-basics-feature.jpg",
+                "height": 619,
+                "width": 1100
+              }
+            }
+          },
+          "toc": true,
+          "comments": true,
+          "comments_locked": true,
+          "hide_meta": null
+        },
+        "id": "7b70104f-7e9f-5a4f-83f2-5f687109c2b3",
+        "html": "<p>TODO</p>",
+        "excerpt": "TODO",
+        "timeToRead": 1,
+        "tableOfContents": ""
+      },
+      "comments": {
+        "edges": [
+          {
+            "node": {
+              "id": "f5d48372-4725-5d61-b6b8-53a1f66bc7a7",
+              "frontmatter": {
+                "name": "Tamara",
+                "email": null,
+                "friendlyDate": "February 10, 2014",
+                "iso8601Date": "2014-02-10T04:08:40.000Z",
+                "published": null
+              },
+              "html": "<p>This? This is freakin’ awesome! Thanks so much for sharing your mad skills and\nexpertise with us!</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "a7db81f9-2370-5132-a467-2bcd594464fc",
+              "frontmatter": {
+                "name": "Will",
+                "email": null,
+                "friendlyDate": "February 12, 2014",
+                "iso8601Date": "2014-02-12T05:42:10.000Z",
+                "published": null
+              },
+              "html": "<p>Nicely done! Looking forward to more how-to articles!</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "3ddf3fda-8af5-50d1-8b97-81d9adee9ba7",
+              "frontmatter": {
+                "name": "rackom",
+                "email": null,
+                "friendlyDate": "February 12, 2014",
+                "iso8601Date": "2014-02-12T07:36:53.000Z",
+                "published": null
+              },
+              "html": "<p>Great tutorial! :) Keep going.</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "b44fd14f-4e45-5901-9505-240194453346",
+              "frontmatter": {
+                "name": "James Daly",
+                "email": null,
+                "friendlyDate": "March 19, 2014",
+                "iso8601Date": "2014-03-19T04:38:37.000Z",
+                "published": null
+              },
+              "html": "<p>You are amazing, thank you so much for making these articles!</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "c0576bc0-bc26-5174-b639-62fa207967b3",
+              "frontmatter": {
+                "name": "Ben Hoffer",
+                "email": null,
+                "friendlyDate": "April 06, 2014",
+                "iso8601Date": "2014-04-06T20:15:57.000Z",
+                "published": null
+              },
+              "html": "<p>You good sir are the man…thanks for sharing your brilliance :)</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "7a8d5d79-4b44-5e83-83a4-db5fe6a06c9b",
+              "frontmatter": {
+                "name": "Hong",
+                "email": null,
+                "friendlyDate": "April 07, 2014",
+                "iso8601Date": "2014-04-07T11:09:34.000Z",
+                "published": null
+              },
+              "html": "<p>Very nice written articles, looking forward to the new ones!</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "fd478367-2447-579a-8298-22b8cb93e973",
+              "frontmatter": {
+                "name": "AbbyObi",
+                "email": null,
+                "friendlyDate": "July 12, 2014",
+                "iso8601Date": "2014-07-12T09:23:50.000Z",
+                "published": null
+              },
+              "html": "<p>Awesome! Thanks for the great tutorial :)</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "bd0b8773-97e1-56e9-95b1-bf35280422c9",
+              "frontmatter": {
+                "name": "idol chan",
+                "email": null,
+                "friendlyDate": "September 09, 2014",
+                "iso8601Date": "2014-09-09T12:14:21.000Z",
+                "published": null
+              },
+              "html": "<p>The level of awesomeness is too damn high</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "7a647c88-2639-516b-86a9-0b69762169cf",
+              "frontmatter": {
+                "name": "lesley",
+                "email": null,
+                "friendlyDate": "December 10, 2014",
+                "iso8601Date": "2014-12-10T07:26:01.000Z",
+                "published": null
+              },
+              "html": "<p>Fantastic help for getting started with 53. Thanks so much. Your work is amazing</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "c8e3c59f-8f53-56d1-b166-dd3a089076cd",
+              "frontmatter": {
+                "name": "Al.",
+                "email": null,
+                "friendlyDate": "January 17, 2015",
+                "iso8601Date": "2015-01-17T20:13:08.000Z",
+                "published": null
+              },
+              "html": "<p>Need the most basic instruction of all!!! How do I start a new drawing, by\nbringing up a blank page, which allows me to <em>swipe</em> up to bring in the tool\n<em>bar</em></p>"
+            }
+          },
+          {
+            "node": {
+              "id": "37d47845-20dc-5a33-9695-8f26deb26729",
+              "frontmatter": {
+                "name": "Michael Rose",
+                "email": "1ce71bc10b86565464b612093d89707e",
+                "friendlyDate": "January 17, 2015",
+                "iso8601Date": "2015-01-17T20:41:28.000Z",
+                "published": null
+              },
+              "html": "<p>Pinch the page and it will zoom out to a view that allows you to swipe through,\nadd, or delete pages. Pinch again and you’ll see all of your journals. For more\nhelp check FiftyThree’s support page, it has videos and animations showing how\nto do all the basics.</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "21dc61c1-ef18-5477-8750-e59386f44a0e",
+              "frontmatter": {
+                "name": "KA",
+                "email": null,
+                "friendlyDate": "March 22, 2015",
+                "iso8601Date": "2015-03-22T08:34:16.000Z",
+                "published": null
+              },
+              "html": "<p>Thank you for this guide!! There is still one thing I do not understand: I have\nwatched your video on the watercolor tool and tried to colour slowly and evenly\nin one go but the final outcome still looks blotchy. I’m using my finger for\nthis, could that be it?</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "0bd93209-6198-580f-834b-e352aa67d2bb",
+              "frontmatter": {
+                "name": "Michael Rose",
+                "email": "1ce71bc10b86565464b612093d89707e",
+                "friendlyDate": "March 22, 2015",
+                "iso8601Date": "2015-03-22T14:05:28.000Z",
+                "published": null
+              },
+              "html": "<p>I’ve noticed that painting with the Pencil stylus allows you paint faster and\ndoes seem to produce a smoother tone easier, but the same effect is possible\nusing just your finger.</p>\n<p>Try moving in a small circular pattern as you paint, it will help even things.\nAnd of course do not lift your finger off the screen or else you’ll start to\ndarken areas and won’t get that smooth tone.</p>\n<p>Other than that keep practicing.</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "6cd99ba4-e246-518d-b5d2-31b21dfe78db",
+              "frontmatter": {
+                "name": "Graham Krewinghaus",
+                "email": null,
+                "friendlyDate": "July 15, 2015",
+                "iso8601Date": "2015-07-15T16:16:53.000Z",
+                "published": null
+              },
+              "html": "<p>Hi Michael, I was scrolling down your page, looking for inspiration (which I do\nwhenever I have drawer’s block), and I saw your ink splatter example and\nwondered if you could put that in some more detail. Would you mind maybe\nexplaining your process more extensively?</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "0bd00b66-f4bc-5d0d-9f2b-053b88becccc",
+              "frontmatter": {
+                "name": "Michael Rose",
+                "email": "1ce71bc10b86565464b612093d89707e",
+                "friendlyDate": "July 15, 2015",
+                "iso8601Date": "2015-07-15T18:05:01.000Z",
+                "published": null
+              },
+              "html": "<p>There’s not much more to the process than what I included above.</p>\n<ol>\n<li>Use the pen tools to create the general shape and fill it in.</li>\n<li>Add some dots of various sizes around it to simulate the splatter.</li>\n<li>To make some blobs look more 3D add highlights using white or another light\ncolor with the pencil tool.</li>\n<li>To finish it off add a drop shadow with a light gray and the watercolor\nbrush, zoom in, and paint quickly along the edge where you want to cast a\nshadow.</li>\n</ol>"
+            }
+          },
+          {
+            "node": {
+              "id": "82fa8b4d-e7ff-5b74-aa66-4bf635448bfd",
+              "frontmatter": {
+                "name": "Laura Tucker",
+                "email": null,
+                "friendlyDate": "September 09, 2015",
+                "iso8601Date": "2015-09-09T14:23:41.000Z",
+                "published": null
+              },
+              "html": "<p>I just found your site and articles about Paper and want to thank you!</p>\n<p>They are beautiful, very well written and have inspired me to get more out of my\nPencil and Paper.</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "6a2fa4b1-8da5-5e8b-8a74-2a707eff30da",
+              "frontmatter": {
+                "name": "Michael Rose",
+                "email": "1ce71bc10b86565464b612093d89707e",
+                "friendlyDate": "September 09, 2015",
+                "iso8601Date": "2015-09-09T14:27:00.000Z",
+                "published": null
+              },
+              "html": "<p>You’re welcome Laura! Glad you’ve found them useful.</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "239cb6d9-dcd9-5540-a473-03ec2a611de2",
+              "frontmatter": {
+                "name": "Laura Tucker",
+                "email": null,
+                "friendlyDate": "September 09, 2015",
+                "iso8601Date": "2015-09-09T15:17:24.000Z",
+                "published": null
+              },
+              "html": "<p>My pleasure, Michael. I posted a couple of links to your articles on\n<a href=\"https://lauratucker.com/pencil-by-53/\">a blog I wrote a couple of months back</a>\nso my readers can find them.</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "7e80a442-7abf-59e2-8089-28894c50ae14",
+              "frontmatter": {
+                "name": "Lynn Mason",
+                "email": "19976dbd37e6042f42d765c2f01bf5e7",
+                "friendlyDate": "April 13, 2017",
+                "iso8601Date": "2017-04-13T09:29:01.092Z",
+                "published": null
+              },
+              "html": "<p>Hi Michael I’ve never found anything that makes the transition from pencil and\npaper to digital that is so effortless. More so because of your great tutorials.\nI have a question on neutralizing colors by mixing with complement. I dragged\nthe small circle around the color mixer with the compliment also selected but I\ndidn’t see a difference. Perhaps I’m misunderstanding the instruction: “To\nneutralize them, do one full rotation of the Color Mixer with both complementary\ncolors selected.”</p>\n<p>My Pencil by 53 is on the way, but I’m learning while using my finger and\nanother stylus.</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "0cedce9e-8e7f-5719-b6e7-4acf03744583",
+              "frontmatter": {
+                "name": "Michael Rose",
+                "email": "1ce71bc10b86565464b612093d89707e",
+                "friendlyDate": "April 13, 2017",
+                "iso8601Date": "2017-04-13T11:57:08.477Z",
+                "published": null
+              },
+              "html": "<p>Did you rotate the little circle clockwise? If you have say red in the big\ncircle, then select a green from the palettes on the right, when you rotate the\nbig circle clockwise you should see it change colors as green is mixed into it.</p>\n<p>Looks something like this:</p>\n<p><img src=\"../../../images/paper-53-mixing-complementary-gray-2.jpg\" alt=\"neutralizing a color\"></p>"
+            }
+          },
+          {
+            "node": {
+              "id": "74c7163a-be2c-5328-a5bc-055b4207cb2f",
+              "frontmatter": {
+                "name": "Ger",
+                "email": "dd6ec1c54573a96354b359d0c338196f",
+                "friendlyDate": "May 21, 2017",
+                "iso8601Date": "2017-05-21T02:41:46.120Z",
+                "published": null
+              },
+              "html": "<p>Do you have any advice about different papers for ball pens. Ball ROller Gel and\nFelt I doodle. But some papers are way better than others and I’m having\ndifficulty figuring out . I have come across newsprint (like the wight of a\ndaily paper. But no idea where to get more. Or even what words I us to search\nfor it. any help will be appreciated</p>"
+            }
+          },
+          {
+            "node": {
+              "id": "bc6b74ea-b302-5836-8fc7-62f6156d70a2",
+              "frontmatter": {
+                "name": "Michael Rose",
+                "email": "1ce71bc10b86565464b612093d89707e",
+                "friendlyDate": "May 22, 2017",
+                "iso8601Date": "2017-05-22T12:50:32.560Z",
+                "published": null
+              },
+              "html": "<p>Not really. I work mostly digital these days so I’m probably the wrong person to\nask for advice on traditional materials.</p>"
+            }
+          }
+        ]
+      }
+    },
+    "pageContext": {
+      "next": {
+        "frontmatter": {
+          "path": "/paperfaces/yorgle-portrait/",
+          "title": "Lego Man",
+          "authors": [{ "id": "mmistakes", "name": "Michael Rose" }],
+          "categories": ["paperfaces"],
+          "tags": ["portrait", "illustration", "Paper for iOS"]
+        },
+        "fileAbsolutePath": "/home/28041/opensource/github.com/tonykwok/made-mistakes-gatsby/src/posts/paperfaces/yorgle-portrait.md"
+      },
+      "previous": {
+        "frontmatter": {
+          "path": "/procreate-paintings/wendy-rose-portrait/",
+          "title": "Tattoos turning to mud",
+          "authors": [{ "id": "mmistakes", "name": "Michael Rose" }],
+          "categories": ["procreate-paintings"],
+          "tags": ["Procreate", "portrait", "illustration", "time lapse"]
+        },
+        "fileAbsolutePath": "/home/28041/opensource/github.com/tonykwok/made-mistakes-gatsby/src/posts/procreate-paintings/wendy-rose-portrait.md"
+      }
+    }
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

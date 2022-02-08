@@ -1,0 +1,71 @@
+{
+  "componentChunkName": "component---src-templates-post-js",
+  "path": "/tiny-paintings/michael-rose-painting/",
+  "result": {
+    "data": {
+      "markdownRemark": {
+        "frontmatter": {
+          "title": "Cut My Face in Half",
+          "authors": [{ "id": "mmistakes", "name": "Michael Rose" }],
+          "date": "2015-10-16T00:00:00.000Z",
+          "date_pretty": "October 16th, 2015",
+          "date_from_now": "6 years ago",
+          "last_modified_at": "2019-12-31T20:53:50.000Z",
+          "last_modified_at_from_now": "2 years ago",
+          "path": "/tiny-paintings/michael-rose-painting/",
+          "author": null,
+          "excerpt": "Tiny portrait of Michael Rose painted with watercolor on hot press paper.",
+          "tags": ["watercolor", "portrait", "self portrait", "illustration"],
+          "image": {
+            "childImageSharp": {
+              "fluid": {
+                "aspectRatio": 1.7515923566878981,
+                "src": "/static/e9fedd5a391415212f5259e215a883e0/fc20c/painting-michael-rose.jpg",
+                "srcSet": "/static/e9fedd5a391415212f5259e215a883e0/6e883/painting-michael-rose.jpg 275w,\n/static/e9fedd5a391415212f5259e215a883e0/a09ef/painting-michael-rose.jpg 550w,\n/static/e9fedd5a391415212f5259e215a883e0/fc20c/painting-michael-rose.jpg 1100w,\n/static/e9fedd5a391415212f5259e215a883e0/9352a/painting-michael-rose.jpg 1600w",
+                "sizes": "(max-width: 1100px) 100vw, 1100px"
+              },
+              "fixed": {
+                "src": "/static/e9fedd5a391415212f5259e215a883e0/fc20c/painting-michael-rose.jpg",
+                "height": 629,
+                "width": 1100
+              }
+            }
+          },
+          "toc": null,
+          "comments": null,
+          "comments_locked": null,
+          "hide_meta": null
+        },
+        "id": "bf112289-5c3d-526d-8a6e-a24f05b80d80",
+        "html": "<p>TODO</p>",
+        "excerpt": "TODO",
+        "timeToRead": 1,
+        "tableOfContents": ""
+      },
+      "comments": { "edges": [] }
+    },
+    "pageContext": {
+      "next": {
+        "frontmatter": {
+          "path": "/work/2-little-rosebuds/",
+          "title": "2 Little Rosebuds",
+          "authors": [{ "id": "mmistakes", "name": "Michael Rose" }],
+          "categories": ["work"],
+          "tags": ["design", "web development"]
+        },
+        "fileAbsolutePath": "/home/28041/opensource/github.com/tonykwok/made-mistakes-gatsby/src/posts/work/2-little-rosebuds.md"
+      },
+      "previous": {
+        "frontmatter": {
+          "path": "/paperfaces/yorgle-portrait/",
+          "title": "Lego Man",
+          "authors": [{ "id": "mmistakes", "name": "Michael Rose" }],
+          "categories": ["paperfaces"],
+          "tags": ["portrait", "illustration", "Paper for iOS"]
+        },
+        "fileAbsolutePath": "/home/28041/opensource/github.com/tonykwok/made-mistakes-gatsby/src/posts/paperfaces/yorgle-portrait.md"
+      }
+    }
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

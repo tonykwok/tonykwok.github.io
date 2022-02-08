@@ -1,0 +1,31 @@
+{
+  "componentChunkName": "component---src-pages-tag-js",
+  "path": "/tag/",
+  "result": {
+    "data": {
+      "allMarkdownRemark": {
+        "group": [
+          { "fieldValue": "Android", "totalCount": 3 },
+          { "fieldValue": "Apple", "totalCount": 1 },
+          { "fieldValue": "Git", "totalCount": 2 },
+          { "fieldValue": "Graphics", "totalCount": 2 },
+          { "fieldValue": "Paper for iOS", "totalCount": 3 },
+          { "fieldValue": "Procreate", "totalCount": 2 },
+          { "fieldValue": "design", "totalCount": 1 },
+          { "fieldValue": "drawing", "totalCount": 3 },
+          { "fieldValue": "iPad", "totalCount": 1 },
+          { "fieldValue": "illustration", "totalCount": 6 },
+          { "fieldValue": "painting", "totalCount": 3 },
+          { "fieldValue": "portrait", "totalCount": 6 },
+          { "fieldValue": "self portrait", "totalCount": 1 },
+          { "fieldValue": "time lapse", "totalCount": 1 },
+          { "fieldValue": "tutorial", "totalCount": 1 },
+          { "fieldValue": "watercolor", "totalCount": 2 },
+          { "fieldValue": "web development", "totalCount": 1 }
+        ]
+      }
+    },
+    "pageContext": {}
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

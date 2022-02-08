@@ -1,0 +1,213 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script>
+
+		var dpis = [
+				{label:'ldpi', 			value:120, scale:0.75,    factor:0.75, 		description:'Low density', 								},
+				{label:'mdpi', 			value:160, scale:1,       factor:1, 		description:'Medium density BASELINE', 					},
+				{label:'tvdpi', 		value:213, scale:1.33125, factor:1.0, 		description:'TV density', 								},
+				{label:'hdpi', 			value:240, scale:1.5,     factor:1.2, 		description:'High density'								},
+				{label:'xhdpi', 		value:320, scale:2,       factor:1.8,		description:'Extra high density'						},
+				{label:'420dpi', 		value:420, scale:2.625,   factor:1.4,		description:'Extra high density'						},
+				{label:'440dpi', 		value:440, scale:2.75,    factor:1.5,		description:'Extra high density'						},
+				{label:'xxhdpi', 		value:480, scale:3,       factor:1.6, 		description:'Extra Extra high density', 				},
+				{label:'560dpi', 		value:560, scale:3.5,     factor:1.9, 		description:'Extra Extra high density', 				},
+				{label:'xxxhdpi', 		value:640, scale:4,       factor:2.0, 		description:'Extra Extra Extra high density', 			}
+		];
+
+		var BASE_DPI = 160;
+
+		function clear() {
+		    document.getElementById("error").innerHTML = "";
+		    for(var i = 0; i < dpis.length; i++) {
+		        var data = dpis[i];
+				document.getElementById("dp_" + i).innerHTML = "?dp"
+				document.getElementById("px_" + i).innerHTML = "?px"
+			}
+		}
+
+		//pixel = dps * ( density / 160)
+		//dps = pixel / ( density/160 )
+		function calc() {
+
+			clear();
+
+			if (isNaN(parseFloat(document.getElementById("value").value))) {
+				var error = "Unit must be a number."
+				document.getElementById("error").innerHTML = error;
+				return
+			}
+
+			for(var i = 0; i < dpis.length; i++) {
+				var data = dpis[i];
+				if (isNaN(parseFloat(document.getElementById("sf_" + i).value))) {
+					var error = "Scale factor must be a number.";
+					document.getElementById("error").innerHTML = error;
+					return;
+				}
+			}
+
+			var unit = document.getElementById("unit").value;
+			var index = parseInt(document.getElementById("density").value);
+			var d = dpis[index].value;
+			var f = parseFloat(document.getElementById("sf_" + index).value);
+			var s = d / BASE_DPI;
+
+			if (unit == "px") {
+				var px = parseFloat(document.getElementById("value").value);
+				var dp = px / s;
+			} else {
+				var dp = parseFloat(document.getElementById("value").value);
+			}
+
+			for(var i = 0; i < dpis.length; i++) {
+				var data = dpis[i];
+				var factor = parseFloat(document.getElementById("sf_" + i).value);
+				var dip = dp * (factor / f)
+				var pix = dip * data.scale;
+
+
+				document.getElementById("dp_" + i).innerHTML = dip.toFixed(3)
+				document.getElementById("px_" + i).innerHTML = pix.toFixed(3)
+			}
+		}
+
+		function unitChange() {
+			var el = document.getElementById("density");
+			var unit = document.getElementById("unit").value;
+
+			if (unit == "dp") {
+				// el.disabled = true;
+			} else {
+				// el.disabled = false;
+			}
+
+			calc();
+		}
+
+		function render() {
+			var html = "";
+			for(var i = 0; i < dpis.length; i++) {
+				var data = dpis[i];
+				var selected = BASE_DPI == data.value ? "selected" : "";
+				html+="<option " + selected + " value='" + i + "'>" + data.description + " (" + data.value + "dpi, " + data.label + ", " + data.scale + "x) </i> </option>";
+			}
+
+			document.getElementById("density").innerHTML = html;
+
+			var res = "<table>";
+			res += "<tr align='right'>"
+			res += "<th scope='row' width='120px'>DIMENSIONS</th>";
+			res += "<th scope='row' width='120px'>SCALE FACTOR<sup>*</sup></th>"
+			res += "<th scope='row' width='120px'>DIP</th>";
+			res += "<th scope='row' width='120px'>PIX</th>";
+			res += "</tr>"
+			for(var i = 0; i < dpis.length; i++) {
+				var data = dpis[i];
+				var disabled = BASE_DPI == data.value ? "disabled" : "";
+				res += "<tr align='right'>"
+				res += "<th scope='col' width='120px'>" + data.label + "@" + data.scale + "x</th>";
+				res += "<td><input " + disabled + " type='text' value='" + data.factor + "' id='sf_" + i + "' onkeyup='calc()' style='width:80px' /></td>"
+				res += "<td width='120px' id='dp_" + i + "'>?dp</td>";
+				res += "<td width='120px' id='px_" + i + "'>?px</td>";
+				res += "</tr>"
+			}
+			res += "</table>"
+
+			document.getElementById("result").innerHTML = res;
+		}
+
+	</script>
+
+	<style>
+		body {
+			font-family: sans-serif;
+		}
+
+		legend {
+			display: block;
+			width: 100%;
+			padding: 0;
+			margin-bottom: 20px;
+			font-size: 18px;
+			line-height: inherit;
+			color: #333;
+			border: 0;
+			border-bottom: 1px solid #e5e5e5;
+		}
+
+		#content {
+			width: 500px;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 100px;
+		}
+
+		fieldset {
+			width: 500px;
+			border:0;
+		}
+
+		p.info {
+			font-size: 10px;
+			margin-bottom: 20px;
+		}
+
+		#result {
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+
+		a {
+			font-size: 10px;
+		}
+
+		.logo {
+			width:200px;
+			margin-bottom: 20px;
+		}
+
+		tr {
+			font-size: 12px;
+			height:20px;
+		}
+	</style>
+</head>
+
+
+<body onload="render()">
+	<div id="content">
+		<fieldset>
+			<legend>Android DP / PX converter</legend>
+			<A href="http://labs.rampinteractive.co.uk/android_dp_px_calculator/" target="new">Adapted from Android DP / PX converter by Skinkers</a>
+			<p class="info">
+				Enter either a DP (density independent pixel) value, or a PX (pixel) value below.
+			</p>
+
+			<input type="text" id="value" style="width:50px" onkeyup="calc()" />
+
+			<select id="unit" onchange="unitChange()">
+				<option value="px">px</option>
+				<option value="dp">dp</option>
+			</select>
+
+			<label for="density">@</label>
+			<select id="density" onChange="calc()">
+			</select>
+
+			<div id="result"></div>
+
+			<div id="error"></div>
+
+			<p class="info">
+				<sup>*</sup> The default sacle factors for DP (density independent pixel) metric come from
+				 the open-sourced project <A href="https://github.com/intuit/sdp" target="new">sdp</a> by
+				 Elhanan Mishraky
+			</p>
+
+			<A href="http://developer.android.com/guide/practices/screens_support.html" target="new">Android API : supporting multiple screens</a>
+		</fieldset>
+	</div>
+</body>
+</html>

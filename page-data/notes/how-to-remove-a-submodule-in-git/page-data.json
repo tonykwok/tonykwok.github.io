@@ -1,0 +1,71 @@
+{
+  "componentChunkName": "component---src-templates-post-js",
+  "path": "/notes/how-to-remove-a-submodule-in-git/",
+  "result": {
+    "data": {
+      "markdownRemark": {
+        "frontmatter": {
+          "title": "How to Remove a Submodule in Git",
+          "authors": [{ "id": "tonykwok", "name": "Tony Guo" }],
+          "date": "2020-07-16T00:00:00.000Z",
+          "date_pretty": "July 16th, 2020",
+          "date_from_now": "2 years ago",
+          "last_modified_at": null,
+          "last_modified_at_from_now": null,
+          "path": "/notes/how-to-remove-a-submodule-in-git/",
+          "author": null,
+          "excerpt": "Removing a submodule is useful when it is no longer required. The steps below outline the removal of a submodule.",
+          "tags": ["Git"],
+          "image": {
+            "childImageSharp": {
+              "fluid": {
+                "aspectRatio": 1.7741935483870968,
+                "src": "/static/846ec3be36827113b49d2bd227433386/c4e4c/git-tips-and-tricks.png",
+                "srcSet": "/static/846ec3be36827113b49d2bd227433386/4af1b/git-tips-and-tricks.png 275w,\n/static/846ec3be36827113b49d2bd227433386/25aaf/git-tips-and-tricks.png 550w,\n/static/846ec3be36827113b49d2bd227433386/c4e4c/git-tips-and-tricks.png 1100w,\n/static/846ec3be36827113b49d2bd227433386/e2e50/git-tips-and-tricks.png 1650w,\n/static/846ec3be36827113b49d2bd227433386/4ce6a/git-tips-and-tricks.png 1920w",
+                "sizes": "(max-width: 1100px) 100vw, 1100px"
+              },
+              "fixed": {
+                "src": "/static/846ec3be36827113b49d2bd227433386/c4e4c/git-tips-and-tricks.png",
+                "height": 619,
+                "width": 1100
+              }
+            }
+          },
+          "toc": false,
+          "comments": false,
+          "comments_locked": true,
+          "hide_meta": null
+        },
+        "id": "8283218c-5199-5cc1-bcbc-e030d995c632",
+        "html": "<p>Removing a submodule is useful when it is no longer required. The steps<sup id=\"fnref-1\"><a href=\"#fn-1\" class=\"footnote-ref\">1</a></sup> below outline the removal of a submodule:</p>\n<ul>\n<li>Delete the section referring to the submodule from the <code class=\"language-text\">.gitmodules</code> file</li>\n<li>Stage the changes via <code class=\"language-text\">git add .gitmodules</code></li>\n<li>Delete the relevant section of the submodule from <code class=\"language-text\">.git/config</code>.</li>\n<li>Run <code class=\"language-text\">git rm --cached path_to_submodule</code> (no trailing slash)</li>\n<li>Run <code class=\"language-text\">rm -rf .git/modules/path_to_submodule</code></li>\n<li>Commit the changes with <code class=\"language-text\">git commit -m &quot;Removed submodule &lt;name&gt;&quot;</code></li>\n<li>Delete the now untracked submodule files <code class=\"language-text\">rm -rf path_to_submodule</code></li>\n</ul>\n<div class=\"footnotes\">\n<hr>\n<ol>\n<li id=\"fn-1\">\n<p><a href=\"https://forum.freecodecamp.org/t/how-to-remove-a-submodule-in-git/13228\">https://forum.freecodecamp.org/t/how-to-remove-a-submodule-in-git/13228</a></p>\n<a href=\"#fnref-1\" class=\"footnote-backref\">↩</a>\n</li>\n</ol>\n</div>",
+        "excerpt": "Removing a submodule is useful when it is no longer required. The steps below outline the removal of a submodule: Delete the section…",
+        "timeToRead": 1,
+        "tableOfContents": ""
+      },
+      "comments": { "edges": [] }
+    },
+    "pageContext": {
+      "next": {
+        "frontmatter": {
+          "path": "/articles/android-system-framework-architecture/",
+          "title": "How should I design my Android application?",
+          "authors": [{ "id": "hackbod", "name": "Dianne Hackborn" }],
+          "categories": ["articles"],
+          "tags": ["Android"]
+        },
+        "fileAbsolutePath": "/home/28041/opensource/github.com/tonykwok/made-mistakes-gatsby/src/posts/articles/How-should-I-design-my-Android-application.md"
+      },
+      "previous": {
+        "frontmatter": {
+          "path": "/notes/squash-commits-into-one-with-git/",
+          "title": "Squash commits into one with Git",
+          "authors": [{ "id": "triangles", "name": "Triangles" }],
+          "categories": ["notes"],
+          "tags": ["Git"]
+        },
+        "fileAbsolutePath": "/home/28041/opensource/github.com/tonykwok/made-mistakes-gatsby/src/posts/notes/squash-commits-into-one-with-git.md"
+      }
+    }
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

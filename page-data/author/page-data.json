@@ -1,0 +1,29 @@
+{
+  "componentChunkName": "component---src-pages-author-js",
+  "path": "/author/",
+  "result": {
+    "data": {
+      "allAuthorYaml": {
+        "nodes": [
+          { "id": "tonykwok", "name": "Tony Guo" },
+          { "id": "mmistakes", "name": "Michael Rose" },
+          { "id": "hackbod", "name": "Dianne Hackborn" },
+          { "id": "triangles", "name": "Triangles" },
+          { "id": "romainguy", "name": "Romain Guy" },
+          { "id": "chethaase", "name": "Chet Haase" },
+          { "id": "cyrilmottier", "name": "Cyril Mottier" }
+        ]
+      },
+      "allMarkdownRemark": {
+        "group": [
+          { "fieldValue": "hackbod", "totalCount": 3 },
+          { "fieldValue": "mmistakes", "totalCount": 8 },
+          { "fieldValue": "tonykwok", "totalCount": 1 },
+          { "fieldValue": "triangles", "totalCount": 1 }
+        ]
+      }
+    },
+    "pageContext": {}
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

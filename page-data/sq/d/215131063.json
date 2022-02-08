@@ -1,0 +1,22 @@
+{
+  "data": {
+    "site": {
+      "buildTime": "2022-02-08",
+      "siteMetadata": {
+        "siteUrl": "https://kwapoong.github.io",
+        "defaultTitle": "Reisen",
+        "defaultDescription": "Things I've Found on the Way Getting There",
+        "defaultBanner": { "src": "/images/made-mistakes-logo.png" },
+        "siteLanguage": "en",
+        "ogLanguage": "en_US",
+        "pingbackUrl": "https://webmention.io/mademistakes.com/xmlrpc",
+        "webmentionUrl": "https://webmention.io/mademistakes.com/webmention",
+        "micropubUrl": "https://mm-micropub-to-github.herokuapp.com/micropub/main",
+        "coilUrl": "$coil.xrptipbot.com/AbwB-yidQNanSI2lYyTJJw",
+        "author": { "name": "Tony Guo", "url": "https://kwapoong.github.io" },
+        "twitter": "@kwapoong",
+        "facebook": "kwapoong"
+      }
+    }
+  }
+}

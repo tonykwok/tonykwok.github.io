@@ -1,0 +1,71 @@
+{
+  "componentChunkName": "component---src-templates-post-js",
+  "path": "/work/2-little-rosebuds/",
+  "result": {
+    "data": {
+      "markdownRemark": {
+        "frontmatter": {
+          "title": "2 Little Rosebuds",
+          "authors": [{ "id": "mmistakes", "name": "Michael Rose" }],
+          "date": "2020-01-21T00:00:00.000Z",
+          "date_pretty": "January 21st, 2020",
+          "date_from_now": "2 years ago",
+          "last_modified_at": "2020-01-22T15:12:52.000Z",
+          "last_modified_at_from_now": "2 years ago",
+          "path": "/work/2-little-rosebuds/",
+          "author": null,
+          "excerpt": "Creative and site development for 2 Little Rosebuds — a blog all about subscription boxes.",
+          "tags": ["design", "web development"],
+          "image": {
+            "childImageSharp": {
+              "fluid": {
+                "aspectRatio": 1.7741935483870968,
+                "src": "/static/ab2790e0c90f736bffa60842de98ef88/fc20c/2-little-rosebuds-feature.jpg",
+                "srcSet": "/static/ab2790e0c90f736bffa60842de98ef88/6e883/2-little-rosebuds-feature.jpg 275w,\n/static/ab2790e0c90f736bffa60842de98ef88/a09ef/2-little-rosebuds-feature.jpg 550w,\n/static/ab2790e0c90f736bffa60842de98ef88/fc20c/2-little-rosebuds-feature.jpg 1100w,\n/static/ab2790e0c90f736bffa60842de98ef88/236a8/2-little-rosebuds-feature.jpg 1580w",
+                "sizes": "(max-width: 1100px) 100vw, 1100px"
+              },
+              "fixed": {
+                "src": "/static/ab2790e0c90f736bffa60842de98ef88/fc20c/2-little-rosebuds-feature.jpg",
+                "height": 618,
+                "width": 1100
+              }
+            }
+          },
+          "toc": null,
+          "comments": false,
+          "comments_locked": null,
+          "hide_meta": true
+        },
+        "id": "58de9813-d9cc-5b1f-aa8e-16b0f1fef71c",
+        "html": "<p>TODO</p>",
+        "excerpt": "TODO",
+        "timeToRead": 1,
+        "tableOfContents": ""
+      },
+      "comments": { "edges": [] }
+    },
+    "pageContext": {
+      "next": {
+        "frontmatter": {
+          "path": "/notes/squash-commits-into-one-with-git/",
+          "title": "Squash commits into one with Git",
+          "authors": [{ "id": "triangles", "name": "Triangles" }],
+          "categories": ["notes"],
+          "tags": ["Git"]
+        },
+        "fileAbsolutePath": "/home/28041/opensource/github.com/tonykwok/made-mistakes-gatsby/src/posts/notes/squash-commits-into-one-with-git.md"
+      },
+      "previous": {
+        "frontmatter": {
+          "path": "/tiny-paintings/michael-rose-painting/",
+          "title": "Cut My Face in Half",
+          "authors": [{ "id": "mmistakes", "name": "Michael Rose" }],
+          "categories": ["tiny-paintings"],
+          "tags": ["watercolor", "portrait", "self portrait", "illustration"]
+        },
+        "fileAbsolutePath": "/home/28041/opensource/github.com/tonykwok/made-mistakes-gatsby/src/posts/tiny-paintings/michael-rose-painting.md"
+      }
+    }
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

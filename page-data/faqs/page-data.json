@@ -1,0 +1,24 @@
+{
+  "componentChunkName": "component---src-pages-faqs-index-js",
+  "path": "/faqs/",
+  "result": {
+    "data": {
+      "allMarkdownRemark": {
+        "edges": [
+          {
+            "node": {
+              "id": "3d7f9093-034a-5509-bd75-50a0ffacd0a6",
+              "frontmatter": {
+                "path": "/faqs/glitching-images/",
+                "title": "How do you glitch images?"
+              },
+              "fileAbsolutePath": "/home/28041/opensource/github.com/tonykwok/made-mistakes-gatsby/src/pages/faqs/glitching-images.md"
+            }
+          }
+        ]
+      }
+    },
+    "pageContext": {}
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

@@ -1,0 +1,1797 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Camera Control using the FCam API &mdash; FCam for Tegra 1.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FCam for Tegra 1.3 documentation" href="index.html" />
+    <link rel="next" title="High-performance image processing" href="imageprocessing.html" />
+    <link rel="prev" title="Profiling your application" href="profiling.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: black; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/nvidia_logo.png" border="0" alt="NVIDIA logo"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="imageprocessing.html" title="High-performance image processing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="profiling.html" title="Profiling your application"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Camera Control using the FCam API</a><ul>
+<li><a class="reference internal" href="#fcam-installation-for-tegra">FCam installation for Tegra</a></li>
+<li><a class="reference internal" href="#the-simplefcam-template-project">The SimpleFCam template project</a></li>
+<li><a class="reference internal" href="#checking-for-errors">Checking for errors</a></li>
+<li><a class="reference internal" href="#vectors-of-shots">Vectors of shots</a></li>
+<li><a class="reference internal" href="#streaming-requests">Streaming requests</a></li>
+<li><a class="reference internal" href="#adding-focus">Adding focus</a></li>
+<li><a class="reference internal" href="#adding-flash">Adding flash</a></li>
+<li><a class="reference internal" href="#writing-a-custom-device">Writing a custom device</a></li>
+<li><a class="reference internal" href="#using-fcam-with-opencv-and-opengl">Using FCam with OpenCV and OpenGL</a></li>
+<li><a class="reference internal" href="#debugging-your-fcam-application">Debugging your FCam application</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="profiling.html"
+                        title="previous chapter">Profiling your application</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="imageprocessing.html"
+                        title="next chapter">High-performance image processing</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/fcam.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="camera-control-using-the-fcam-api">
+<h1>Camera Control using the FCam API<a class="headerlink" href="#camera-control-using-the-fcam-api" title="Permalink to this headline">¶</a></h1>
+<p>FCam is a C++ API for easy and precise control of digital cameras. Before
+taking this tutorial, it is highly recommended that you read the
+<a class="reference external" href="http://graphics.stanford.edu/papers/fcam/">Frankencamera</a> paper.
+The FCam API is available on the Tegra Android platform, the Nokia N900
+and Nokia N9 phones. This tutorial focuses on the Tegra Android
+platform.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The FCam library is tightly coupled with the Tegra Android
+software. A mismatch between the installed Tegra Android version
+and the FCam library will cause the API to fail. If you suspect
+that is the case, please write to us at <tt class="docutils literal"><span class="pre">NVR-Tegra-Prototype-Support&#64;nvidia.com</span></tt>
+to verify that the version of the FCam library and the Android software you
+are running are supported.</p>
+</div>
+<div class="section" id="fcam-installation-for-tegra">
+<span id="install-fcam4tegra"></span><h2>FCam installation for Tegra<a class="headerlink" href="#fcam-installation-for-tegra" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Download the <a class="reference external" href="https://developer.nvidia.com/tegra-resources">Tegra Android Jelly Bean (4.1) OS Image for the Tegra 3 Developer Kit</a>.
+Run the installer, and see <a class="reference internal" href="faqs.html#flash-system-image"><em>How to flash a system image?</em></a> for step-by-step instructions.</p>
+</li>
+<li><p class="first">Download <a class="reference download internal" href="_downloads/fcam4tegra.zip"><tt class="xref download docutils literal"><span class="pre">fcam4tegra.zip</span></tt></a>, and expand it to some folder, e.g. <tt class="docutils literal"><span class="pre">/work/fcam4tegra/</span></tt>.
+Create an environment variable <em>FCAM4TEGRA_PATH</em> and set its value to that path.
+If the environment variables are not visible to Eclipse (e.g., on Mac if you launch Eclipse via Spotlight),
+you need to define it inside Eclipse. Go to <em>Preferences &gt; C/C++ &gt; Build &gt; Environment</em> and
+<em>Add</em> variable <em>FCAM4TEGRA_PATH</em> and give it the correct value (such as <tt class="docutils literal"><span class="pre">/work/fcam4tegra/</span></tt>).</p>
+</li>
+<li id="disable-early-graph"><p class="first">On recent releases of the NVIDIA Tegra software, the camera software
+is powered up early to enable fast camera startup. Since only one
+client can be connected to the camera at a time, we need to disable
+this feature in order to be able to run FCam. On your host machine,
+type:</p>
+<div class="highlight-python"><pre>adb shell setprop nv-camera-disable-early-graph 1</pre>
+</div>
+<p>Now open the Android camera application and then close it. This will cause the
+property to be read and enforced.  Note that you need to repeat this step after every reboot.</p>
+</li>
+</ol>
+<div class="admonition-see-also admonition">
+<p class="first admonition-title">See also</p>
+<p class="last"><strong>.../NVPACK/android-ndk-r8c/docs/IMPORT_MODULE.html</strong>, this document explains how
+Android NDK modules work.</p>
+</div>
+</div>
+<div class="section" id="the-simplefcam-template-project">
+<h2>The SimpleFCam template project<a class="headerlink" href="#the-simplefcam-template-project" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Locate <tt class="docutils literal"><span class="pre">tutorials/SimpleFCam</span></tt> inside the tutorials source tree.</p>
+</li>
+<li><p class="first">Import the project into your Eclipse workspace
+<em>File &gt; Import &gt; Android &gt; Existing Android Code into Workspace</em>.
+Check the option to <em>Copy projects into workspace</em>.</p>
+</li>
+<li><p class="first">You can find the imported project in the Package Explorer
+as <strong>com.nvidia.simplefcam.SimpleFCamActivity</strong>. Right-click on the project
+and select <em>Refactor &gt; Rename</em> and name it to <strong>SimpleFCam1</strong>.</p>
+</li>
+<li><p class="first">To create a unique project from the SimpleFCam template, edit
+<tt class="docutils literal"><span class="pre">AndroidManifest.xml</span></tt> and change the package name:</p>
+<div class="highlight-xml"><div class="highlight"><pre>   <span class="nt">&lt;manifest</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+<span class="hll">   <span class="na">package=</span><span class="s">&quot;com.nvidia.example.simplefcam1&quot;</span>
+</span></pre></div>
+</div>
+<p>The Android Package Manager uses the package name as a unique identifier
+for each application.</p>
+</li>
+<li><p class="first">Change the string <tt class="docutils literal"><span class="pre">app_name</span></tt> in the file <tt class="docutils literal"><span class="pre">res/values/strings.xml</span></tt> to read
+<strong>SimpleFCam1</strong>.</p>
+</li>
+<li><p class="first">Switch to the C/C++ Perspective.
+Convert the project to C++ project (right-click project, <em>New &gt; Convert to C/C++ Project</em>).
+For more details see <a class="reference internal" href="opengles.html#import-existing-project-opengles"><em>Importing an existing project</em></a>.</p>
+</li>
+<li><p class="first">For this project to build successfully, we need to define <tt class="docutils literal"><span class="pre">NDK_MODULE_PATH</span></tt>. Open
+the project&#8217;s preferences by right-clicking the project, and picking <em>Properties &gt; C/C++ Build</em>
+from the context menu. Uncheck the <em>Use default build command</em> option and change the <em>Build command:</em>
+to add the definition of <tt class="docutils literal"><span class="pre">NDK_MODULE_PATH</span></tt>, passing in the absolute path for the location where
+you unzipped <tt class="docutils literal"><span class="pre">fcam4tegra.zip</span></tt> earlier, if you unzipped it in <tt class="docutils literal"><span class="pre">~/work</span></tt>, you now have <tt class="docutils literal"><span class="pre">~/work/fcam</span></tt>,
+and you&#8217;d enter something like <tt class="docutils literal"><span class="pre">/Users/user_name/work</span></tt>.</p>
+<p>To understand why FCAM4TEGRA_PATH is required, take a look at <tt class="docutils literal"><span class="pre">jni/Android.mk</span></tt></p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_PATH</span> <span class="o">:=</span> <span class="k">$(</span>call my-dir<span class="k">)</span>
+<span class="cp">include $(CLEAR_VARS)</span>
+
+<span class="nv">LOCAL_MODULE</span>    <span class="o">:=</span> simplefcam
+<span class="nv">LOCAL_SRC_FILES</span> <span class="o">:=</span> simplefcam.cpp com_nvidia_simplefcam_SimpleFCamActivity.cpp
+<span class="hll">
+</span><span class="hll"><span class="nv">LOCAL_STATIC_LIBRARIES</span>  <span class="o">+=</span> fcamlib
+</span><span class="hll"><span class="nv">LOCAL_SHARED_LIBRARIES</span>  <span class="o">+=</span> fcamhal
+</span>
+<span class="cp">include $(BUILD_SHARED_LIBRARY)</span>
+<span class="hll"><span class="k">$(</span>call import-add-path, <span class="k">$(</span>FCAM4TEGRA_PATH<span class="k">)</span>/modules<span class="k">)</span>
+</span><span class="hll"><span class="k">$(</span>call import-module, fcam/lib<span class="k">)</span>
+</span></pre></div>
+</div>
+<p>We have added references to <tt class="docutils literal"><span class="pre">fcamlib</span></tt> and <tt class="docutils literal"><span class="pre">fcamhal</span></tt>. These
+are modules that are defined within the call to <tt class="docutils literal"><span class="pre">$(call</span> <span class="pre">import-module,</span> <span class="pre">fcam/lib)</span></tt>.
+In addition, the module search path is extended to include <tt class="docutils literal"><span class="pre">$(FCAM4TEGRA_PATH)/modules</span></tt>,
+where <tt class="docutils literal"><span class="pre">fcam/lib</span></tt> can be foudn. If your <tt class="docutils literal"><span class="pre">FCAM4TEGRA_PATH</span></tt> is defined incorrectly,
+the build will display an error saying <tt class="docutils literal"><span class="pre">fcam/lib</span></tt> was not found:</p>
+<div class="highlight-python"><pre>Android NDK: jni/Android.mk: Cannot find module with tag 'fcam' in import path
+Android NDK: Are you sure your NDK_MODULE_PATH variable is properly defined ?
+Android NDK: The following directories were searched:
+Android NDK:</pre>
+</div>
+</li>
+<li><p class="first">If everything is setup correctly, the project should now build successfully. Make sure you are on the
+C/C++ perspective and build the project.</p>
+<a class="reference internal image-reference" href="_images/simplefcam_build.png"><img alt="_images/simplefcam_build.png" src="_images/simplefcam_build.png" style="width: 733.0px; height: 333.0px;" /></a>
+</li>
+<li><p class="first">Now let&#8217;s write a program that takes a picture and saves it to a file. Open
+<tt class="docutils literal"><span class="pre">jni/simplefcam.cpp</span></tt>. You will find a block of code that is empty:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;jni.h&gt;</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &quot;simplefcam.h&quot;</span>
+
+<span class="cp">#include &lt;FCam/Tegra.h&gt;</span>
+
+<span class="c1">// This is the main function to run FCam code.</span>
+<span class="c1">// It will execute on its own thread.</span>
+<span class="hll"><span class="kt">void</span> <span class="n">SimpleFCam</span><span class="o">::</span><span class="n">run</span><span class="p">()</span>
+</span><span class="hll"><span class="p">{</span>
+</span><span class="hll">    <span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;This is an FCam example</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+</span><span class="hll"><span class="p">}</span>
+</span></pre></div>
+</div>
+<p>We will write our own code into the <tt class="docutils literal"><span class="pre">SimpleFCam::run</span></tt> function. This
+function will execute on its own thread. In addition, the <tt class="docutils literal"><span class="pre">SimpleFCam</span></tt>
+class provides a function <tt class="docutils literal"><span class="pre">printToConsole</span></tt> to print to a <tt class="docutils literal"><span class="pre">TextView</span></tt>
+and a function named <tt class="docutils literal"><span class="pre">saveJPEG</span></tt> that will save a picture to the
+default user-visible <em>Pictures</em> path and notify the Android Media
+Scanner about it.</p>
+<p>Copy the following code into the <tt class="docutils literal"><span class="pre">SimpleFCam::run</span></tt> function. This
+code captures an image with an exposure time of 25ms, a gain of 1, and
+white balance set to 6500K.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Sensor</span> <span class="n">sensor</span><span class="p">;</span>
+<span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Shot</span>   <span class="n">shot</span><span class="p">;</span>
+
+<span class="c1">// Define the shot properties.</span>
+<span class="n">shot</span><span class="p">.</span><span class="n">exposure</span>     <span class="o">=</span> <span class="mi">25000</span><span class="p">;</span>  <span class="c1">// exposure duration in microseconds</span>
+<span class="n">shot</span><span class="p">.</span><span class="n">gain</span>         <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>   <span class="c1">// no additional analog gain</span>
+<span class="n">shot</span><span class="p">.</span><span class="n">whiteBalance</span> <span class="o">=</span> <span class="mi">6500</span><span class="p">;</span>   <span class="c1">// color temperature in Kelvins</span>
+
+<span class="c1">// Set the image object - with the desired resolution and format.</span>
+<span class="c1">// Available formats for Tegra are YUV420p and RAW.</span>
+<span class="n">shot</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Image</span><span class="p">(</span> <span class="n">sensor</span><span class="p">.</span><span class="n">maxImageSize</span><span class="p">(),</span> <span class="n">FCam</span><span class="o">::</span><span class="n">YUV420p</span> <span class="p">);</span>
+
+<span class="c1">// Send the request to the Sensor, this action launches the worker threads.</span>
+<span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Requesting a new capture&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+<span class="n">sensor</span><span class="p">.</span><span class="n">capture</span><span class="p">(</span> <span class="n">shot</span> <span class="p">);</span>
+
+<span class="c1">// Wait for the frame to come back, this is a blocking call.</span>
+<span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Frame</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">getFrame</span><span class="p">();</span>
+<span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Got a frame back, saving file!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+
+<span class="c1">// Stop the worker threads and shut the sensor down.</span>
+<span class="n">sensor</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
+
+<span class="c1">// Save the file to disk.</span>
+<span class="n">saveJPEG</span><span class="p">(</span> <span class="s">&quot;SimpleFCam1.jpg&quot;</span><span class="p">,</span> <span class="n">frame</span> <span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition-in-depth admonition">
+<p class="first admonition-title">In Depth</p>
+<p>This short program shows a few basic concepts. First, it declares
+a <tt class="docutils literal"><span class="pre">Sensor</span></tt> instance. This instance refers to the default camera
+in the system, which in the case of the Tegra 3 prototype is the
+rear camera. Other cameras can be opened passing an argument to
+the constructor, as we will show later on. Next, it sets up a
+<tt class="docutils literal"><span class="pre">Shot</span></tt> instance with the parameters of the request. Then, it
+creates the <tt class="docutils literal"><span class="pre">FCam::Image</span></tt> object that will hold the output. An
+<tt class="docutils literal"><span class="pre">Image</span></tt> has reference-counted storage and can be passed between
+objects without causing a deep copy. The <tt class="docutils literal"><span class="pre">Image</span></tt> object
+is also used to determine the <tt class="docutils literal"><span class="pre">Sensor</span></tt> resolution. Demosaicked data
+is provided in <tt class="docutils literal"><span class="pre">YUV</span></tt> planar format with subsampling of the <tt class="docutils literal"><span class="pre">U</span></tt> and <tt class="docutils literal"><span class="pre">V</span></tt>
+planes. In memory, the <tt class="docutils literal"><span class="pre">Y</span></tt> plane comes first and has full resolution,
+it is followed by the <tt class="docutils literal"><span class="pre">U</span></tt> plane at a quarter resolution <tt class="docutils literal"><span class="pre">(width/2</span> <span class="pre">x</span> <span class="pre">height/2)</span></tt> and
+the <tt class="docutils literal"><span class="pre">V</span></tt> at the same resolution as the <tt class="docutils literal"><span class="pre">U</span></tt> plane. The other
+available formats are <tt class="docutils literal"><span class="pre">RAW</span></tt> and <tt class="docutils literal"><span class="pre">RGB24</span></tt>; note that for <tt class="docutils literal"><span class="pre">RGB24</span></tt> the
+FCam runtime will do a conversion from <tt class="docutils literal"><span class="pre">YUV420p</span></tt> to <tt class="docutils literal"><span class="pre">RGB24</span></tt>.</p>
+<p class="last">Once the capture request is sent, the
+program waits for the capture to complete and retrieves the output <tt class="docutils literal"><span class="pre">Frame</span></tt>,
+and saves it as a jpg file.</p>
+</div>
+<p>Compile the application. Before running it, make sure you&#8217;ve done the steps
+outlined <a class="reference internal" href="#disable-early-graph"><em>here</em></a>. Now run it. You will see the
+following output:</p>
+<a class="reference internal image-reference" href="_images/simplefcam_output.png"><img alt="_images/simplefcam_output.png" src="_images/simplefcam_output.png" style="width: 819.6px; height: 460.8px;" /></a>
+<p>To view the image, tap on the screen to close the app, and open the <em>Gallery</em> app.
+Open the <em>Pictures</em> Album and you will find <em>SimpleFCam1.jpg</em> in it.</p>
+<p>Before we move to the next example, let&#8217;s take a look at <tt class="docutils literal"><span class="pre">SimpleFCamActivity.java</span></tt>.
+In particular, the static block is important.</p>
+<div class="highlight-java"><div class="highlight"><pre> <span class="c1">// All FCam programs must load the fcamtegrahal library.</span>
+<span class="kd">static</span> <span class="o">{</span>
+   <span class="n">System</span><span class="o">.</span><span class="na">loadLibrary</span><span class="o">(</span><span class="s">&quot;fcamtegrahal&quot;</span><span class="o">);</span>
+   <span class="n">System</span><span class="o">.</span><span class="na">loadLibrary</span><span class="o">(</span><span class="s">&quot;simplefcam&quot;</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>All FCam programs need to load the <tt class="docutils literal"><span class="pre">fcamtegrahal</span></tt> shared library. In
+addition, we load the the <tt class="docutils literal"><span class="pre">simplefcam</span></tt> library with our FCam program.
+When loading native libraries these should be loaded in reverse order
+of dependency. <tt class="docutils literal"><span class="pre">simplefcam</span></tt> depends on <tt class="docutils literal"><span class="pre">fcamtegrahal</span></tt>, so we load
+this latter one first.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="checking-for-errors">
+<h2>Checking for errors<a class="headerlink" href="#checking-for-errors" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">Sensor</span></tt> class has a single blocking function: <tt class="docutils literal"><span class="pre">Sensor::getFrame()</span></tt>. The <tt class="docutils literal"><span class="pre">capture</span></tt>
+function is asynchronous and will spawn two worker threads. One of the threads takes shots from
+the request queue and builds a request that is sent to the underlying camera driver. As a result
+of this asynchronous design, errors can not be directly passed to the calling functions.
+Instead, FCam provides a queue of events where errors will be pushed to. The <tt class="docutils literal"><span class="pre">SimpleFCam</span></tt>
+class has a function <tt class="docutils literal"><span class="pre">bool</span> <span class="pre">errorCheck()</span></tt> that checks for error events:</p>
+<blockquote>
+<div><div class="highlight-c++"><div class="highlight"><pre><span class="kt">bool</span> <span class="n">SimpleFCam</span><span class="o">::</span><span class="n">errorCheck</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">bool</span> <span class="n">error</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="n">FCam</span><span class="o">::</span><span class="n">Event</span> <span class="n">e</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span> <span class="n">FCam</span><span class="o">::</span><span class="n">getNextEvent</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">,</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Event</span><span class="o">::</span><span class="n">Error</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;FCam error: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">description</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">error</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>We can add a call to <tt class="docutils literal"><span class="pre">errorCheck()</span></tt> right after <tt class="docutils literal"><span class="pre">getFrame()</span></tt>:</p>
+<blockquote>
+<div><div class="highlight-c++"><div class="highlight"><pre> <span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Frame</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">getFrame</span><span class="p">();</span>
+<span class="hll"> <span class="k">if</span> <span class="p">(</span> <span class="n">errorCheck</span><span class="p">()</span> <span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span></pre></div>
+</div>
+</div></blockquote>
+<p>It is safe to bail out of the current scope by calling <tt class="docutils literal"><span class="pre">return</span></tt>. The <tt class="docutils literal"><span class="pre">Sensor</span></tt>
+destructor will take care of cleaning up any allocated resources. We can also
+explicitly request the <tt class="docutils literal"><span class="pre">Sensor</span></tt> to <tt class="docutils literal"><span class="pre">stop()</span></tt>, which will destroy the worker
+threads. In general, it is a good practive to call <tt class="docutils literal"><span class="pre">stop()</span></tt> as soon as you
+have retrieved all the frames, to destroy the working threads and stop the
+<tt class="docutils literal"><span class="pre">Sensor</span></tt> from capturing in the background.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is possible that an error occurs and the <tt class="docutils literal"><span class="pre">getFrame()</span></tt> function
+stalls due to its blocking nature. One could add an <tt class="docutils literal"><span class="pre">errorcheck()</span></tt> right
+after calling <tt class="docutils literal"><span class="pre">capture(shot)</span></tt> but there is no guarantee that the error
+will be reported by the worker thread before <tt class="docutils literal"><span class="pre">errorCheck()</span></tt> is called.
+The proper solution is to have a timeout parameter added to <tt class="docutils literal"><span class="pre">getFrame()</span></tt>
+which we will do on a future release.</p>
+</div>
+</div>
+<div class="section" id="vectors-of-shots">
+<h2>Vectors of shots<a class="headerlink" href="#vectors-of-shots" title="Permalink to this headline">¶</a></h2>
+<p>In the previous example we captured a single shot. Let&#8217;s now
+program a burst capture that brackets three images.</p>
+<ol class="arabic">
+<li><p class="first">Start a new <tt class="docutils literal"><span class="pre">SimpleFCam</span></tt>-based project. Rename it <tt class="docutils literal"><span class="pre">SimpleFCam2</span></tt>.</p>
+</li>
+<li><p class="first">To capture a burst we have to create one <tt class="docutils literal"><span class="pre">Shot</span></tt> for every image we
+want to capture. In this example we will create three shots. We will
+also need three separate <tt class="docutils literal"><span class="pre">Image</span></tt> objects to store the output and
+three separate image <tt class="docutils literal"><span class="pre">Frame</span></tt> objects, as shown below.  Add the code to the <tt class="docutils literal"><span class="pre">run()</span></tt> method.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Sensor</span> <span class="n">sensor</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Shot</span><span class="o">&gt;</span>  <span class="n">shots</span><span class="p">(</span> <span class="mi">3</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Frame</span><span class="o">&gt;</span> <span class="n">frames</span><span class="p">(</span> <span class="mi">3</span> <span class="p">);</span>
+
+<span class="c1">// Define the shot properties for the first shot.</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">exposure</span>     <span class="o">=</span> <span class="mi">25000</span><span class="p">;</span>  <span class="c1">// exposure duration in microseconds</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">gain</span>         <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>   <span class="c1">// no additional analog gain</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">whiteBalance</span> <span class="o">=</span> <span class="mi">6500</span><span class="p">;</span>   <span class="c1">// color temperature in Kelvins</span>
+
+<span class="c1">// Copy the shot parameters.</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">shots</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">shots</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+<span class="c1">// Set the exposure of the two remaining shots.</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">exposure</span> <span class="o">=</span> <span class="n">shots</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">exposure</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">exposure</span> <span class="o">=</span> <span class="n">shots</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">exposure</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+
+<span class="c1">// Create the result images.</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">image</span> <span class="o">=</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Image</span><span class="p">(</span> <span class="n">sensor</span><span class="p">.</span><span class="n">maxImageSize</span><span class="p">(),</span> <span class="n">FCam</span><span class="o">::</span><span class="n">YUV420p</span> <span class="p">);</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">image</span> <span class="o">=</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Image</span><span class="p">(</span> <span class="n">sensor</span><span class="p">.</span><span class="n">maxImageSize</span><span class="p">(),</span> <span class="n">FCam</span><span class="o">::</span><span class="n">YUV420p</span> <span class="p">);</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">image</span> <span class="o">=</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Image</span><span class="p">(</span> <span class="n">sensor</span><span class="p">.</span><span class="n">maxImageSize</span><span class="p">(),</span> <span class="n">FCam</span><span class="o">::</span><span class="n">YUV420p</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">The <tt class="docutils literal"><span class="pre">Sensor::capture()</span></tt> is overloaded, it accepts both <tt class="docutils literal"><span class="pre">Shot</span></tt> and <tt class="docutils literal"><span class="pre">std::vector&lt;Shot&gt;</span></tt>.
+We will call capture once and wait for the three frames to be retrieved. Here is
+the remaining code:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Requesting a burst of 3 shots&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+<span class="n">sensor</span><span class="p">.</span><span class="n">capture</span><span class="p">(</span> <span class="n">shots</span> <span class="p">);</span>
+
+<span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">getFrame</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span> <span class="n">errorCheck</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+<span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Got first frame back!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+
+<span class="n">frames</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">getFrame</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span> <span class="n">errorCheck</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+<span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Got second frame back!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+
+<span class="n">frames</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">getFrame</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span> <span class="n">errorCheck</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+<span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Got third frame back!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+
+<span class="n">sensor</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
+
+<span class="c1">// Save the file to disk.</span>
+<span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Saving images..&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+<span class="n">saveJPEG</span><span class="p">(</span> <span class="s">&quot;SimpleFCam2-0.jpg&quot;</span><span class="p">,</span> <span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">);</span>
+<span class="n">saveJPEG</span><span class="p">(</span> <span class="s">&quot;SimpleFCam2-1.jpg&quot;</span><span class="p">,</span> <span class="n">frames</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">);</span>
+<span class="n">saveJPEG</span><span class="p">(</span> <span class="s">&quot;SimpleFCam2-2.jpg&quot;</span><span class="p">,</span> <span class="n">frames</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Build the program and run it! Then open <em>Gallery</em> to see the three captured images.</p>
+</li>
+</ol>
+<div class="admonition-in-depth admonition">
+<p class="first admonition-title">In Depth</p>
+<p class="last">When capturing a burst, it is important to submit the set of shots in a single vector.
+This minimizes the time between frames, since requests will be sent
+to the imaging software stack as soon as it is ready to receive them, which
+is earlier than the time the frame is received through <tt class="docutils literal"><span class="pre">getFrame()</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="streaming-requests">
+<h2>Streaming requests<a class="headerlink" href="#streaming-requests" title="Permalink to this headline">¶</a></h2>
+<p>We have so far captured single shots and bursts. If we wanted to write a camera
+or a video recording application we need the ability to stream shots continuously.
+For this purpose, the sensor provides the <tt class="docutils literal"><span class="pre">Sensor::stream()</span></tt> function. On this
+example we will show how to write a simple application that does streaming
+combined with auto-exposure and auto-whitebalance.</p>
+<ol class="arabic">
+<li><p class="first">Start a new <tt class="docutils literal"><span class="pre">SimpleFCam</span></tt> based project. Rename it <tt class="docutils literal"><span class="pre">SimpleFCam3</span></tt>.</p>
+</li>
+<li><p class="first">Open <tt class="docutils literal"><span class="pre">simplefcam.cpp</span></tt> and add a new include to find the <tt class="docutils literal"><span class="pre">std::fabs()</span></tt> function:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include&lt;cmath&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Modify <tt class="docutils literal"><span class="pre">SimpleFCam::run()</span></tt>. Let&#8217;s start setting up our <tt class="docutils literal"><span class="pre">Sensor</span></tt> and <tt class="docutils literal"><span class="pre">Shot</span></tt> instances.
+We will define two shots, a <tt class="docutils literal"><span class="pre">meterShot</span></tt> that we will stream at
+a lower resolution to keep up a good frame rate,
+and a <tt class="docutils literal"><span class="pre">captureShot</span></tt> that we will send once to capture a full-size frame.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Sensor</span> <span class="n">sensor</span><span class="p">;</span>
+<span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Shot</span>   <span class="n">meterShot</span><span class="p">;</span>
+<span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Shot</span>   <span class="n">captureShot</span><span class="p">;</span>
+
+<span class="c1">// Setup a half-sized capture for the streaming shots to get 30fps.</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">width</span>  <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">maxImageSize</span><span class="p">().</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">maxImageSize</span><span class="p">().</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+
+<span class="c1">// Set the initial shot parameters.</span>
+<span class="n">meterShot</span><span class="p">.</span><span class="n">exposure</span> <span class="o">=</span> <span class="mi">16666</span><span class="p">;</span>
+<span class="n">meterShot</span><span class="p">.</span><span class="n">gain</span>     <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
+<span class="n">meterShot</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Image</span><span class="p">(</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">FCam</span><span class="o">::</span><span class="n">YUV420p</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">To do metering, we need to enable histograms.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// Enable the histogram unit.</span>
+<span class="n">meterShot</span><span class="p">.</span><span class="n">histogram</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="n">meterShot</span><span class="p">.</span><span class="n">histogram</span><span class="p">.</span><span class="n">region</span>  <span class="o">=</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Rect</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Setup some variables to determine when the exposure stabilizes.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// Stream until the exposure stabilizes.</span>
+<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>          <span class="c1">// # of frames streamed</span>
+<span class="kt">int</span> <span class="n">stableCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>    <span class="c1">// # of consecutive frames with stable exposure</span>
+<span class="kt">float</span> <span class="n">exposure</span><span class="p">;</span>         <span class="c1">// total exposure for the current frame (exposure time * gain)</span>
+<span class="kt">float</span> <span class="n">lastExposure</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// total exposure for the previous frame</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Now we will write the main metering loop. Every time we receive a frame
+we call the <tt class="docutils literal"><span class="pre">autoExpose()</span></tt> and <tt class="docutils literal"><span class="pre">autoWhiteBalance()</span></tt> functions to update
+the shot parameters. Every call we make to <tt class="docutils literal"><span class="pre">stream()</span></tt> clears the
+streaming shot we had set previously. We repeat our loop until
+the total exposure difference between two frames is less than
+5% for 5 consecutive frames.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Frame</span> <span class="n">frame</span><span class="p">;</span>
+
+<span class="k">do</span>
+<span class="p">{</span>
+    <span class="c1">// Ask the sensor to stream with the given parameters.</span>
+    <span class="n">sensor</span><span class="p">.</span><span class="n">stream</span><span class="p">(</span> <span class="n">meterShot</span> <span class="p">);</span>
+
+    <span class="c1">// Retrieve a frame.</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">getFrame</span><span class="p">();</span>
+    <span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Frame &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">count</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; exposure: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">frame</span><span class="p">.</span><span class="n">exposure</span><span class="p">()</span>
+                <span class="o">&lt;&lt;</span> <span class="s">&quot; gain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">frame</span><span class="p">.</span><span class="n">gain</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; - &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+
+    <span class="c1">// Calculate the total exposure (including gain).</span>
+    <span class="n">exposure</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">exposure</span><span class="p">()</span> <span class="o">*</span> <span class="n">frame</span><span class="p">.</span><span class="n">gain</span><span class="p">();</span>
+
+    <span class="c1">// Increment stableCount if the exposure is within 5% of the previous one</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">fabs</span><span class="p">(</span> <span class="n">exposure</span> <span class="o">-</span> <span class="n">lastExposure</span> <span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.05f</span> <span class="o">*</span> <span class="n">lastExposure</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">stableCount</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">stableCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Terminate when stable for 5 frames.</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">stableCount</span> <span class="o">&gt;=</span> <span class="mi">5</span> <span class="p">)</span> <span class="p">{</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="c1">// Update lastExposure.</span>
+    <span class="n">lastExposure</span> <span class="o">=</span> <span class="n">exposure</span><span class="p">;</span>
+
+    <span class="c1">// Call the autoexposure algorithm, it will update stream</span>
+    <span class="c1">// using this frame&#39;s histogram.</span>
+    <span class="n">autoExpose</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">meterShot</span><span class="p">,</span> <span class="n">frame</span> <span class="p">);</span>
+
+    <span class="c1">// Call the auto white-balance algorithm. It will similarly</span>
+    <span class="c1">// update the white balance using the histogram.</span>
+    <span class="n">autoWhiteBalance</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">meterShot</span><span class="p">,</span> <span class="n">frame</span> <span class="p">);</span>
+
+    <span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;New exposure: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">meterShot</span><span class="p">.</span><span class="n">exposure</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; gain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">meterShot</span><span class="p">.</span><span class="n">gain</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+
+    <span class="o">++</span><span class="n">count</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">while</span><span class="p">(</span> <span class="nb">true</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Once we exit the loop, meterShot has the parameters we would like to use for capture. We copy
+these parameters to a different shot and assign a full-size image.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// Now let&#39;s capture a full resolution shot</span>
+<span class="c1">// Copy the meter shot but use a full resolution image.</span>
+<span class="n">captureShot</span> <span class="o">=</span> <span class="n">meterShot</span><span class="p">;</span>
+<span class="n">captureShot</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Image</span><span class="p">(</span> <span class="n">sensor</span><span class="p">.</span><span class="n">maxImageSize</span><span class="p">(),</span> <span class="n">FCam</span><span class="o">::</span><span class="n">YUV420p</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Tell the <tt class="docutils literal"><span class="pre">Sensor</span></tt> to clear the streaming shot.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">sensor</span><span class="p">.</span><span class="n">stopStreaming</span><span class="p">();</span>
+<span class="n">sensor</span><span class="p">.</span><span class="n">capture</span><span class="p">(</span> <span class="n">captureShot</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Each shot instance has a different identifier. This identifier can be
+used to match the shot request with the frame request. In our example
+<tt class="docutils literal"><span class="pre">meterShot</span></tt> and <tt class="docutils literal"><span class="pre">captureShot</span></tt> will have different identifiers.
+We will call <tt class="docutils literal"><span class="pre">getFrame()</span></tt> until we have drained all the pending
+metering shots left in the pipeline and received the frame
+for our <tt class="docutils literal"><span class="pre">captureShot</span></tt>.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// We might still not have retrieved all the metering shots -</span>
+<span class="c1">// call getFrame() until we get the captureShot.</span>
+<span class="k">while</span><span class="p">(</span> <span class="n">sensor</span><span class="p">.</span><span class="n">shotsPending</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">frame</span><span class="p">.</span><span class="n">shot</span><span class="p">().</span><span class="n">id</span> <span class="o">!=</span> <span class="n">captureShot</span><span class="p">.</span><span class="n">id</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">getFrame</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Once we get the frame back, we save it to disk.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">sensor</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
+
+<span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Full-size frame received, saving to file&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+
+<span class="c1">// Write out the full-size picture.</span>
+<span class="n">saveJPEG</span><span class="p">(</span> <span class="s">&quot;SimpleFCam3.jpg&quot;</span><span class="p">,</span> <span class="n">frame</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Compile the app and run it!</p>
+</li>
+</ol>
+</div>
+<div class="section" id="adding-focus">
+<h2>Adding focus<a class="headerlink" href="#adding-focus" title="Permalink to this headline">¶</a></h2>
+<p>Next we will add a focus stage to our previous example. Focus is controlled through
+an <tt class="docutils literal"><span class="pre">FCam::Tegra::Lens</span></tt> instance. The <tt class="docutils literal"><span class="pre">Lens</span></tt> is an <tt class="docutils literal"><span class="pre">FCam::Device</span></tt>. Most mobile
+devices have a camera with a fixed aperture and a fixed focal length (i.e., no optical
+zoom), but even those cameras can be focused so that objects at particular focusing
+distance are sharp.
+The Tegra 3 Prototype has a fixed-focus front camera and a pair of rear-cameras
+with focus control. We will now add an autofocus routine to our previous example.</p>
+<ol class="arabic">
+<li><p class="first">Open <tt class="docutils literal"><span class="pre">simplefcam.h</span></tt> and add the focus function:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// Run focus using the given shot parameters.</span>
+<span class="kt">void</span> <span class="nf">focus</span><span class="p">(</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Sensor</span> <span class="o">&amp;</span><span class="n">sensor</span><span class="p">,</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Lens</span> <span class="o">&amp;</span><span class="n">lens</span><span class="p">,</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Shot</span> <span class="n">shot</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Open <tt class="docutils literal"><span class="pre">simplefcam.cpp</span></tt> and copy-paste the function definition:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="kt">void</span> <span class="n">SimpleFCam</span><span class="o">::</span><span class="n">focus</span><span class="p">(</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Sensor</span> <span class="o">&amp;</span><span class="n">sensor</span><span class="p">,</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Lens</span> <span class="o">&amp;</span><span class="n">lens</span><span class="p">,</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Shot</span> <span class="n">shot</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// The shot was passed by value, so we can</span>
+    <span class="c1">// modify it without affecting the caller&#39;s instance.</span>
+
+    <span class="c1">// Disable the histogram</span>
+    <span class="n">shot</span><span class="p">.</span><span class="n">histogram</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="c1">// Enable the whole-image sharpness statistic</span>
+    <span class="n">shot</span><span class="p">.</span><span class="n">sharpness</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+    <span class="c1">// Default AutoFocus routine</span>
+    <span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">AutoFocus</span> <span class="n">autoFocus</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">lens</span> <span class="p">);</span>
+
+    <span class="c1">// Ask the autofocus algorithm to start sweeping the lens</span>
+    <span class="n">autoFocus</span><span class="p">.</span><span class="n">startSweep</span><span class="p">();</span>
+
+    <span class="c1">// Stream until autofocus algorithm completes</span>
+    <span class="n">FCam</span><span class="o">::</span><span class="n">Frame</span> <span class="n">frame</span><span class="p">;</span>
+
+    <span class="k">do</span>
+    <span class="p">{</span>
+        <span class="c1">// Stream the updated shot</span>
+        <span class="n">sensor</span><span class="p">.</span><span class="n">stream</span><span class="p">(</span> <span class="n">shot</span> <span class="p">);</span>
+
+        <span class="c1">// Retrieve a frame</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">getFrame</span><span class="p">();</span>
+
+        <span class="c1">// The lens has tagged each frame with where it was focused</span>
+        <span class="c1">// during that frame. Let&#39;s retrieve it so we can print it out.</span>
+        <span class="kt">float</span> <span class="n">diopters</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s">&quot;lens.focus&quot;</span><span class="p">];</span>
+        <span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Lens focused at &quot;</span> <span class="o">&lt;&lt;</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">diopters</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; cm &quot;</span><span class="p">;</span>
+
+        <span class="c1">// The sensor has attached a sharpness map to each frame.</span>
+        <span class="c1">// Let&#39;s sum up all the values in it so we can print out</span>
+        <span class="c1">// the total sharpness of this frame.</span>
+        <span class="kt">int</span> <span class="n">totalSharpness</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">frame</span><span class="p">.</span><span class="n">sharpness</span><span class="p">().</span><span class="n">height</span><span class="p">();</span> <span class="n">y</span><span class="o">++</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">frame</span><span class="p">.</span><span class="n">sharpness</span><span class="p">().</span><span class="n">width</span><span class="p">();</span> <span class="n">x</span><span class="o">++</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">totalSharpness</span> <span class="o">+=</span> <span class="n">frame</span><span class="p">.</span><span class="n">sharpness</span><span class="p">()(</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; - total sharpness is &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">totalSharpness</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+
+        <span class="c1">// Update the auto-focus algorithm state tracking.</span>
+        <span class="c1">// We pass the frame and the shot.</span>
+        <span class="n">autoFocus</span><span class="p">.</span><span class="n">update</span><span class="p">(</span> <span class="n">frame</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">shot</span> <span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">while</span><span class="p">(</span> <span class="o">!</span><span class="n">autoFocus</span><span class="p">.</span><span class="n">idle</span><span class="p">()</span> <span class="p">);</span>
+
+    <span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Autofocus chose to focus at &quot;</span> <span class="o">&lt;&lt;</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">lens</span><span class="p">.</span><span class="n">getFocus</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Finally, we modify <tt class="docutils literal"><span class="pre">SimpleFCam::run()</span></tt> to call <tt class="docutils literal"><span class="pre">focus</span></tt> after metering is finished.
+First, we create a <tt class="docutils literal"><span class="pre">Lens</span></tt> instance and attach it to the <tt class="docutils literal"><span class="pre">sensor</span></tt>. Attaching a device to
+a <tt class="docutils literal"><span class="pre">Sensor</span></tt> instance allows the device to tag the frames when they are returned.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;FCam/Tegra.h&gt;</span>
+<span class="hll"><span class="cp">#include &lt;FCam/Tegra/AutoFocus.h&gt;</span>
+</span>
+<span class="c1">// This is the main function to run FCam code.</span>
+<span class="c1">// It will execute on its own thread.</span>
+<span class="kt">void</span> <span class="n">SimpleFCam</span><span class="o">::</span><span class="n">run</span><span class="p">()</span>
+<span class="p">{</span>
+
+    <span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Sensor</span> <span class="n">sensor</span><span class="p">;</span>
+<span class="hll">    <span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Lens</span> <span class="n">lens</span><span class="p">;</span>
+</span><span class="hll">    <span class="n">sensor</span><span class="p">.</span><span class="n">attach</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">lens</span> <span class="p">);</span>
+</span></pre></div>
+</div>
+<p>Then, at the end of the auto exposure and white balance loop, we add the call to <tt class="docutils literal"><span class="pre">focus</span></tt>.
+In a more optimized implementation you would combine the all the three tasks (exposure,
+white balance, focus) into a single loop.</p>
+<div class="highlight-c++"><div class="highlight"><pre> <span class="k">while</span><span class="p">(</span> <span class="nb">true</span> <span class="p">);</span>
+
+ <span class="c1">// Now call autofocus</span>
+<span class="hll"> <span class="n">focus</span><span class="p">(</span> <span class="n">sensor</span><span class="p">,</span> <span class="n">lens</span><span class="p">,</span> <span class="n">meterShot</span> <span class="p">);</span>
+</span></pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition-in-depth admonition">
+<p class="first admonition-title">In Depth</p>
+<p>The <tt class="docutils literal"><span class="pre">AutoFocus</span></tt> helper object adds a <tt class="docutils literal"><span class="pre">FocusSteppingAction</span></tt> to the shot. An
+<tt class="docutils literal"><span class="pre">Action</span></tt> on a shot is scheduled to be executed at the given time, relative
+to the beginning of the shot exposure. Below is an example of <tt class="docutils literal"><span class="pre">FocusSteppingAction</span></tt>
+that spans the entire focus range in 15 steps:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">FCam</span><span class="o">::</span><span class="n">Lens</span><span class="o">::</span><span class="n">FocusSteppingAction</span> <span class="n">stepFocus</span><span class="p">(</span> <span class="n">lens</span> <span class="p">);</span>
+<span class="n">stepFocus</span><span class="p">.</span><span class="n">owner</span>  <span class="o">=</span> <span class="p">(</span> <span class="kt">void</span> <span class="o">*</span> <span class="p">)</span> <span class="k">this</span><span class="p">;</span>
+<span class="n">stepFocus</span><span class="p">.</span><span class="n">time</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">stepFocus</span><span class="p">.</span><span class="n">speed</span>  <span class="o">=</span> <span class="n">lens</span><span class="o">-&gt;</span><span class="n">maxFocusSpeed</span><span class="p">();</span>
+<span class="n">stepFocus</span><span class="p">.</span><span class="n">step</span>   <span class="o">=</span> <span class="p">(</span> <span class="n">lens</span><span class="o">-&gt;</span><span class="n">nearFocus</span><span class="p">()</span> <span class="o">-</span> <span class="n">lens</span><span class="o">-&gt;</span><span class="n">farFocus</span><span class="p">()</span> <span class="p">)</span> <span class="o">/</span> <span class="mi">15</span><span class="p">;</span>
+<span class="n">stepFocus</span><span class="p">.</span><span class="n">repeat</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+<span class="n">shot</span><span class="o">-&gt;</span><span class="n">addAction</span><span class="p">(</span> <span class="n">stepFocus</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Every time the focus stepping action is triggered, it updates the next
+focus position by the given step. Also, note how we make use of the tags
+to get the lens position:</p>
+<div class="last highlight-c++"><div class="highlight"><pre><span class="kt">float</span> <span class="n">diopters</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="s">&quot;lens.focus&quot;</span><span class="p">];</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="adding-flash">
+<h2>Adding flash<a class="headerlink" href="#adding-flash" title="Permalink to this headline">¶</a></h2>
+<p>One other device that is available for use is the <tt class="docutils literal"><span class="pre">Flash</span></tt>. We will now show how
+to write a simple program to capture a pair of images, one with no-flash followed
+by one with flash.</p>
+<ol class="arabic">
+<li><p class="first">Start a new <tt class="docutils literal"><span class="pre">SimpleFCam</span></tt>-based project, rename it <tt class="docutils literal"><span class="pre">SimpleFCam4</span></tt>.</p>
+</li>
+<li><p class="first">Open <tt class="docutils literal"><span class="pre">simplefcam.cpp</span></tt> to start modifying the <tt class="docutils literal"><span class="pre">SimpleFCam::run()</span></tt>
+function.</p>
+</li>
+<li><p class="first">Create a <tt class="docutils literal"><span class="pre">Flash</span></tt> device and attach it to the <tt class="docutils literal"><span class="pre">Sensor</span></tt> instance:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Sensor</span> <span class="n">sensor</span><span class="p">;</span>
+<span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Flash</span> <span class="n">flash</span><span class="p">;</span>
+<span class="n">sensor</span><span class="p">.</span><span class="n">attach</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">flash</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create the two shots:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Shot</span><span class="o">&gt;</span> <span class="n">shots</span><span class="p">(</span> <span class="mi">2</span> <span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Frame</span><span class="o">&gt;</span> <span class="n">frames</span><span class="p">(</span> <span class="mi">2</span> <span class="p">);</span>
+
+<span class="c1">// Setup the first shot</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">exposure</span>     <span class="o">=</span> <span class="mi">25000</span><span class="p">;</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">gain</span>         <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">whiteBalance</span> <span class="o">=</span> <span class="mi">6500</span><span class="p">;</span>
+
+<span class="c1">// Copy the shot parameters</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">shots</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+<span class="c1">// Create the result images</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">image</span> <span class="o">=</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Image</span><span class="p">(</span> <span class="n">sensor</span><span class="p">.</span><span class="n">maxImageSize</span><span class="p">(),</span> <span class="n">FCam</span><span class="o">::</span><span class="n">YUV420p</span> <span class="p">);</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">image</span> <span class="o">=</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Image</span><span class="p">(</span> <span class="n">sensor</span><span class="p">.</span><span class="n">maxImageSize</span><span class="p">(),</span> <span class="n">FCam</span><span class="o">::</span><span class="n">YUV420p</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Now we create a <tt class="docutils literal"><span class="pre">Flash::FireAction</span></tt> that we attach to the first shot.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// Make an action to fire the flash</span>
+<span class="n">FCam</span><span class="o">::</span><span class="n">Flash</span><span class="o">::</span><span class="n">FireAction</span> <span class="n">fire</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">flash</span> <span class="p">);</span>
+
+<span class="c1">// Flash on must be triggered at time 0 - duration is ignored.</span>
+<span class="n">fire</span><span class="p">.</span><span class="n">duration</span>   <span class="o">=</span> <span class="n">flash</span><span class="p">.</span><span class="n">minDuration</span><span class="p">();</span>
+<span class="n">fire</span><span class="p">.</span><span class="n">time</span>       <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                        <span class="c1">// at the start of the exposure</span>
+<span class="n">fire</span><span class="p">.</span><span class="n">brightness</span> <span class="o">=</span> <span class="n">flash</span><span class="p">.</span><span class="n">maxBrightness</span><span class="p">();</span>    <span class="c1">// at full power</span>
+
+<span class="c1">// Add the fire action to the second shot.</span>
+<span class="n">shots</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">addAction</span><span class="p">(</span> <span class="n">fire</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Send the requests and wait for the frames to come back:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Requesting a burst pair of no-flash/flash shots&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+<span class="n">sensor</span><span class="p">.</span><span class="n">capture</span><span class="p">(</span> <span class="n">shots</span> <span class="p">);</span>
+
+<span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">getFrame</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span> <span class="n">errorCheck</span><span class="p">()</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span>  <span class="s">&quot;Got first frame back!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="n">FCam</span><span class="o">::</span><span class="n">Flash</span><span class="o">::</span><span class="n">Tags</span> <span class="n">tags0</span><span class="p">(</span> <span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">);</span>
+
+<span class="n">frames</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">getFrame</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span> <span class="n">errorCheck</span><span class="p">()</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Got second frame back!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="n">FCam</span><span class="o">::</span><span class="n">Flash</span><span class="o">::</span><span class="n">Tags</span> <span class="n">tags1</span><span class="p">(</span> <span class="n">frames</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">);</span>
+
+<span class="n">sensor</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
+
+<span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Frame 0 flash brightness: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">tags0</span><span class="p">.</span><span class="n">brightness</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Frame 1 flash brightness: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">tags1</span><span class="p">.</span><span class="n">brightness</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+
+<span class="c1">// Save the file to disk.</span>
+<span class="n">logStream</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Saving images...&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">flush</span><span class="p">();</span>
+<span class="n">saveJPEG</span><span class="p">(</span> <span class="s">&quot;SimpleFCam4-noflash.jpg&quot;</span><span class="p">,</span> <span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">);</span>
+<span class="n">saveJPEG</span><span class="p">(</span> <span class="s">&quot;SimpleFCam4-flash.jpg&quot;</span><span class="p">,</span> <span class="n">frames</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">That&#8217;s all! Build the application and run it!</p>
+</li>
+</ol>
+<div class="admonition-in-depth admonition">
+<p class="first admonition-title">In Depth</p>
+<p class="last">Flash synchronization is an issue we didn&#8217;t address much in the code above. In the
+case of the Tegra Prototype, the camera driver does the flash synchronization; so
+we just set the <tt class="docutils literal"><span class="pre">Action::time</span></tt> to 0. Also, note that for rolling shutter
+sensors, different rows of two successive frames could be exposing at the same time, which would be a problem when
+capturing a flash/no-flash pair. Again, the camera driver is helping us and
+discards a partially-flashed frame. But if such aid had not been provided,
+one would need to consider either changing the <tt class="docutils literal"><span class="pre">Shot.frametime</span></tt> to prevent
+two frames from exposing some rows at the same time. Otherwise, if preserving
+a short frame time is required, one could discard the partially flashed frame.</p>
+</div>
+</div>
+<div class="section" id="writing-a-custom-device">
+<h2>Writing a custom device<a class="headerlink" href="#writing-a-custom-device" title="Permalink to this headline">¶</a></h2>
+<p>You can create your own custom device for actions we want to synchronize
+with the <tt class="docutils literal"><span class="pre">Sensor</span></tt> stream. We do this by creating a new <tt class="docutils literal"><span class="pre">class</span></tt> that inherits
+from <tt class="docutils literal"><span class="pre">FCam::Device</span></tt> and implements <tt class="docutils literal"><span class="pre">void</span> <span class="pre">doAction()</span></tt>. In this example we will
+create a <tt class="docutils literal"><span class="pre">SoundPlayer</span></tt> device to play a shutter sound.</p>
+<ol class="arabic">
+<li><p class="first">Start a new <tt class="docutils literal"><span class="pre">SimpleFCam</span></tt> based project, rename it <tt class="docutils literal"><span class="pre">SimpleFCam5</span></tt>.</p>
+</li>
+<li><p class="first">Add a new header file to the project under <tt class="docutils literal"><span class="pre">jni</span></tt> and call it <tt class="docutils literal"><span class="pre">SoundPlayer.h</span></tt>.
+To play a sound on Android we will use the OpenSL ES API provided by the Android NDK.
+The sound file will be an asset that we will embed in our application. Copy
+and paste the following code:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#ifndef FCAM_BEEPER_H</span>
+<span class="cp">#define FCAM_BEEPER_H</span>
+
+<span class="cm">/** \file */</span>
+
+<span class="cp">#include &lt;string&gt;</span>
+
+<span class="cp">#include &lt;FCam/FCam.h&gt;</span>
+<span class="cp">#include &lt;FCam/Action.h&gt;</span>
+<span class="cp">#include &lt;FCam/Device.h&gt;</span>
+
+<span class="c1">// for native asset manager</span>
+<span class="cp">#include &lt;sys/types.h&gt;</span>
+<span class="cp">#include &lt;android/asset_manager.h&gt;</span>
+<span class="cp">#include &lt;android/asset_manager_jni.h&gt;</span>
+
+<span class="c1">// for native audio</span>
+<span class="cp">#include &lt;SLES/OpenSLES.h&gt;</span>
+<span class="cp">#include &lt;SLES/OpenSLES_Android.h&gt;</span>
+
+
+<span class="cm">/*</span>
+<span class="cm"> * A synchronized beeper example. As a device,</span>
+<span class="cm"> * it inherits from FCam::Device, and declares</span>
+<span class="cm"> * nested classes that inherit from CopyableAction</span>
+<span class="cm"> */</span>
+<span class="k">class</span> <span class="nc">SoundPlayer</span> <span class="o">:</span> <span class="k">public</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Device</span>
+<span class="p">{</span>
+
+<span class="nl">public:</span>
+
+    <span class="n">SoundPlayer</span><span class="p">(</span> <span class="n">AAssetManager</span> <span class="o">*</span><span class="n">mgr</span> <span class="p">);</span>
+    <span class="o">~</span><span class="n">SoundPlayer</span><span class="p">();</span>
+
+    <span class="cm">/*</span>
+<span class="cm">     * An action representing the playback of a .WAV file.</span>
+<span class="cm">     */</span>
+    <span class="k">class</span> <span class="nc">SoundAction</span> <span class="o">:</span> <span class="k">public</span> <span class="n">FCam</span><span class="o">::</span><span class="n">CopyableAction</span><span class="o">&lt;</span><span class="n">SoundAction</span><span class="o">&gt;</span>
+    <span class="p">{</span>
+    <span class="nl">public:</span>
+
+        <span class="cm">/* The enum to return as type() */</span>
+        <span class="k">enum</span>
+        <span class="p">{</span>
+            <span class="n">SoundPlay</span> <span class="o">=</span> <span class="n">CustomAction</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">};</span>
+
+        <span class="cm">/* Constructors and destructor */</span>
+        <span class="o">~</span><span class="n">SoundAction</span><span class="p">();</span>
+        <span class="n">SoundAction</span><span class="p">(</span> <span class="n">SoundPlayer</span> <span class="o">*</span><span class="n">b</span> <span class="p">);</span>
+        <span class="n">SoundAction</span><span class="p">(</span> <span class="n">SoundPlayer</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">time</span> <span class="p">);</span>
+        <span class="n">SoundAction</span><span class="p">(</span> <span class="k">const</span> <span class="n">SoundAction</span> <span class="o">&amp;</span><span class="n">b</span> <span class="p">);</span>
+
+        <span class="cm">/* Implementation of doAction() as required */</span>
+        <span class="kt">void</span> <span class="nf">doAction</span><span class="p">();</span>
+
+        <span class="cm">/* Load the specified file into buffer and prepares playback */</span>
+        <span class="kt">void</span> <span class="nf">setAsset</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">asset</span> <span class="p">);</span>
+
+        <span class="cm">/* Return the underlying device */</span>
+        <span class="n">SoundPlayer</span> <span class="o">*</span><span class="n">getPlayer</span><span class="p">()</span> <span class="k">const</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">player</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="kt">int</span> <span class="n">type</span><span class="p">()</span> <span class="k">const</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">SoundPlay</span><span class="p">;</span>
+        <span class="p">}</span>
+
+    <span class="nl">protected:</span>
+
+        <span class="n">SoundPlayer</span> <span class="o">*</span><span class="n">player</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">assetname</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="cm">/* Normally, this is where a device would add metadata tags to a</span>
+<span class="cm">     * just-created frame, based on the timestamps in the</span>
+<span class="cm">     * Frame. However, we don&#39;t have anything useful to add here, so</span>
+<span class="cm">     * tagFrame does nothing. */</span>
+    <span class="kt">void</span> <span class="nf">tagFrame</span><span class="p">(</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Frame</span> <span class="p">)</span> <span class="p">{}</span>
+
+    <span class="cm">/* Play an application asset */</span>
+    <span class="kt">bool</span> <span class="nf">playAsset</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">asset</span> <span class="p">);</span>
+
+    <span class="cm">/* Returns latency in microseconds */</span>
+    <span class="kt">int</span> <span class="nf">getLatency</span><span class="p">();</span>
+
+    <span class="kt">void</span> <span class="nf">handleEvent</span><span class="p">(</span> <span class="k">const</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Event</span> <span class="o">&amp;</span> <span class="p">)</span> <span class="p">{};</span>
+
+<span class="nl">protected:</span>
+
+    <span class="k">static</span> <span class="kt">bool</span> <span class="nf">createEngine</span><span class="p">();</span>
+    <span class="k">static</span> <span class="kt">bool</span> <span class="nf">destroyEngine</span><span class="p">();</span>
+
+    <span class="c1">// Asset manager</span>
+    <span class="n">AAssetManager</span> <span class="o">*</span><span class="n">mgr</span><span class="p">;</span>
+
+    <span class="c1">// Acquired an engine ref</span>
+    <span class="kt">bool</span> <span class="n">acquiredEngineRef</span><span class="p">;</span>
+
+    <span class="c1">// file descriptor player interfaces</span>
+    <span class="n">SLObjectItf</span>   <span class="n">fdPlayerObject</span><span class="p">;</span>
+    <span class="n">SLPlayItf</span>     <span class="n">fdPlayerPlay</span><span class="p">;</span>
+    <span class="n">SLSeekItf</span>     <span class="n">fdPlayerSeek</span><span class="p">;</span>
+    <span class="n">SLMuteSoloItf</span> <span class="n">fdPlayerMuteSolo</span><span class="p">;</span>
+    <span class="n">SLVolumeItf</span>   <span class="n">fdPlayerVolume</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Now we add a new source file <tt class="docutils literal"><span class="pre">jni/SoundPlayer.cpp</span></tt> that implements the new device:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;assert.h&gt;</span>
+<span class="cp">#include &quot;SoundPlayer.h&quot;</span>
+
+<span class="c1">// engine interfaces</span>
+<span class="k">static</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">engineRefs</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">static</span> <span class="n">SLObjectItf</span>  <span class="n">engineObject</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="k">static</span> <span class="n">SLEngineItf</span>  <span class="n">engineEngine</span><span class="p">;</span>
+
+<span class="c1">// output mix interfaces</span>
+<span class="k">static</span> <span class="n">SLObjectItf</span> <span class="n">outputMixObject</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+<span class="cm">/** \file */</span>
+
+<span class="cm">/***************************************************************/</span>
+<span class="cm">/* SoundPlayer implementation                                  */</span>
+<span class="cm">/***************************************************************/</span>
+
+<span class="cm">/* SoundPlayer constructor */</span>
+<span class="n">SoundPlayer</span><span class="o">::</span><span class="n">SoundPlayer</span><span class="p">(</span> <span class="n">AAssetManager</span> <span class="o">*</span> <span class="n">mgr</span> <span class="p">)</span>
+    <span class="o">:</span> <span class="n">mgr</span><span class="p">(</span> <span class="n">mgr</span> <span class="p">),</span> <span class="n">fdPlayerObject</span><span class="p">(</span> <span class="nb">NULL</span> <span class="p">),</span> <span class="n">fdPlayerPlay</span><span class="p">(</span> <span class="nb">NULL</span> <span class="p">),</span> <span class="n">fdPlayerSeek</span><span class="p">(</span> <span class="nb">NULL</span> <span class="p">),</span>
+      <span class="n">fdPlayerMuteSolo</span><span class="p">(</span> <span class="nb">NULL</span> <span class="p">),</span> <span class="n">fdPlayerVolume</span><span class="p">(</span> <span class="nb">NULL</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span> <span class="p">(</span> <span class="n">engineRefs</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">createEngine</span><span class="p">()</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">acquiredEngineRef</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="n">engineRefs</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">acquiredEngineRef</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="n">engineRefs</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* SoundPlayer destructor */</span>
+<span class="n">SoundPlayer</span><span class="o">::~</span><span class="n">SoundPlayer</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// destroy file descriptor audio player object, and invalidate all associated interfaces</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">fdPlayerObject</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="p">(</span> <span class="o">*</span><span class="n">fdPlayerObject</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">Destroy</span><span class="p">(</span> <span class="n">fdPlayerObject</span> <span class="p">);</span>
+        <span class="n">fdPlayerObject</span>   <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">fdPlayerPlay</span>     <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">fdPlayerSeek</span>     <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">fdPlayerMuteSolo</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">fdPlayerVolume</span>   <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span><span class="p">(</span> <span class="n">acquiredEngineRef</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">engineRefs</span><span class="o">--</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span> <span class="n">engineRefs</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">destroyEngine</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* Play a buffer */</span>
+<span class="kt">bool</span> <span class="n">SoundPlayer</span><span class="o">::</span><span class="n">playAsset</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">assetname</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">SLresult</span> <span class="n">result</span><span class="p">;</span>
+
+    <span class="c1">// destroy file descriptor audio player object, and invalidate all associated interfaces</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">fdPlayerObject</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="p">(</span> <span class="o">*</span><span class="n">fdPlayerObject</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">Destroy</span><span class="p">(</span> <span class="n">fdPlayerObject</span> <span class="p">);</span>
+        <span class="n">fdPlayerObject</span>   <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">fdPlayerPlay</span>     <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">fdPlayerSeek</span>     <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">fdPlayerMuteSolo</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">fdPlayerVolume</span>   <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">assert</span><span class="p">(</span> <span class="nb">NULL</span> <span class="o">!=</span> <span class="n">mgr</span> <span class="p">);</span>
+    <span class="n">AAsset</span> <span class="o">*</span><span class="n">asset</span> <span class="o">=</span> <span class="n">AAssetManager_open</span><span class="p">(</span> <span class="n">mgr</span><span class="p">,</span> <span class="n">assetname</span><span class="p">,</span> <span class="n">AASSET_MODE_UNKNOWN</span> <span class="p">);</span>
+
+    <span class="c1">// the asset might not be found</span>
+    <span class="k">if</span><span class="p">(</span> <span class="nb">NULL</span> <span class="o">==</span> <span class="n">asset</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// open asset as file descriptor</span>
+    <span class="kt">off_t</span> <span class="n">start</span><span class="p">,</span> <span class="n">length</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">AAsset_openFileDescriptor</span><span class="p">(</span> <span class="n">asset</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">start</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">length</span> <span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">fd</span> <span class="p">);</span>
+    <span class="n">AAsset_close</span><span class="p">(</span> <span class="n">asset</span> <span class="p">);</span>
+
+    <span class="c1">// configure audio source</span>
+    <span class="n">SLDataLocator_AndroidFD</span> <span class="n">loc_fd</span> <span class="o">=</span> <span class="p">{</span> <span class="n">SL_DATALOCATOR_ANDROIDFD</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">length</span> <span class="p">};</span>
+    <span class="n">SLDataFormat_MIME</span> <span class="n">format_mime</span> <span class="o">=</span>  <span class="p">{</span> <span class="n">SL_DATAFORMAT_MIME</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">SL_CONTAINERTYPE_UNSPECIFIED</span> <span class="p">};</span>
+    <span class="n">SLDataSource</span> <span class="n">audioSrc</span> <span class="o">=</span>          <span class="p">{</span> <span class="o">&amp;</span><span class="n">loc_fd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">format_mime</span> <span class="p">};</span>
+
+    <span class="c1">// configure audio sink</span>
+    <span class="n">SLDataLocator_OutputMix</span> <span class="n">loc_outmix</span> <span class="o">=</span> <span class="p">{</span> <span class="n">SL_DATALOCATOR_OUTPUTMIX</span><span class="p">,</span> <span class="n">outputMixObject</span> <span class="p">};</span>
+    <span class="n">SLDataSink</span> <span class="n">audioSnk</span> <span class="o">=</span>                <span class="p">{</span> <span class="o">&amp;</span><span class="n">loc_outmix</span><span class="p">,</span> <span class="nb">NULL</span> <span class="p">};</span>
+
+    <span class="c1">// create audio player</span>
+    <span class="k">const</span> <span class="n">SLInterfaceID</span> <span class="n">ids</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span>     <span class="p">{</span> <span class="n">SL_IID_SEEK</span><span class="p">,</span> <span class="n">SL_IID_MUTESOLO</span><span class="p">,</span> <span class="n">SL_IID_VOLUME</span> <span class="p">};</span>
+    <span class="k">const</span> <span class="n">SLboolean</span> <span class="n">req</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span>         <span class="p">{</span> <span class="n">SL_BOOLEAN_TRUE</span><span class="p">,</span> <span class="n">SL_BOOLEAN_TRUE</span><span class="p">,</span> <span class="n">SL_BOOLEAN_TRUE</span> <span class="p">};</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">engineEngine</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">CreateAudioPlayer</span><span class="p">(</span> <span class="n">engineEngine</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fdPlayerObject</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">audioSrc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">audioSnk</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">req</span> <span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="o">==</span> <span class="n">result</span> <span class="p">);</span>
+
+    <span class="c1">// realize the player</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">fdPlayerObject</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">Realize</span><span class="p">(</span> <span class="n">fdPlayerObject</span><span class="p">,</span> <span class="n">SL_BOOLEAN_FALSE</span> <span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="o">==</span> <span class="n">result</span> <span class="p">);</span>
+
+    <span class="c1">// get the play interface</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">fdPlayerObject</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">GetInterface</span><span class="p">(</span> <span class="n">fdPlayerObject</span><span class="p">,</span> <span class="n">SL_IID_PLAY</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fdPlayerPlay</span> <span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="o">==</span> <span class="n">result</span> <span class="p">);</span>
+
+    <span class="c1">// get the seek interface</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">fdPlayerObject</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">GetInterface</span><span class="p">(</span> <span class="n">fdPlayerObject</span><span class="p">,</span> <span class="n">SL_IID_SEEK</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fdPlayerSeek</span> <span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="o">==</span> <span class="n">result</span> <span class="p">);</span>
+
+    <span class="c1">// get the mute/solo interface</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">fdPlayerObject</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">GetInterface</span><span class="p">(</span> <span class="n">fdPlayerObject</span><span class="p">,</span> <span class="n">SL_IID_MUTESOLO</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fdPlayerMuteSolo</span> <span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="o">==</span> <span class="n">result</span> <span class="p">);</span>
+
+    <span class="c1">// get the volume interface</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">fdPlayerObject</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">GetInterface</span><span class="p">(</span> <span class="n">fdPlayerObject</span><span class="p">,</span> <span class="n">SL_IID_VOLUME</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fdPlayerVolume</span> <span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="o">==</span> <span class="n">result</span> <span class="p">);</span>
+
+    <span class="c1">// set the player&#39;s state</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">fdPlayerPlay</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">SetPlayState</span><span class="p">(</span> <span class="n">fdPlayerPlay</span><span class="p">,</span> <span class="n">SL_PLAYSTATE_PLAYING</span> <span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="o">==</span> <span class="n">result</span> <span class="p">);</span>
+
+    <span class="k">return</span> <span class="p">(</span> <span class="n">result</span> <span class="o">==</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">SoundPlayer</span><span class="o">::</span><span class="n">getLatency</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">SoundPlayer</span><span class="o">::</span><span class="n">createEngine</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">SLresult</span> <span class="n">result</span><span class="p">;</span>
+
+    <span class="c1">// create engine</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">slCreateEngine</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">engineObject</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span> <span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="o">==</span> <span class="n">result</span> <span class="p">);</span>
+
+    <span class="c1">// realize the engine</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">engineObject</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">Realize</span><span class="p">(</span> <span class="n">engineObject</span><span class="p">,</span> <span class="n">SL_BOOLEAN_FALSE</span> <span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="o">==</span> <span class="n">result</span> <span class="p">);</span>
+
+    <span class="c1">// get the engine interface, which is needed in order to create other objects</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">engineObject</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">GetInterface</span><span class="p">(</span> <span class="n">engineObject</span><span class="p">,</span> <span class="n">SL_IID_ENGINE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">engineEngine</span> <span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="o">==</span> <span class="n">result</span> <span class="p">);</span>
+
+    <span class="c1">// create output mix, with environmental reverb specified as a non-required interface</span>
+    <span class="k">const</span> <span class="n">SLInterfaceID</span> <span class="n">ids</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="n">SL_IID_ENVIRONMENTALREVERB</span> <span class="p">};</span>
+    <span class="k">const</span> <span class="n">SLboolean</span> <span class="n">req</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span>     <span class="p">{</span> <span class="n">SL_BOOLEAN_FALSE</span> <span class="p">};</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">engineEngine</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">CreateOutputMix</span><span class="p">(</span> <span class="n">engineEngine</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">outputMixObject</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">req</span> <span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="o">==</span> <span class="n">result</span> <span class="p">);</span>
+
+    <span class="c1">// realize the output mix</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">outputMixObject</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">Realize</span><span class="p">(</span> <span class="n">outputMixObject</span><span class="p">,</span> <span class="n">SL_BOOLEAN_FALSE</span> <span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="o">==</span> <span class="n">result</span> <span class="p">);</span>
+
+    <span class="k">return</span> <span class="p">(</span> <span class="n">result</span> <span class="o">==</span> <span class="n">SL_RESULT_SUCCESS</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">SoundPlayer</span><span class="o">::</span><span class="n">destroyEngine</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// destroy output mix object, and invalidate all associated interfaces</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">outputMixObject</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="p">(</span> <span class="o">*</span><span class="n">outputMixObject</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">Destroy</span><span class="p">(</span> <span class="n">outputMixObject</span> <span class="p">);</span>
+        <span class="n">outputMixObject</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// destroy engine object, and invalidate all associated interfaces</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">engineObject</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="p">(</span> <span class="o">*</span><span class="n">engineObject</span> <span class="p">)</span><span class="o">-&gt;</span><span class="n">Destroy</span><span class="p">(</span> <span class="n">engineObject</span> <span class="p">);</span>
+        <span class="n">engineObject</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">engineEngine</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/***************************************************************/</span>
+<span class="cm">/* SoundPlayer::SoundAction implementation                     */</span>
+<span class="cm">/***************************************************************/</span>
+
+<span class="cm">/* SoundAction constructors */</span>
+<span class="n">SoundPlayer</span><span class="o">::</span><span class="n">SoundAction</span><span class="o">::</span><span class="n">SoundAction</span><span class="p">(</span> <span class="n">SoundPlayer</span> <span class="o">*</span><span class="n">a</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">player</span>  <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+    <span class="n">time</span>    <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">latency</span> <span class="o">=</span> <span class="n">a</span> <span class="o">?</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">getLatency</span><span class="p">()</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">SoundPlayer</span><span class="o">::</span><span class="n">SoundAction</span><span class="o">::</span><span class="n">SoundAction</span><span class="p">(</span> <span class="n">SoundPlayer</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">player</span>  <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+    <span class="n">time</span>    <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+    <span class="n">latency</span> <span class="o">=</span> <span class="n">a</span> <span class="o">?</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">getLatency</span><span class="p">()</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">SoundPlayer</span><span class="o">::</span><span class="n">SoundAction</span><span class="o">::</span><span class="n">SoundAction</span><span class="p">(</span> <span class="k">const</span> <span class="n">SoundPlayer</span><span class="o">::</span><span class="n">SoundAction</span> <span class="o">&amp;</span><span class="n">b</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Copy fields from the target.</span>
+    <span class="n">time</span>      <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">time</span><span class="p">;</span>
+    <span class="n">latency</span>   <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">latency</span><span class="p">;</span>
+    <span class="n">player</span>    <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">getPlayer</span><span class="p">();</span>
+    <span class="n">assetname</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">assetname</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/* SoundAction destructor */</span>
+<span class="n">SoundPlayer</span><span class="o">::</span><span class="n">SoundAction</span><span class="o">::~</span><span class="n">SoundAction</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">SoundPlayer</span><span class="o">::</span><span class="n">SoundAction</span><span class="o">::</span><span class="n">setAsset</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">asset</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">assetname</span> <span class="o">=</span> <span class="n">asset</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/* Perform the required action */</span>
+<span class="kt">void</span> <span class="n">SoundPlayer</span><span class="o">::</span><span class="n">SoundAction</span><span class="o">::</span><span class="n">doAction</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">player</span><span class="o">-&gt;</span><span class="n">playAsset</span><span class="p">(</span> <span class="n">assetname</span><span class="p">.</span><span class="n">c_str</span><span class="p">()</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Next is time to change the modify <tt class="docutils literal"><span class="pre">simplefcam.cpp</span></tt>. Add a new include:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &quot;SoundPlayer.h&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Now we will write code into <tt class="docutils literal"><span class="pre">SimpleFCam::run()</span></tt>. Our program
+will capture a shot with two actions; an action to fire
+the flash and an action to play the shutter sound.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// Check that the native asset manager was succesfully initialized.</span>
+<span class="k">if</span><span class="p">(</span> <span class="n">mNativeAssetManager</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Devices</span>
+<span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Sensor</span> <span class="n">sensor</span><span class="p">;</span>
+<span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Flash</span>  <span class="n">flash</span><span class="p">;</span>
+
+<span class="c1">// We defined a custom device to play a sound during the</span>
+<span class="c1">// exposure. See SoundPlayer.h/cpp for details.</span>
+<span class="n">SoundPlayer</span> <span class="nf">audio</span><span class="p">(</span> <span class="n">mNativeAssetManager</span> <span class="p">);</span>
+
+<span class="n">sensor</span><span class="p">.</span><span class="n">attach</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">flash</span> <span class="p">);</span> <span class="c1">// Attach the flash to the sensor</span>
+<span class="n">sensor</span><span class="p">.</span><span class="n">attach</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">audio</span> <span class="p">);</span> <span class="c1">// Attach the sound player to the sensor</span>
+
+<span class="c1">// Set the shot parameters</span>
+<span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Shot</span> <span class="n">shot1</span><span class="p">;</span>
+<span class="n">shot1</span><span class="p">.</span><span class="n">exposure</span> <span class="o">=</span> <span class="mi">50000</span><span class="p">;</span>
+<span class="n">shot1</span><span class="p">.</span><span class="n">gain</span>     <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
+<span class="n">shot1</span><span class="p">.</span><span class="n">image</span>    <span class="o">=</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Image</span><span class="p">(</span> <span class="n">sensor</span><span class="p">.</span><span class="n">maxImageSize</span><span class="p">(),</span> <span class="n">FCam</span><span class="o">::</span><span class="n">YUV420p</span> <span class="p">);</span>
+
+<span class="c1">// Action (Flash)</span>
+<span class="n">FCam</span><span class="o">::</span><span class="n">Flash</span><span class="o">::</span><span class="n">FireAction</span> <span class="n">fire</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">flash</span> <span class="p">);</span>
+<span class="n">fire</span><span class="p">.</span><span class="n">time</span>       <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">fire</span><span class="p">.</span><span class="n">duration</span>   <span class="o">=</span> <span class="n">flash</span><span class="p">.</span><span class="n">minDuration</span><span class="p">();</span>
+<span class="n">fire</span><span class="p">.</span><span class="n">brightness</span> <span class="o">=</span> <span class="n">flash</span><span class="p">.</span><span class="n">maxBrightness</span><span class="p">();</span>
+
+<span class="c1">// Action (Sound)</span>
+<span class="n">SoundPlayer</span><span class="o">::</span><span class="n">SoundAction</span> <span class="n">click</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">audio</span> <span class="p">);</span>
+<span class="n">click</span><span class="p">.</span><span class="n">time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Start at the beginning of the exposure</span>
+<span class="n">click</span><span class="p">.</span><span class="n">setAsset</span><span class="p">(</span> <span class="s">&quot;camera_snd.mp3&quot;</span> <span class="p">);</span>
+
+<span class="c1">// Attach actions</span>
+<span class="n">shot1</span><span class="p">.</span><span class="n">addAction</span><span class="p">(</span> <span class="n">fire</span> <span class="p">);</span>
+<span class="n">shot1</span><span class="p">.</span><span class="n">addAction</span><span class="p">(</span> <span class="n">click</span> <span class="p">);</span>
+
+<span class="c1">// Order the sensor to capture a shot.</span>
+<span class="c1">// The flash and the shutter sound should happen simultaneously.</span>
+<span class="n">sensor</span><span class="p">.</span><span class="n">capture</span><span class="p">(</span> <span class="n">shot1</span> <span class="p">);</span>
+
+<span class="c1">// Retrieve the frame from the sensor</span>
+<span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Frame</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">getFrame</span><span class="p">();</span>
+
+<span class="c1">// Write out the file</span>
+<span class="n">saveJPEG</span><span class="p">(</span> <span class="s">&quot;SimpleFCam5.jpg&quot;</span><span class="p">,</span> <span class="n">frame</span> <span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Download a <a class="reference external" href="http://soundbible.com/563-Camera-Shutter-Click.html">camera shutter sound</a> and
+save into the <tt class="docutils literal"><span class="pre">assets</span></tt> folder of the <tt class="docutils literal"><span class="pre">SimpleFCam5</span></tt> project as <tt class="docutils literal"><span class="pre">camera_snd.mp3</span></tt>.</p>
+</li>
+<li><p class="first">Modify <tt class="docutils literal"><span class="pre">Android.mk</span></tt> to include <tt class="docutils literal"><span class="pre">SoundPlayer.cpp</span></tt> and link the <tt class="docutils literal"><span class="pre">OpenSLES</span></tt> library.</p>
+<div class="highlight-makefile"><div class="highlight"><pre><span class="nv">LOCAL_MODULE</span>    <span class="o">:=</span> simplefcam
+<span class="nv">LOCAL_SRC_FILES</span> <span class="o">:=</span> simplefcam.cpp com_nvidia_simplefcam_SimpleFCamActivity.cpp
+<span class="hll"><span class="nv">LOCAL_SRC_FILES</span> <span class="o">+=</span> SoundPlayer.cpp
+</span>
+<span class="nv">LOCAL_STATIC_LIBRARIES</span>  <span class="o">+=</span> fcamlib libjpeg
+<span class="nv">LOCAL_SHARED_LIBRARIES</span>  <span class="o">+=</span> fcamhal
+
+<span class="c"># libraries for native asset manager and OpenSLES</span>
+<span class="hll"><span class="nv">LOCAL_LDLIBS</span>    <span class="o">+=</span> -landroid -lOpenSLES
+</span></pre></div>
+</div>
+</li>
+<li><p class="first">Build and run the application; you should see the flash and hear the shutter sound.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="using-fcam-with-opencv-and-opengl">
+<h2>Using FCam with OpenCV and OpenGL<a class="headerlink" href="#using-fcam-with-opencv-and-opengl" title="Permalink to this headline">¶</a></h2>
+<p>In this section we will use the FCam API to retrieve frames from the camera and
+process them using OpenCV and draw the image on the screen with OpenGL ES. If you
+haven&#8217;t yet read the <a class="reference internal" href="opencv.html#simple-image-opencv-gl"><em>Display Results using OpenGL</em></a> section, please do so before
+proceeding.</p>
+<p>We will replace the OpenCV camera in <tt class="docutils literal"><span class="pre">SimpleImageOpenCV_GL</span></tt> with an FCam camera.</p>
+<ol class="arabic">
+<li><p class="first">Import the <tt class="docutils literal"><span class="pre">SimpleImageOpenCV_GL_FCam</span></tt> project to your Eclipse workspace. This
+will be our starting point.</p>
+</li>
+<li><p class="first">The FCam code will need to provide its own camera control loop. For this purpose
+we will create a new class called <tt class="docutils literal"><span class="pre">ImageSource</span></tt> that starts a new worker
+thread with the purpose of executing the camera control loop.
+Every frame that becomes available is pushed by the worker thread
+to a queue of frames that the Engine rendering thread can pop.</p>
+<p>Add a new file <tt class="docutils literal"><span class="pre">jni/ImageSource.h</span></tt>, with the following code. This
+is an abstract class that provides the basic framework to launch
+start a worker thread and manage the available frames queue. A
+derived class has to implement to <tt class="docutils literal"><span class="pre">work()</span></tt> function to run
+on the worker thread. We have chosen to store our frames
+as cv::Mat objects that we can use immediately with OpenCV.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#ifndef __IMAGESOURCE_H</span>
+<span class="cp">#define __IMAGESOURCE_H</span>
+
+<span class="cp">#include &lt;deque&gt;</span>
+<span class="cp">#include &lt;pthread.h&gt;</span>
+<span class="cp">#include &lt;opencv2/core/core.hpp&gt;</span>
+
+<span class="k">class</span> <span class="nc">ImageSource</span>
+<span class="p">{</span>
+<span class="nl">public:</span>
+
+    <span class="n">ImageSource</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">ImageSource</span><span class="p">();</span>
+
+    <span class="cm">/* Launches the worker thread */</span>
+    <span class="kt">void</span> <span class="nf">start</span><span class="p">();</span>
+
+    <span class="cm">/* Stops the worker thread - blocks until</span>
+<span class="cm">     * worker thread has completed.</span>
+<span class="cm">     */</span>
+    <span class="kt">void</span> <span class="nf">stop</span><span class="p">();</span>
+
+    <span class="cm">/* Returns the number of available frames in</span>
+<span class="cm">     * the frame queue. */</span>
+    <span class="kt">size_t</span> <span class="nf">availableFrames</span><span class="p">();</span>
+
+
+    <span class="cm">/* Gets the next frame from the top of the</span>
+<span class="cm">     * queue. Returns false if the queue is empty,</span>
+<span class="cm">     * true if a frame has been retrieved.</span>
+<span class="cm">     */</span>
+    <span class="kt">bool</span> <span class="nf">getFrame</span><span class="p">(</span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="o">&amp;</span><span class="n">frame</span><span class="p">);</span>
+
+<span class="nl">protected:</span>
+
+    <span class="cm">/* returns true if there was a request to stop work */</span>
+    <span class="kt">bool</span> <span class="nf">stopRequested</span><span class="p">();</span>
+
+    <span class="cm">/* Work function */</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">work</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="cm">/* put a new frame in the available queue */</span>
+    <span class="kt">void</span> <span class="nf">addAvailableFrame</span><span class="p">(</span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="o">&amp;</span><span class="n">frame</span><span class="p">);</span>
+
+    <span class="cm">/* Worker thread entry function */</span>
+    <span class="k">static</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">workerFunc</span><span class="p">(</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg</span> <span class="p">);</span>
+
+<span class="nl">private:</span>
+
+    <span class="k">volatile</span> <span class="kt">bool</span>       <span class="n">mStopRequested</span><span class="p">;</span>
+    <span class="kt">pthread_t</span>           <span class="n">mWorkerThread</span><span class="p">;</span>
+    <span class="kt">pthread_mutex_t</span>     <span class="n">mQueueMutex</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">deque</span><span class="o">&lt;</span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&gt;</span> <span class="n">mFramesQueue</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="cp">#endif </span><span class="cm">/* __IMAGESOURCE_H */</span><span class="cp"></span>
+</pre></div>
+</div>
+<p>Now we will add the implementation for these methods. Create
+a new file <tt class="docutils literal"><span class="pre">jni/ImageSource.cpp</span></tt>. We provide utility
+functions <tt class="docutils literal"><span class="pre">addAvailableFrame()</span></tt> to add a new frame to the
+queue and <tt class="docutils literal"><span class="pre">getFrame()</span></tt> to retrieve the next frame
+available. The queue is protected by a mutex to prevent
+concurrent access from the worker and the rendering
+threads.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &quot;ImageSource.h&quot;</span>
+
+<span class="n">ImageSource</span><span class="o">::</span><span class="n">ImageSource</span><span class="p">()</span> <span class="o">:</span>
+    <span class="n">mStopRequested</span><span class="p">(</span> <span class="nb">false</span> <span class="p">),</span>
+    <span class="n">mWorkerThread</span><span class="p">(</span> <span class="mi">0</span> <span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="n">ImageSource</span><span class="o">::~</span><span class="n">ImageSource</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">mWorkerThread</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">stop</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">ImageSource</span><span class="o">::</span><span class="n">start</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Create the queue mutex</span>
+    <span class="n">pthread_mutex_init</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">mQueueMutex</span><span class="p">,</span> <span class="nb">NULL</span> <span class="p">);</span>
+
+    <span class="c1">// Create the thread</span>
+    <span class="n">pthread_create</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">mWorkerThread</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">workerFunc</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="k">this</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">ImageSource</span><span class="o">::</span><span class="n">stop</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Indicate a stop is being requested.</span>
+    <span class="n">mStopRequested</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+    <span class="c1">// Wait until the worker thread finishes</span>
+    <span class="n">pthread_join</span><span class="p">(</span> <span class="n">mWorkerThread</span><span class="p">,</span> <span class="nb">NULL</span> <span class="p">);</span>
+
+    <span class="c1">// Now that thread has finished, destroy the mutex.</span>
+    <span class="n">pthread_mutex_destroy</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">mQueueMutex</span> <span class="p">);</span>
+
+    <span class="n">mWorkerThread</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">size_t</span> <span class="n">ImageSource</span><span class="o">::</span><span class="n">availableFrames</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">pthread_mutex_lock</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">mQueueMutex</span> <span class="p">);</span>
+    <span class="kt">size_t</span> <span class="n">numFrames</span> <span class="o">=</span> <span class="n">mFramesQueue</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">pthread_mutex_unlock</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">mQueueMutex</span> <span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">numFrames</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">ImageSource</span><span class="o">::</span><span class="n">getFrame</span><span class="p">(</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="o">&amp;</span><span class="n">frame</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">bool</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+    <span class="n">pthread_mutex_lock</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">mQueueMutex</span> <span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span> <span class="n">mFramesQueue</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">mFramesQueue</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+        <span class="n">mFramesQueue</span><span class="p">.</span><span class="n">pop_front</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">pthread_mutex_unlock</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">mQueueMutex</span> <span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">ImageSource</span><span class="o">::</span><span class="n">addAvailableFrame</span><span class="p">(</span><span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="o">&amp;</span><span class="n">frame</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">pthread_mutex_lock</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">mQueueMutex</span> <span class="p">);</span>
+    <span class="n">mFramesQueue</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+    <span class="n">pthread_mutex_unlock</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">mQueueMutex</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">ImageSource</span><span class="o">::</span><span class="n">stopRequested</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">mStopRequested</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="o">*</span><span class="n">ImageSource</span><span class="o">::</span><span class="n">workerFunc</span><span class="p">(</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">ImageSource</span> <span class="o">*</span><span class="n">instance</span> <span class="o">=</span> <span class="p">(</span><span class="n">ImageSource</span> <span class="o">*</span><span class="p">)</span> <span class="n">arg</span><span class="p">;</span>
+    <span class="n">instance</span><span class="o">-&gt;</span><span class="n">work</span><span class="p">();</span>
+    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Next we will create a derived class called <tt class="docutils literal"><span class="pre">ImageSourceFCam</span></tt> that
+implements the FCam control loop. Add a new file <tt class="docutils literal"><span class="pre">jni/ImageSourceFCam.h</span></tt>.
+As the following code shows, only the constructor, destructor and <tt class="docutils literal"><span class="pre">work()</span></tt>
+function need to be provided, the base class provides the remaining infrastructure.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#ifndef _IMAGESOURCEFCAM_H</span>
+<span class="cp">#define _IMAGESOURCEFCAM_H</span>
+
+<span class="cp">#include &quot;ImageSource.h&quot;</span>
+
+<span class="cm">/* ImageSourceFCam</span>
+<span class="cm"> * A class that uses the FCam API to stream images</span>
+<span class="cm"> */</span>
+
+<span class="k">class</span> <span class="nc">ImageSourceFCam</span> <span class="o">:</span> <span class="k">public</span> <span class="n">ImageSource</span>
+<span class="p">{</span>
+<span class="nl">public:</span>
+
+    <span class="n">ImageSourceFCam</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">ImageSourceFCam</span><span class="p">();</span>
+
+<span class="nl">protected:</span>
+
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">work</span><span class="p">();</span>
+
+<span class="p">};</span>
+
+
+<span class="cp">#endif </span><span class="cm">/* _IMAGESOURCEFCAM_H */</span><span class="cp"></span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add a new file called <tt class="docutils literal"><span class="pre">jni/ImageSourceFCam.cpp</span></tt> with the
+following code:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;opencv2/highgui/highgui.hpp&gt;</span>
+<span class="cp">#include &lt;opencv2/imgproc/imgproc.hpp&gt;</span>
+
+<span class="cp">#include &quot;ImageSourceFCam.h&quot;</span>
+<span class="cp">#include &quot;FCam/Tegra.h&quot;</span>
+<span class="cp">#include &lt;FCam/AutoExposure.h&gt;</span>
+<span class="cp">#include &lt;FCam/AutoWhiteBalance.h&gt;</span>
+
+<span class="n">ImageSourceFCam</span><span class="o">::</span><span class="n">ImageSourceFCam</span><span class="p">()</span> <span class="o">:</span>
+    <span class="n">ImageSource</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="n">ImageSourceFCam</span><span class="o">::~</span><span class="n">ImageSourceFCam</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">ImageSourceFCam</span><span class="o">::</span><span class="n">work</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Sensor</span> <span class="n">sensor</span><span class="p">;</span>
+    <span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Shot</span>   <span class="n">shot</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">width</span>  <span class="o">=</span> <span class="mi">640</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">480</span><span class="p">;</span>
+
+    <span class="c1">// Initial shot parameters</span>
+    <span class="n">shot</span><span class="p">.</span><span class="n">exposure</span> <span class="o">=</span> <span class="mi">20000</span><span class="p">;</span>
+    <span class="n">shot</span><span class="p">.</span><span class="n">gain</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
+    <span class="n">shot</span><span class="p">.</span><span class="n">whiteBalance</span> <span class="o">=</span> <span class="mi">6500</span><span class="p">;</span>
+
+    <span class="c1">// Enable histograms for metering and whitebalance</span>
+    <span class="n">shot</span><span class="p">.</span><span class="n">histogram</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">shot</span><span class="p">.</span><span class="n">histogram</span><span class="p">.</span><span class="n">region</span> <span class="o">=</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Rect</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="p">);</span>
+
+    <span class="n">shot</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">FCam</span><span class="o">::</span><span class="n">Image</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">FCam</span><span class="o">::</span><span class="n">YUV420p</span><span class="p">);</span>
+
+    <span class="k">while</span> <span class="p">(</span> <span class="o">!</span><span class="n">stopRequested</span><span class="p">()</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Start streaming this shot.</span>
+        <span class="n">sensor</span><span class="p">.</span><span class="n">stream</span><span class="p">(</span><span class="n">shot</span><span class="p">);</span>
+
+        <span class="c1">// Wait for a frame</span>
+        <span class="n">FCam</span><span class="o">::</span><span class="n">Tegra</span><span class="o">::</span><span class="n">Frame</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">getFrame</span><span class="p">();</span>
+
+        <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">frame</span><span class="p">.</span><span class="n">image</span><span class="p">().</span><span class="n">valid</span><span class="p">()</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Do auto exposure and auto whitebalance</span>
+        <span class="n">autoExpose</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">shot</span><span class="p">,</span> <span class="n">frame</span> <span class="p">);</span>
+        <span class="n">autoWhiteBalance</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">shot</span><span class="p">,</span> <span class="n">frame</span><span class="p">);</span>
+
+        <span class="c1">// Wrap the FCam frame as an OpenCV CV_8UC1 image</span>
+        <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">yuvimg</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">image</span><span class="p">().</span><span class="n">height</span><span class="p">()</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">frame</span><span class="p">.</span><span class="n">image</span><span class="p">().</span><span class="n">width</span><span class="p">(),</span> <span class="n">CV_8UC1</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">frame</span><span class="p">.</span><span class="n">image</span><span class="p">()(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">);</span>
+
+        <span class="c1">// Convert the YUV420p image to BGR.</span>
+        <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">rgbimg</span><span class="p">;</span>
+        <span class="n">cv</span><span class="o">::</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">yuvimg</span><span class="p">,</span> <span class="n">rgbimg</span><span class="p">,</span> <span class="n">CV_YUV420p2BGR</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+
+        <span class="c1">// Add new image to the queue.</span>
+        <span class="n">addAvailableFrame</span><span class="p">(</span><span class="n">rgbimg</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">sensor</span><span class="p">.</span><span class="n">stopStreaming</span><span class="p">();</span>
+    <span class="n">sensor</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition-in-depth admonition">
+<p class="first admonition-title">In Depth</p>
+<p class="last">The FCam code doesn&#8217;t present any new FCam API concept. What is new in this example
+is the conversion from <tt class="docutils literal"><span class="pre">YUV420p</span></tt> to a <tt class="docutils literal"><span class="pre">cv::Mat</span></tt>. This is done with the <tt class="docutils literal"><span class="pre">cv::cvtColor</span></tt>
+function. After the color conversion we push the frame to the queue.</p>
+</div>
+</li>
+<li><p class="first">Modify the <tt class="docutils literal"><span class="pre">Android.mk</span></tt> file to add the new source files and update
+the module name. After this change, verify that your project builds
+succesfully.</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_PATH</span> <span class="o">:=</span> <span class="k">$(</span>call my-dir<span class="k">)</span>
+<span class="cp">include $(CLEAR_VARS)</span>
+
+<span class="nv">OPENCV_CAMERA_MODULES</span>  <span class="o">:=</span> on
+<span class="nv">OPENCV_INSTALL_MODULES</span> <span class="o">:=</span> on
+<span class="nv">OPENCV_LIB_TYPE</span>        <span class="o">:=</span> STATIC
+
+<span class="cp">include $(NVPACK_PATH)/OpenCV-2.4.2-Tegra-sdk/sdk/native/jni/OpenCV-tegra3.mk</span>
+
+<span class="hll"><span class="nv">LOCAL_MODULE</span> <span class="o">:=</span> SimpleImageDisplayCVGLFCam
+</span>
+<span class="nv">LOCAL_SRC_FILES</span> <span class="o">:=</span> SimpleNativeGL_NV.cpp Engine.cpp DrawRect.cpp RectShader.cpp OpenCV_native.cpp
+<span class="hll"><span class="nv">LOCAL_SRC_FILES</span> <span class="o">+=</span> ImageSource.cpp ImageSourceFCam.cpp
+</span>
+<span class="nv">LOCAL_LDLIBS</span>    <span class="o">+=</span> -lstdc++ -lc -lm -llog -landroid -ldl -lGLESv2 -lEGL
+<span class="nv">LOCAL_STATIC_LIBRARIES</span> <span class="o">+=</span> nv_and_util nv_egl_util nv_bitfont nv_math nv_glesutil nv_hhdds nv_log nv_shader nv_file nv_thread
+
+<span class="hll"><span class="c"># Add libraries required by FCam.</span>
+</span><span class="hll"><span class="nv">LOCAL_STATIC_LIBRARIES</span> <span class="o">+=</span> fcamlib
+</span><span class="hll"><span class="nv">LOCAL_SHARED_LIBRARIES</span> <span class="o">+=</span> fcamhal
+</span>
+<span class="nv">LOCAL_CFLAGS</span> <span class="o">+=</span> -std<span class="o">=</span>gnu++0x
+<span class="cp">include $(BUILD_SHARED_LIBRARY)</span>
+
+<span class="c"># Add the folder with the NVIDIA helper</span>
+<span class="k">$(</span>call import-add-path, <span class="k">$(</span>NVPACK_PATH<span class="k">)</span>/TDK_Samples/tegra_android_native_samples_v10p10/libs/jni<span class="k">)</span>
+
+<span class="c"># Import the fcam module</span>
+<span class="hll"><span class="k">$(</span>call import-add-path, <span class="k">$(</span>FCAM4TEGRA_PATH<span class="k">)</span>/modules<span class="k">)</span>
+</span><span class="hll"><span class="k">$(</span>call import-module,fcam/lib<span class="k">)</span>
+</span>
+<span class="c"># Import the modules from the NVIDIA helper</span>
+<span class="k">$(</span>call import-module, nv_and_util<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_egl_util<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_bitfont<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_math<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_glesutil<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_hhdds<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_log<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_shader<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_file<span class="k">)</span>
+<span class="k">$(</span>call import-module, nv_thread<span class="k">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">We are now ready to add our new <tt class="docutils literal"><span class="pre">ImageSource</span></tt> instance to the <tt class="docutils literal"><span class="pre">Engine</span></tt> class.
+Open <tt class="docutils literal"><span class="pre">jni/Engine.h</span></tt>. Add the following:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#ifndef __ENGINE_H</span>
+<span class="cp">#define __ENGINE_H</span>
+
+<span class="hll"><span class="c1">// Include the ImageSource abstraction class</span>
+</span><span class="hll"><span class="cp">#include &quot;ImageSource.h&quot;</span>
+</span></pre></div>
+</div>
+<p>We will add a <tt class="docutils literal"><span class="pre">std::unique_ptr</span></tt> instance to the
+ImageSource:</p>
+<div class="highlight-c++"><div class="highlight"><pre>    <span class="c1">// OpenGL for OpenCV</span>
+    <span class="n">GLint</span> <span class="n">mCVlineShader</span><span class="p">;</span>
+
+<span class="hll">    <span class="c1">// Image source used to grab frames.</span>
+</span><span class="hll">    <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">ImageSource</span><span class="o">&gt;</span> <span class="n">mImageSource</span><span class="p">;</span>
+</span><span class="p">};</span>
+
+<span class="cp">#endif </span><span class="c1">// __ENGINE_H</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Open <tt class="docutils literal"><span class="pre">jni/Engine.cpp</span></tt>. Begin by adding a new include:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;nv_bitfont/nv_bitfont.h&gt;</span>
+<span class="cp">#include &lt;nv_shader/nv_shader.h&gt;</span>
+
+<span class="hll"><span class="cp">#include &quot;ImageSourceFCam.h&quot;</span>
+</span></pre></div>
+</div>
+<p>Modify the code that handles the button events
+to create and destroy the <tt class="docutils literal"><span class="pre">ImageSourceFCam</span></tt>. When
+the <tt class="docutils literal"><span class="pre">CAM</span></tt> button is pressed we want to start
+a new <tt class="docutils literal"><span class="pre">ImageSourceFCam</span></tt> instance, when <tt class="docutils literal"><span class="pre">IMAGE</span></tt>
+is pressed we want to switch to the image display
+and destroy the <tt class="docutils literal"><span class="pre">ImageSourceFCam</span></tt> insance.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// Check if the touch was inside of the first button...</span>
+<span class="k">if</span><span class="p">(</span> <span class="n">mUiButtonZone</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">inside</span><span class="p">(</span> <span class="n">mx</span><span class="p">,</span> <span class="n">my</span> <span class="p">)</span> <span class="p">)</span>
+<span class="p">{</span>
+<span class="hll">    <span class="c1">// ``CAM`` button calls a camera capture function here</span>
+</span><span class="hll">    <span class="k">if</span><span class="p">(</span> <span class="n">mImageSource</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="n">nullptr</span> <span class="p">)</span>
+</span><span class="hll">    <span class="p">{</span>
+</span><span class="hll">        <span class="n">mImageSource</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span> <span class="k">new</span> <span class="n">ImageSourceFCam</span><span class="p">()</span> <span class="p">);</span>
+</span><span class="hll">        <span class="n">mImageSource</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">();</span>
+</span><span class="hll">    <span class="p">}</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="n">mHitButton</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="p">}</span>
+<span class="c1">// ... or the second</span>
+<span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">mUiButtonZone</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">inside</span><span class="p">(</span> <span class="n">mx</span><span class="p">,</span> <span class="n">my</span> <span class="p">)</span> <span class="p">)</span>
+<span class="p">{</span>
+
+<span class="hll">    <span class="c1">// If we are currently running the camera, stop it.</span>
+</span><span class="hll">    <span class="k">if</span><span class="p">(</span> <span class="n">mImageSource</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">!=</span> <span class="n">nullptr</span> <span class="p">)</span>
+</span><span class="hll">    <span class="p">{</span>
+</span><span class="hll">        <span class="c1">// Stop the image source.</span>
+</span><span class="hll">        <span class="n">mImageSource</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span> <span class="n">nullptr</span> <span class="p">);</span>
+</span><span class="hll">    <span class="p">}</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="c1">// Clear any features that we might have computed</span>
+</span><span class="hll">    <span class="n">mCV</span><span class="p">.</span><span class="n">mFeature</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="c1">// ``IMAGE`` button calls a load image function, and</span>
+</span><span class="hll">    <span class="c1">// a function to update a texture here.</span>
+</span><span class="hll">    <span class="n">updateCVTexture</span><span class="p">(</span> <span class="n">mImgTexture</span><span class="p">,</span> <span class="n">mCV</span><span class="p">.</span><span class="n">runLoadCVImg</span><span class="p">()</span> <span class="p">);</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="n">mHitButton</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>We also want to destroy the mImageSource if the user presses
+the back key and pauses the active. Inside the <tt class="docutils literal"><span class="pre">Engine::updateFrame</span></tt>
+function, add the following code:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// Time stands still when we&#39;re auto-paused, and we don&#39;t</span>
+<span class="c1">// automatically render</span>
+<span class="k">if</span><span class="p">(</span> <span class="n">mActiveMode</span> <span class="p">)</span>
+<span class="p">{</span>
+   <span class="c1">// The time needs to advance in active mode.</span>
+   <span class="n">advanceTime</span><span class="p">(</span> <span class="n">deltaTime</span> <span class="p">);</span>
+
+   <span class="c1">// This will try to set up EGL if it isn&#39;t set up</span>
+   <span class="c1">// When we first set up EGL completely, we also load our GLES resources</span>
+   <span class="c1">// If these are already set up or we succeed at setting them all up now, then</span>
+   <span class="c1">// we go ahead and render.</span>
+   <span class="n">renderFrame</span><span class="p">(</span> <span class="nb">true</span> <span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">isForcedRenderPending</span><span class="p">()</span> <span class="p">)</span>  <span class="c1">// forced rendering when needed for UI, etc.</span>
+<span class="p">{</span>
+   <span class="c1">// This forces to render.</span>
+   <span class="n">renderFrame</span><span class="p">(</span> <span class="nb">true</span> <span class="p">);</span>
+<span class="p">}</span>
+<span class="hll"><span class="k">else</span>
+</span><span class="hll"><span class="p">{</span>
+</span><span class="hll">   <span class="k">if</span><span class="p">(</span> <span class="n">mImageSource</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">!=</span> <span class="n">nullptr</span> <span class="p">)</span>
+</span><span class="hll">   <span class="p">{</span>
+</span><span class="hll">       <span class="n">mImageSource</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span> <span class="n">nullptr</span> <span class="p">);</span>
+</span><span class="hll">   <span class="p">}</span>
+</span><span class="hll"><span class="p">}</span>
+</span></pre></div>
+</div>
+<p>Finally, we want to grab a frame from mImageSource inside <tt class="docutils literal"><span class="pre">Engine::renderFrame</span></tt>.
+The function <tt class="docutils literal"><span class="pre">mImageSource-&gt;getFrame</span></tt> returns true if a new frame
+was available. If none was available, we don&#8217;t update the rendering texture.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// TODO: Add code to retrieve a frame using FCam</span>
+<span class="hll"><span class="k">if</span><span class="p">(</span> <span class="n">mImageSource</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">!=</span> <span class="n">nullptr</span> <span class="p">)</span>
+</span><span class="hll"><span class="p">{</span>
+</span><span class="hll">  <span class="c1">// If there is a frame available, update the display</span>
+</span><span class="hll">  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">frame</span><span class="p">;</span>
+</span><span class="hll">  <span class="k">if</span><span class="p">(</span> <span class="n">mImageSource</span><span class="o">-&gt;</span><span class="n">getFrame</span><span class="p">(</span> <span class="n">frame</span> <span class="p">)</span> <span class="p">)</span>
+</span><span class="hll">  <span class="p">{</span>
+</span><span class="hll">      <span class="n">updateCVTexture</span><span class="p">(</span> <span class="n">mImgTexture</span><span class="p">,</span> <span class="n">mCV</span><span class="p">.</span><span class="n">runOpenCVFeatureDetector</span><span class="p">(</span> <span class="n">frame</span> <span class="p">)</span> <span class="p">);</span>
+</span><span class="hll">  <span class="p">}</span>
+</span><span class="hll"><span class="p">}</span>
+</span></pre></div>
+</div>
+</li>
+<li><p class="first">We are almost done. We have update all our native files. Recall that we need
+to load the <tt class="docutils literal"><span class="pre">libfcamtegrahal.so</span></tt> shared library in all our FCam applications.
+To do this, we need to subclass <tt class="docutils literal"><span class="pre">NativeActivity</span></tt>.</p>
+<p>Add a new Java class called <tt class="docutils literal"><span class="pre">FCamNativeActivity</span></tt> under the
+package <tt class="docutils literal"><span class="pre">com.nvidia.fcamwithopencv</span></tt>. This class extends
+<tt class="docutils literal"><span class="pre">android.app.NativeActivity</span></tt> and adds a static method
+to load the required shared library into the Java VM.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">nvidia</span><span class="o">.</span><span class="na">fcamwithopencv</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">android.app.NativeActivity</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FCamNativeActivity</span> <span class="kd">extends</span> <span class="n">NativeActivity</span> <span class="o">{</span>
+
+    <span class="kd">static</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">loadLibrary</span><span class="o">(</span> <span class="s">&quot;fcamtegrahal&quot;</span> <span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Finally, we need to modify the <tt class="docutils literal"><span class="pre">AndroidManifest.xml</span></tt>. We will
+change the package name, remove the <tt class="docutils literal"><span class="pre">android::hasCode=&quot;false&quot;</span> <span class="pre">tag,</span>
+<span class="pre">substitute</span> <span class="pre">``NativeActivity</span></tt> with <tt class="docutils literal"><span class="pre">FCamNativeActivity</span></tt> and change
+the library name to load to <tt class="docutils literal"><span class="pre">SimpleImageDisplayCVGLFCam</span></tt>.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;manifest</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+<span class="hll">    <span class="na">package=</span><span class="s">&quot;com.nvidia.fcamwithopencv&quot;</span>
+</span>    <span class="na">android:versionCode=</span><span class="s">&quot;1&quot;</span>
+    <span class="na">android:versionName=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;uses-sdk</span> <span class="na">android:minSdkVersion=</span><span class="s">&quot;14&quot;</span> <span class="na">android:targetSdkVersion=</span><span class="s">&quot;15&quot;</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;</span> <span class="nt">&gt;</span> <span class="nt">&lt;/uses-permission&gt;</span>
+    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.CAMERA&quot;</span> <span class="nt">&gt;&lt;/uses-permission&gt;</span>
+    <span class="nt">&lt;uses-feature</span> <span class="na">android:name=</span><span class="s">&quot;android.hardware.camera&quot;</span> <span class="nt">&gt;&lt;/uses-feature&gt;</span>
+    <span class="nt">&lt;uses-feature</span> <span class="na">android:name=</span><span class="s">&quot;android.hardware.camera.autofocus&quot;</span> <span class="nt">&gt;&lt;/uses-feature&gt;</span>
+    <span class="nt">&lt;uses-feature</span> <span class="na">android:name=</span><span class="s">&quot;android.hardware.camera.front&quot;</span> <span class="na">android:required=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;uses-feature</span> <span class="na">android:name=</span><span class="s">&quot;android.hardware.camera.front.autofocus&quot;</span> <span class="na">android:required=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="c">&lt;!-- We do not have Java code. Therefore android:hasCode is set to false. --&gt;</span>
+<span class="hll">    <span class="nt">&lt;application</span> <span class="na">android:label=</span><span class="s">&quot;@string/app_name&quot;</span><span class="nt">&gt;</span>
+</span>      <span class="c">&lt;!-- Our activity is the built-in NativeActivity framework class.</span>
+<span class="c">             This will take care of integrating with our NDK code. --&gt;</span>
+<span class="hll">        <span class="nt">&lt;activity</span> <span class="na">android:name=</span><span class="s">&quot;com.nvidia.fcamwithopencv.FCamNativeActivity&quot;</span>
+</span>                <span class="na">android:label=</span><span class="s">&quot;@string/app_name&quot;</span>
+                <span class="na">android:configChanges=</span><span class="s">&quot;orientation|keyboard|keyboardHidden&quot;</span>
+                <span class="na">android:theme=</span><span class="s">&quot;@android:style/Theme.NoTitleBar.Fullscreen&quot;</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- Tell NativeActivity the name of or .so --&gt;</span>
+            <span class="nt">&lt;meta-data</span> <span class="na">android:name=</span><span class="s">&quot;android.app.lib_name&quot;</span>
+<span class="hll">                    <span class="na">android:value=</span><span class="s">&quot;SimpleImageDisplayCVGLFCam&quot;</span> <span class="nt">/&gt;</span>
+</span>            <span class="nt">&lt;intent-filter&gt;</span>
+                <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">&quot;android.intent.action.MAIN&quot;</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;category</span> <span class="na">android:name=</span><span class="s">&quot;android.intent.category.LAUNCHER&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/intent-filter&gt;</span>
+        <span class="nt">&lt;/activity&gt;</span>
+    <span class="nt">&lt;/application&gt;</span>
+
+<span class="nt">&lt;/manifest&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Now you can build and launch the application. For convenience, we have provided the complete
+project as <tt class="docutils literal"><span class="pre">SimpleImageOpenCV_GL_FCam_Complete</span></tt>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="debugging-your-fcam-application">
+<h2>Debugging your FCam application<a class="headerlink" href="#debugging-your-fcam-application" title="Permalink to this headline">¶</a></h2>
+<p>To debug your FCam application, follow the steps in <a class="reference internal" href="opencv.html#debugging-native-opencv"><em>Debugging your OpenCV application</em></a> to work
+around some issues with Google&#8217;s ADT plugin.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="imageprocessing.html" title="High-performance image processing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="profiling.html" title="Profiling your application"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, NVIDIA Research - Mobile Visual Computing.
+      Last updated on Jun 13, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+/* Lodash Addons
+ * @version 2.0.1
+ * https://github.com/helion3/lodash-addons
+ * @copyright Copyright 2015 Helion3, and other contributors
+ * @license Licensed under MIT
+ *          see https://github.com/helion3/lodash-addons/blob/master/LICENSE
+ */

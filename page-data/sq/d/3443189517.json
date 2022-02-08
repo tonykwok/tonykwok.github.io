@@ -1,0 +1,28 @@
+{
+  "data": {
+    "site": {
+      "siteMetadata": {
+        "title": "Reisen",
+        "defaultTheme": "light",
+        "twitterUrl": "https://twitter.com/kwapoong",
+        "githubUrl": "https://github.com/kwapoong",
+        "instagramUrl": "https://www.instagram.com/kwapoong/",
+        "feedUrl": "/atom.xml",
+        "copyrights": "&copy; 2004&mdash;2022 <a href=\"https://kwapoong.github.io/humans.txt\">Tony Guo</a>. Some rights reserved.<br />Theme based on <a href=\"https://mademistakes.com\" rel=\"nofollow\">Made Mistakes</a> • Site powered by <a href=\"https://pages.github.com\" rel=\"nofollow\">Github Pages</a>.",
+        "mainMenu": [
+          { "title": "Articles", "path": "/articles/" },
+          { "title": "Notes", "path": "/notes/" },
+          { "title": "Works", "path": "/work/" },
+          { "title": "About", "path": "/about/" },
+          { "title": "Contact", "path": "/contact/" }
+        ],
+        "footerMenu": [
+          { "title": "Support me", "path": "/support/" },
+          { "title": "FAQs", "path": "/faqs/" },
+          { "title": "Terms & policies", "path": "/terms/" },
+          { "title": "Sitemap", "path": "/sitemap/" }
+        ]
+      }
+    }
+  }
+}

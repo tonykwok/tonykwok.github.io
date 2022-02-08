@@ -1,0 +1,61 @@
+//---------------------------
+//
+// Navigation
+//
+//---------------------------
+
+.site-nav {
+
+  a {
+    display: block;
+
+    letter-spacing: 1.5px;
+    text-transform: none;
+    text-decoration: none;
+
+    font-size: $font-size__tiny;
+    color: $color__type--hover;
+    border-bottom: 0;
+
+    &.current,
+    &:hover {
+      color: $color__type;
+    }
+
+    @media #{$medium-down} {
+      padding: ($line-height__small / 4) 0;
+      border-bottom: 1px solid $border-color;
+    }
+  }
+
+  @media #{$medium-down} {
+    opacity: 0;
+    height: 0;
+    margin-bottom: $line-height__small;
+    transition: all .4s;
+  }
+}
+
+// Toggle Menu
+
+.menu-toggle-button {
+  display: none;
+
+  @media #{$medium-down} {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: $line-height__base / 2;
+    font-size: $font-size__small;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+}
+
+#menu-toggle { display: none; }
+
+#menu-toggle:checked + .site-nav {
+  opacity: 1;
+  height: auto;
+}

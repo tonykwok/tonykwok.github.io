@@ -1,0 +1,60 @@
+{
+  "componentChunkName": "component---src-templates-authors-js",
+  "path": "/author/tonykwok/",
+  "result": {
+    "data": {
+      "site": {
+        "siteMetadata": {
+          "author": { "name": "Tony Guo", "url": "https://kwapoong.github.io" }
+        }
+      },
+      "authorYaml": {
+        "id": "tonykwok",
+        "name": "Tony Guo",
+        "bio": "content strategist at the Office of Natural Resources Revenue",
+        "website": null
+      },
+      "allMarkdownRemark": {
+        "edges": [
+          {
+            "node": {
+              "id": "8283218c-5199-5cc1-bcbc-e030d995c632",
+              "excerpt": "<p>Removing a submodule is useful when it is no longer required. The steps<sup id=\"fnref-1\"><a href=\"#fn-1\" class=\"footnote-ref\">1</a></sup> below outline the removal of a submodule:</p>\n<ul>\n<li>Delete the section referring to the submodule from the <code class=\"language-text\">.gitmodules</code> file</li>\n<li>Stage the changes via <code class=\"language-text\">git add .gitmodules</code></li>\n<li>Delete the relevant section of the submodule from <code class=\"language-text\">.git/config</code>.</li>\n<li>Run <code class=\"language-text\">git rm --cached path_to_submodule</code>…</li></ul>",
+              "timeToRead": 1,
+              "frontmatter": {
+                "title": "How to Remove a Submodule in Git",
+                "date": "2020-07-16T00:00:00.000Z",
+                "date_pretty": "July 16th, 2020",
+                "date_from_now": "2 years ago",
+                "path": "/notes/how-to-remove-a-submodule-in-git/",
+                "author": null,
+                "excerpt": "Removing a submodule is useful when it is no longer required. The steps below outline the removal of a submodule.",
+                "image": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1.7757009345794392,
+                      "src": "/static/846ec3be36827113b49d2bd227433386/8fa08/git-tips-and-tricks.png",
+                      "srcSet": "/static/846ec3be36827113b49d2bd227433386/a7f8a/git-tips-and-tricks.png 190w,\n/static/846ec3be36827113b49d2bd227433386/25721/git-tips-and-tricks.png 380w,\n/static/846ec3be36827113b49d2bd227433386/8fa08/git-tips-and-tricks.png 760w,\n/static/846ec3be36827113b49d2bd227433386/594d1/git-tips-and-tricks.png 1140w,\n/static/846ec3be36827113b49d2bd227433386/2df5d/git-tips-and-tricks.png 1520w,\n/static/846ec3be36827113b49d2bd227433386/4ce6a/git-tips-and-tricks.png 1920w",
+                      "sizes": "(max-width: 760px) 100vw, 760px"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "pageContext": {
+      "author": "tonykwok",
+      "pageNumber": 0,
+      "humanPageNumber": 1,
+      "skip": 0,
+      "limit": 10,
+      "numberOfPages": 1,
+      "previousPagePath": "",
+      "nextPagePath": ""
+    }
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

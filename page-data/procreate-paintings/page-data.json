@@ -1,0 +1,50 @@
+{
+  "componentChunkName": "component---src-pages-procreate-paintings-js",
+  "path": "/procreate-paintings/",
+  "result": {
+    "data": {
+      "site": { "siteMetadata": { "title": "Reisen" } },
+      "file": {
+        "childImageSharp": {
+          "fluid": {
+            "aspectRatio": 1.7741935483870968,
+            "src": "/static/09d1a0b9d7ad4232d80cae6fcf2d0b72/fc20c/procreate-paintings-feature.jpg",
+            "srcSet": "/static/09d1a0b9d7ad4232d80cae6fcf2d0b72/6e883/procreate-paintings-feature.jpg 275w,\n/static/09d1a0b9d7ad4232d80cae6fcf2d0b72/a09ef/procreate-paintings-feature.jpg 550w,\n/static/09d1a0b9d7ad4232d80cae6fcf2d0b72/fc20c/procreate-paintings-feature.jpg 1100w,\n/static/09d1a0b9d7ad4232d80cae6fcf2d0b72/9352a/procreate-paintings-feature.jpg 1600w",
+            "sizes": "(max-width: 1100px) 100vw, 1100px"
+          },
+          "fixed": {
+            "src": "/static/09d1a0b9d7ad4232d80cae6fcf2d0b72/fc20c/procreate-paintings-feature.jpg",
+            "height": 619,
+            "width": 1100
+          }
+        }
+      },
+      "allMarkdownRemark": {
+        "edges": [
+          {
+            "node": {
+              "id": "b40832ee-b7f8-5b6e-a9a8-c53eed397101",
+              "frontmatter": {
+                "title": "Tattoos turning to mud",
+                "path": "/procreate-paintings/wendy-rose-portrait/",
+                "image": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1.33,
+                      "src": "/static/d0101ff003c6d18ad6671c039fff0d79/f4608/wendy-rose-procreate.jpg",
+                      "srcSet": "/static/d0101ff003c6d18ad6671c039fff0d79/d60bb/wendy-rose-procreate.jpg 133w,\n/static/d0101ff003c6d18ad6671c039fff0d79/c48d8/wendy-rose-procreate.jpg 267w,\n/static/d0101ff003c6d18ad6671c039fff0d79/f4608/wendy-rose-procreate.jpg 533w,\n/static/d0101ff003c6d18ad6671c039fff0d79/b30f4/wendy-rose-procreate.jpg 800w,\n/static/d0101ff003c6d18ad6671c039fff0d79/d3ff8/wendy-rose-procreate.jpg 1067w,\n/static/d0101ff003c6d18ad6671c039fff0d79/db123/wendy-rose-procreate.jpg 2048w",
+                      "sizes": "(max-width: 533px) 100vw, 533px"
+                    }
+                  }
+                },
+                "thumbnail": null
+              }
+            }
+          }
+        ]
+      }
+    },
+    "pageContext": {}
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

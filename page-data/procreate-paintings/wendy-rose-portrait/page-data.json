@@ -1,0 +1,62 @@
+{
+  "componentChunkName": "component---src-templates-post-js",
+  "path": "/procreate-paintings/wendy-rose-portrait/",
+  "result": {
+    "data": {
+      "markdownRemark": {
+        "frontmatter": {
+          "title": "Tattoos turning to mud",
+          "authors": [{ "id": "mmistakes", "name": "Michael Rose" }],
+          "date": "2013-09-03T00:00:00.000Z",
+          "date_pretty": "September 3rd, 2013",
+          "date_from_now": "8 years ago",
+          "last_modified_at": "2020-01-06T16:00:23.000Z",
+          "last_modified_at_from_now": "2 years ago",
+          "path": "/procreate-paintings/wendy-rose-portrait/",
+          "author": null,
+          "excerpt": "Portrait of Wendy Rose, digitally painted with Procreate on an iPad.",
+          "tags": ["Procreate", "portrait", "illustration", "time lapse"],
+          "image": {
+            "childImageSharp": {
+              "fluid": {
+                "aspectRatio": 1.3349514563106797,
+                "src": "/static/d0101ff003c6d18ad6671c039fff0d79/fc20c/wendy-rose-procreate.jpg",
+                "srcSet": "/static/d0101ff003c6d18ad6671c039fff0d79/6e883/wendy-rose-procreate.jpg 275w,\n/static/d0101ff003c6d18ad6671c039fff0d79/a09ef/wendy-rose-procreate.jpg 550w,\n/static/d0101ff003c6d18ad6671c039fff0d79/fc20c/wendy-rose-procreate.jpg 1100w,\n/static/d0101ff003c6d18ad6671c039fff0d79/5d6ff/wendy-rose-procreate.jpg 1650w,\n/static/d0101ff003c6d18ad6671c039fff0d79/d2f4e/wendy-rose-procreate.jpg 2048w",
+                "sizes": "(max-width: 1100px) 100vw, 1100px"
+              },
+              "fixed": {
+                "src": "/static/d0101ff003c6d18ad6671c039fff0d79/fc20c/wendy-rose-procreate.jpg",
+                "height": 825,
+                "width": 1100
+              }
+            }
+          },
+          "toc": null,
+          "comments": null,
+          "comments_locked": null,
+          "hide_meta": null
+        },
+        "id": "b40832ee-b7f8-5b6e-a9a8-c53eed397101",
+        "html": "<p>TODO</p>",
+        "excerpt": "TODO",
+        "timeToRead": 1,
+        "tableOfContents": ""
+      },
+      "comments": { "edges": [] }
+    },
+    "pageContext": {
+      "next": {
+        "frontmatter": {
+          "path": "/mastering-paper/basics/",
+          "title": "Mastering Paper for iOS: back to the basics",
+          "authors": [{ "id": "mmistakes", "name": "Michael Rose" }],
+          "categories": ["mastering-paper"],
+          "tags": ["Paper for iOS", "tutorial", "Apple"]
+        },
+        "fileAbsolutePath": "/home/28041/opensource/github.com/tonykwok/made-mistakes-gatsby/src/posts/mastering-paper/basics.md"
+      },
+      "previous": null
+    }
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

@@ -1,0 +1,61 @@
+//---------------------------
+//
+// Post
+//
+//---------------------------
+
+.post-card {
+  border-bottom: 1px solid $border-color;
+  margin-bottom: $line-height__base;
+  padding-bottom: $line-height__base;
+
+  @media #{$medium-down} {
+    margin-bottom: $line-height__medium;
+    padding-bottom: $line-height__medium;
+  }
+}
+
+.post-header { margin-bottom: $line-height__base / 4; }
+
+.post__title {
+  margin-top: 0;
+  margin-bottom: 0;
+
+  a {
+    display: block;
+    border-bottom: none;
+    color: $color__type;
+
+    &:hover { color: $color__type--hover; }
+  }
+}
+
+.post__date {
+  color: $color__type--hover;
+  font-size: $font-size__small;
+  line-height: $line-height__small;
+}
+
+.post__excerpt p {
+  font-size: $font-size__small;
+  line-height: $line-height__medium;
+  margin-bottom: $line-height__base / 2;
+}
+
+.post__meta { line-height: $line-height__medium; }
+
+.post__meta__author-thumb {
+  width: 24px;
+  height: 24px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 0;
+  border-radius: 3px;
+}
+
+.post__meta__author-name {
+  font-size: $font-size__small;
+  line-height: $line-height__small;
+
+  a { text-decoration: none; }
+}

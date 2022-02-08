@@ -1,0 +1,326 @@
+Development tools
+=================
+
+To develop Android applications you need many tools, such as the Android SDK,
+the Android NDK, Java, the Eclipse IDE, the Android Development Tools (ADT),
+and command line (bash on Mac or Linux, Cygwin on Windows). 
+To simplify installation, NVIDIA has
+created the Tegra Android Development Pack (TADP), a single file that
+installs everything you need.
+
+Install the Tegra Android Development Pack 2.0
+----------------------------------------------
+
+To download the Tegra Android Development Pack 2.0 you will to become
+a member of the *Tegra Registered Developer Program*. Please visit the 
+`NVIDIA Developer Zone <http://developer.nvidia.com/tegra-resources>`_, create
+an account (it is free and easy) and then apply for membership to the *Tegra Registered Developer Program*.
+
+Then, 
+
+#. Download the latest TADP.
+#. Run the installer. 
+
+   .. admonition:: Ubuntu notes
+
+      Set the executable attribute on the downloaded file:
+
+        $ chmod a+x tegra-devpack-20-linux-x64-2013-05-09-15755747.run
+
+      The installer requires a Java runtime installed. If you get a message that
+      Java is missing, install openjdk jre.
+
+        $ sudo apt-get install openjdk-7-jre
+
+   At the *Installation Options* prompt, select *Custom*.
+
+   .. image:: images/tadp_installer_options.png
+      :width: 498
+      :scale: 100
+
+#. Select the following components; the list of available components will vary by
+   OS.
+
+   * Tegra Android Development Pack
+   * Android SDK r18
+   * Android 2.3.3 (API 10)
+   * Android 3.1 (API 12)
+   * Android 4.0.3 (API 15)
+   * Android 4.2 (API 17)
+   * Android NDK r8d
+   * Eclipse 4.2.1, CDT 8.1.1 and ADT 21.1.
+   * NVIDIA Debug Manager
+   * Tegra SDK samples
+   * OpenCV for Tegra 2.4.4
+   * Apache Ant 1.8.2
+   * PerfHUD ES 1.9.9
+   * Tegra Profiler (Windows only)
+   * PhysX 3.2 for Android
+   * Documentation
+
+   The main deviation from the default values are that you may want to skip Nsight (available on Windows only, allows development with Visual Studio,
+   not covered in this tutorial).
+
+#. Select the installation folder, and any proxy configuration if needed to access
+   internet, and the installer will begin to download the selected components.
+
+#. After the installation files are downloaded (which may take a while) the
+   TADP will be installed on your computer.
+   
+.. admonition:: Ubuntu notes
+
+   The default installation directory for TADP is ~/NVPACK. You can create a link to Eclipse in
+   your desktop by opening the ~NVPACK/eclipse folder, creating a link to Eclipse and dragging it
+   to the desktop.
+
+    .. image:: images/tadp_eclipse_link_menu.png
+       :width: 865
+       :scale: 80
+
+.. _nvpack_path_set:
+
+.. admonition:: Windows notes
+
+   The Windows installer has the option to install Nsight for Tegra development. Note that Nsight
+   requires Visual Studio and will fail to install if Visual Studio is not present. If this is the
+   case, just ignore the message and continue with the installation.
+
+   From now on we refer to the NVPACK installation directory as ``$NVPACK_PATH``, 
+   you should create such an environment variable.  If the environment variables
+   are not visible to Eclipse (e.g., on Mac if you launch Eclipse via Spotlight),
+   you need to define it inside Eclipse.
+   Go to *Preferences > C/C++ > Build > Environment* and *Add* variable *NVPACK_PATH* and give it the
+   correct value (such as ``C:\NVPACK`` or where ever you installed NVPACK).
+
+
+Configure Eclipse for this tutorial
+-----------------------------------
+
+Launch Eclipse (it's installed in the eclipse folder under NVPACK); when prompted for a workspace, 
+use the one that came with TADP: ``$NVPACK_PATH/nvsample_workspace``.
+
+  .. image:: images/eclipse_workspace_selection.png
+     :width: 617
+     :scale: 100
+
+Upgrade the Android SDK
++++++++++++++++++++++++
+
+The Android Eclipse plugins require a matching version of the Android SDK Tools.
+Go to *Window > Android SDK Manager* to update your SDK tools:
+
+  .. image:: images/eclipse_android_sdk_manager_run2.png
+     :width: 678
+     :scale: 100
+
+Check the Android SDK Tools and the Android SDK Platform-Tools.
+Click on **Install 2 packages**. After the update finishes, 
+you may be prompted to check for updates of the Eclipse Plugin, which
+we already did.
+
+
+Upgrade Android NDK
++++++++++++++++++++
+
+The Android NDK provides the compiler toolchain to build C and C++ code into native
+binaries. Native modules are usually used to write optimized code or port existing
+C / C++ code into Android. In addition, such modules are built and debugged
+separately from Java code, because there is no Java VM involved. The TADP installs the Android NDK.
+
+
+For this tutorial, we will use the Android NDK r8e.
+Go to the `Android NDK <http://developer.android.com/tools/sdk/ndk/index.html>`_ web site,
+download the package for your OS, and unpack it.
+
+Copy the ``android-ndk-r8e`` folder to ``$NVPACK_PATH`` folder.
+
+.. note:: There is a simple to fix bug in the r8c release of the NDK that causes every
+          object to be rebuilt even when no changes have been done to the source. See
+          `Issue 39810 <http://code.google.com/p/android/issues/detail?id=39810>`_. To fix
+          the issue line 289 in ``android_ndk_r8c/build/core/definitions.mk`` needs to be
+          changed from::
+          
+            $1: $$(__ndk_file_dir)
+          
+          to::
+          
+            $1: | $$(__ndk_file_dir)
+
+
+Set the Android Preferences in Eclipse
+++++++++++++++++++++++++++++++++++++++
+
+To set up the Android Preferences in Eclipse go to *Window > Preferences > Android* (on Mac: *Eclipse > Preferences > Android*).
+You will see a list of installed SDK.
+
+  .. image:: images/eclipse_android_preferences.png
+     :width: 732
+     :scale: 100
+
+Look for the **SDK Location**, it should point to the 
+root of your SDK directory (TADP sets this up for you).
+
+Change the NDK path under *Preferences > Android > NDK*. Set the path
+to point to the recommended release of the Android NDK.
+
+  .. image:: images/eclipse_android_preferences_ndk.png
+     :width: 632
+     :scale: 100
+
+After making your changes, click **OK** to close the window.
+
+
+What is inside the Android SDK
+------------------------------
+
+The Android SDK is maintained by Google and is updated frequently. The SDK consists of:
+
+    **SDK Tools**: Basic set of development and debugging tools. Includes the *Android SDK Manager*, the
+    *Android Emulator*, and other tools required to build your applications.
+
+    **SDK Platform Tools**: The most important of the platform tools is the *Android Debug Bridge (adb)*, which 
+    allows you to connect to your device, install and uninstall applications, view logs, and run shell commands.
+
+    **SDK Platform**: For every Android API that has been released, there is a corresponding 
+    Android Platform SDK. Each new *Platform SDK* adds new APIs and maintains backward compatibility with 
+    previous ones. If you use the smallest API level that includes the APIs that you need, your application
+    runs on more systems than if you require a newer API.
+
+    **Vendor APIs**: In addition, hardware vendors can release their own SDKs to work with additional features 
+    available on their devices.
+
+.. admonition:: See also
+
+   Google's official `Installing the SDK <http://developer.android.com/sdk/installing/index.html>`_.
+
+
+Configure your device for development
+-------------------------------------
+
+
+Flashing your NVIDIA Android Devkit
++++++++++++++++++++++++++++++++++++
+Unlike regular Android devices, Cardhu (and other NVIDIA Devkit) has to be updated manually.
+If you are using one for this tutorial, please make sure it is running the latest Jelly Bean.
+This not only gives you the benefit from the latest Android system, but also ensure new OpenCV and FCam are pushed to the device.
+
+Flashing your Cardhu is easy. First, you need to download the latest OS image. This can be done by following the same procedure of installing TADP.
+If you select Custom and drag down the menu, OS image option is at the bottom.
+
+  .. image:: images/flash_select_os.png
+  	 :width: 500
+	 :height: 380
+	 
+Once the image is downloaded, it will prompt you an option to flash the device.
+
+  .. image:: images/flash_flash_devkit.png
+  	 :width: 500
+	 :height: 380
+	 
+Following the manual to connect the debug board to the devkit, before hitting okay.
+
+  .. image:: images/flash_prepare_cardhu.png
+  	 :width: 500
+	 :height: 380
+	 
+After awhile, Cardhu will reboot itself and you are ready to go!
+
+
+Device configuration
+++++++++++++++++++++
+
+In order to install and debug applications on the device through the USB connection,
+you have to enable USB debugging. On the tablet, tap on
+*Settings > Developer options* and check *USB debugging*. 
+
+  .. image:: images/tablet_settings_usbdebugging.png
+     :width: 1366
+     :scale: 65
+
+This will enable you to connect to the device from the host computer using adb. To verify 
+your device is ready for development run *adb devices* to see a list of attached devices:
+
+  .. image:: images/adbdevices.png
+     :width: 609
+     :scale: 100
+
+You will also see the device in Eclipse in the *Devices* tab. If the tab is not visible, you 
+can open the tab from *Window > Show View > Other... > Android > Devices*.
+
+  .. image:: images/devicestab.png
+     :width: 637
+     :scale: 100
+
+.. ifconfig:: audience in ( 'internal' )
+
+   **Configuring the Sony Xperia Tablet S (and possibly other tablets)**
+
+   If you develop in Linux you should be fine, but if you develop under Windows, you might see
+   that when you enable USB debugging mode on the Sony Xperia tablet, Windows won't be able to
+   install the drivers correctly, and you won't be able to *adb* to the device. If you type
+   ``adb devices`` in a shell you should not be able to see your tablet listed there.
+   
+   Basically we need to make Windows see the tablet as a compatible device. On your Windows
+   machine go to *Control Panel > System and Security > System > Device Manager*. The tablet
+   might or might not show as correctly installed depending on Window's mood. If Windows thinks 
+   it failed installing the device you'll see an icon with an exclamation mark in the *Device 
+   Manager*, if not you should find the device under *Portable devices > SGPT12*:
+   
+     .. image:: images/xperia_DeviceManager.png
+        :width: 394
+        :scale: 100
+   
+   Right-click on it, select *Properties* and go to the tab *Details*. From the *Property* menu
+   select *Hardware Ids*. Now right-click and copy the second ID, the one NOT ending in
+   ``&REV_9999``:
+   
+     .. image:: images/xperia_IDs.png
+        :width: 413
+        :scale: 100
+   
+   Leave this window open and open the file ``android_winusb.inf`` located under
+   your NVPACK installation directory, *../NVPACK/android-sdk-windows/google-usb_driver*
+   
+   We need to add a few lines under the tags *[Google.NTx86]* and *[Google.NTamd64]*:
+   
+     .. code-block:: c++
+       :emphasize-lines: 5-6, 14-15
+       
+       [Google.NTx86]
+       ;NVIDIA Tegra  
+       %SingleAdbInterface%        = USB_Install, USB\VID_0955&PID_7000
+       %CompositeAdbInterface%     = USB_Install, USB\VID_0955&PID_7100&MI_01
+       %SingleAdbInterface%        = USB_Install, USB\VID_054C&PID_06AD
+       %CompositeAdbInterface%     = USB_Install, USB\VID_054C&PID_06AD&MI_01
+       
+       [....]    
+       
+       [Google.NTamd64]
+       ;NVIDIA Tegra  
+       %SingleAdbInterface%        = USB_Install, USB\VID_0955&PID_7000
+       %CompositeAdbInterface%     = USB_Install, USB\VID_0955&PID_7100&MI_01
+       %SingleAdbInterface%        = USB_Install, USB\VID_054C&PID_06AD
+       %CompositeAdbInterface%     = USB_Install, USB\VID_054C&PID_06AD&MI_01
+   
+   where you can replace the ``USB\VID_054C&PID_06AD`` part with whatever you
+   copied from the device manager.
+   
+   Now go to the driver tab in the *Properties* tab:
+   
+     .. image:: images/xperia_UpdateDrivers.png
+        :width: 414
+        :scale: 100
+   
+   In the new window select *Browse my computer for driver software* and then
+   make windows look in the folder where you found the ``.inf`` file before
+   (*../NVPACK/android-sdk-windows/google-usb_driver/*). Follow on-screen
+   instructions and everything should run smoothly. Typing ``adb devices``
+   in a shell again should let you to see your tablet listed.
+
+Tutorial sample codes
+---------------------
+
+We have provided some sample codes as part of the tutorial in :download:`tutorial.zip <./files/tutorial.zip>`.
+Please download and unzip it.  We will call it the ``/tutorials`` folder from now on.
+
+You are now ready to create your first Eclipse project.

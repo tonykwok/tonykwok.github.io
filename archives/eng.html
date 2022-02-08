@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
+  <title>R&eacutesum&eacute</title>
+  <link type="text/css" rel="stylesheet" href="assets/css/tufte.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <p>
+    <a href="chs.html">切换到中文</a>
+  </p>
+  <article>
+    <section>
+      <h1>TONY KWOK</h1>
+      <p>Male &bullet; August 14th, 1984 &bullet; <a href="mailto:tony_kwok@126.com">tony_kwok@126.com</a> &bullet; +86 134 888 62189</p>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <p>2007.9-2009.4, Dept. of Computer Science, Beijing Institute of Technology, China, M.E.</p>
+      <p>2003.9-2007.6, Dept. of Computer Science, QUFU Normal University, China, B.E.</p>
+    </section>
+
+    <section>
+      <h2>Work Experience</h2>
+      <h3>#01: June 2011 ~ present, Sony Mobile Communications Inc.</h3>
+      <p>
+        <b>Camera application new feature development:</b>
+      </p>
+      <p>Voice-guided self-portrait: according to the face location calculated by face detection engine in the camera viewfinder,
+        guide the user how to move the phone (e.g. left, up, right, and down) via voice and trigger a capture when face locates
+        in a proper position automatically.</p>
+      <p>Sound photo: capture a much more playful photo with sound embedded in it. The sound data is stored in JPEG file’s EXIF
+        APP2 section, not a separating file, so it is much easier to transfer and share among different devices.</p>
+      <p>Real-time face beauty: apply various effects like Distortion, Vignette, Kaleidoscope, etc. on camera’s preview frame
+        buffer (YUV format) before sending it to graphics module to complete rendering and compositing. There are mainly
+        2 different solutions to achieve this: GPU or CPU. Both of them are implemented, compared and finally, CPU solution
+        was chosen since it is more performant and less power consumption.</p>
+      <ul>
+        <li>GPU: This solution is much power consuming and the device becomes hot quickly because it uses OpenGL ES2.0 shader
+          to do the YUV-RGB conversion first and then uses GL to render the RGB frame on GLSurfaceView.</li>
+        <li>CPU: Just need to get the backend graphics buffer of the SurfaceView and then copy the post-processed YUV frame to
+          it directly without color conversion. Since this solution uses CPU to do compositing, it consumes less power than
+          GPU solution, and thermal won’t increase quickly.</li>
+      </ul>
+      <p>
+        <b>Camera performance improvement:</b>
+      </p>
+      <p>Camera View layout was so complicated that impacted launch speed. By investigating the camera view layout hierarchies,
+        I found that there were so many redundant/unnecessary views: one kind of them could be removed, and another kind
+        of them could be merged, and the rest of them should use lazy loading approach. It’s not an easy job since any changes
+        should not cause degrades, but it's worth it. Finally, our camera app launches much more quickly than before even
+        for cold boot case.</p>
+
+      <h3>#02: July 2009-June 2011, Kingdee Software Co., Ltd.</h3>
+      <p>EAS (Enterprise Application Suite based on Kingdee Business Operating System) is a Client-Server based ERP software.
+        On the client side, the UI is built with Java Swing, we enrich the existing Swing both with extensions as well as
+        brand new ones to meet our special requirement, such as KingdeeTable, F7BizPromptBox and so on; On the server side,
+        we adopt Java EE technologies and our own application server – Apusic, the fourth application server that passes
+        Java EE 5.0 certification in the world. During this period, I was responsible for Manufacture Module design and development,
+        including Production Line Scheduling, Manufacture Order Split and Reform, and so on.</p>
+    </section>
+    <section>
+      <h2>Projects</h2>
+      <h3>#01: Java Class File Encryption</h3>
+      <p>Most Obfuscators only rename the identifiers in java class file. As such, it does nothing but makes the files decompiled
+        by Java Decompilers much more difficult to read. Considering these limits, I overwrite the ClassLoader and use Java
+        Native Interface to convert the byte array into Java class, because the main part is written in C, this approach
+        puts the security on a level comparable to software written in a native language.</p>
+      <h3>#02: Content-Based Image Retrieval System</h3>
+      <p>A CBIR library which I implemented in Java based on the thesis:
+        <a href="http://grail.cs.washington.edu/wp-content/uploads/2015/08/jacobs-1995.pdf"></a>"Fast Multi-Resolution Image Querying, Charles E. Jacobs, Adam Frinkelstein, David H. Salesin" for Material Management
+        System to help users finding the most similar materials corresponding to the image they provided efficiently.</p>
+      <h3>#03: Expression Evaluation on Android Platform</h3>
+      <p>A tool for evaluating expressions of type string, e.g.
+        <code>double value = eval("3.14 * (3 ^ 2) - (3 / 2) * 2");</code> As we all know there is an eval function in JavaScript and Android supports JavaScript as well, but unfortunately,
+        <code>WebView.loadUrl()</code> has no return value, so we used a customized WebChromeClient and got the result through the
+        <code>boolean onJsAlert(WebView view, String url, String message, JsResult result)</code> callback.</p>
+      <h3>#04: Alloy Look and Feel Improvement and Enhancement</h3>
+      <p>Alloy Look and Feel is a pluggable java look and feel that can be used by Java developers to enhance the appearance
+        and atmosphere of their Java Swing applications (e.g.
+        <a href="https://www.jetbrains.com/idea/">Jetbrains&reg; IntelliJ IDEA</a>). It is developed by the
+        <a href="http://lookandfeel.incors.com/">INCORS&reg;</a> Corporation and they have stopped supporting it since version 1.4.4, I fixed some known bugs and
+        customized it to meet the aesthetic standard of mine.
+      </p>
+      <h3>#05: Regex4j</h3>
+      <p>
+        <a href="https://github.com/tonykwok/regex4j">Regex4j</a> is a
+        <a href="https://en.wikipedia.org/wiki/Regular_expression">Regular Expression Engine</a> ported from the
+        <code>System.Text.RegularExpressions</code> module of
+        <a href="https://github.com/dotnet/corefx">Microsoft's .Net Core Project</a>
+        for Java platform. As a compensation for the Java built-in Pattern class, with one of its advantages, you can avoid the
+        <code>StackOverflowError</code> issues (
+        <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6337993">JDK-6337993</a>,
+        <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6882582">JDK-6882582</a> and
+        <a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=8078476">JDK-8078476</a>), which have existed in the
+        <code>java.util.regex</code> package since Java 1.4 and still not fixed in the latest JDK.</p>
+
+      <h3>#06: Primitive</h3>
+      <p>Primitive is a Java Swing desktop app and open source library for geometrizing images into shapes. Using only geometric
+        primitives like rectangles, triangles, and ellipses, the software recreates images as abstract arrangements of shapes.
+        This project was ported from the popular and excellent work of
+        <a href="https://www.michaelfogleman.com/projects/primitive/">Michael Fogleman - Reproducing images with geometric primitives.</a> The original implementation is written in Go,
+        I ported it to Java and implemented an antialiasing rasterizer based on the same area/coverage accumulation algorithm
+        as the
+        <a href="https://github.com/golang/freetype/blob/master/raster/raster.go">Freetype</a> "smooth" module and the
+        <a href="http://www.antigrain.com/">Anti-Grain Geometry
+        </a> library.</p>
+
+      <h3>#07: Others</h3>
+      <p>
+        Visit
+        <a href="https://github.com/tonykwok">https://github.com/tonykwok</a> for more details.
+      </p>
+    </section>
+  </article>
+</body>
+
+</html>

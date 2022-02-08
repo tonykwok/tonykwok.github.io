@@ -1,0 +1,59 @@
+{
+  "componentChunkName": "component---src-pages-tiny-paintings-js",
+  "path": "/tiny-paintings/",
+  "result": {
+    "data": {
+      "site": { "siteMetadata": { "title": "Reisen" } },
+      "file": {
+        "childImageSharp": {
+          "fluid": {
+            "aspectRatio": 1.7741935483870968,
+            "src": "/static/0a60255b10bab55ffe87c6105696b174/fc20c/tiny-paintings.jpg",
+            "srcSet": "/static/0a60255b10bab55ffe87c6105696b174/6e883/tiny-paintings.jpg 275w,\n/static/0a60255b10bab55ffe87c6105696b174/a09ef/tiny-paintings.jpg 550w,\n/static/0a60255b10bab55ffe87c6105696b174/fc20c/tiny-paintings.jpg 1100w,\n/static/0a60255b10bab55ffe87c6105696b174/356ef/tiny-paintings.jpg 1280w",
+            "sizes": "(max-width: 1100px) 100vw, 1100px"
+          },
+          "fixed": {
+            "src": "/static/0a60255b10bab55ffe87c6105696b174/fc20c/tiny-paintings.jpg",
+            "height": 619,
+            "width": 1100
+          }
+        }
+      },
+      "allMarkdownRemark": {
+        "edges": [
+          {
+            "node": {
+              "id": "bf112289-5c3d-526d-8a6e-a24f05b80d80",
+              "frontmatter": {
+                "title": "Cut My Face in Half",
+                "path": "/tiny-paintings/michael-rose-painting/",
+                "image": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1.75,
+                      "src": "/static/e9fedd5a391415212f5259e215a883e0/f4608/painting-michael-rose.jpg",
+                      "srcSet": "/static/e9fedd5a391415212f5259e215a883e0/d60bb/painting-michael-rose.jpg 175w,\n/static/e9fedd5a391415212f5259e215a883e0/c48d8/painting-michael-rose.jpg 350w,\n/static/e9fedd5a391415212f5259e215a883e0/f4608/painting-michael-rose.jpg 699w,\n/static/e9fedd5a391415212f5259e215a883e0/b30f4/painting-michael-rose.jpg 1049w,\n/static/e9fedd5a391415212f5259e215a883e0/d3ff8/painting-michael-rose.jpg 1399w,\n/static/e9fedd5a391415212f5259e215a883e0/ed649/painting-michael-rose.jpg 1600w",
+                      "sizes": "(max-width: 699px) 100vw, 699px"
+                    }
+                  }
+                },
+                "thumbnail": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1,
+                      "src": "/static/4ab9855566b020e47666a8d1b3357d2c/f4608/painting-michael-rose-crop.jpg",
+                      "srcSet": "/static/4ab9855566b020e47666a8d1b3357d2c/d60bb/painting-michael-rose-crop.jpg 100w,\n/static/4ab9855566b020e47666a8d1b3357d2c/c48d8/painting-michael-rose-crop.jpg 200w,\n/static/4ab9855566b020e47666a8d1b3357d2c/f4608/painting-michael-rose-crop.jpg 400w,\n/static/4ab9855566b020e47666a8d1b3357d2c/b30f4/painting-michael-rose-crop.jpg 600w,\n/static/4ab9855566b020e47666a8d1b3357d2c/b7234/painting-michael-rose-crop.jpg 682w",
+                      "sizes": "(max-width: 400px) 100vw, 400px"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "pageContext": {}
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

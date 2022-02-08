@@ -1,0 +1,111 @@
+{
+  "componentChunkName": "component---src-templates-tags-js",
+  "path": "/tag/paper-for-ios/",
+  "result": {
+    "data": {
+      "site": {
+        "siteMetadata": {
+          "author": { "name": "Tony Guo", "url": "https://kwapoong.github.io" }
+        }
+      },
+      "taxonomyYaml": {
+        "id": "Paper for iOS",
+        "excerpt": "A collection of art created on iPad with the iOS app Paper by WeTransfer. Tutorials and other learnings related to my Mastering Paper series are also included.",
+        "html": "<p>A collection of art created on iPad with the iOS app <strong>Paper by WeTransfer</strong>. Tutorials and other learnings related to my <a href=\"/mastering-paper\">Mastering Paper</a> series are also included.</p>\n"
+      },
+      "allMarkdownRemark": {
+        "edges": [
+          {
+            "node": {
+              "id": "c588bcd7-94cd-5e3e-ae49-0ef86ce7db85",
+              "excerpt": "",
+              "timeToRead": 1,
+              "frontmatter": {
+                "title": "PaperFaces iPad project",
+                "date": "2018-11-06T00:00:00.000Z",
+                "date_pretty": "November 6th, 2018",
+                "date_from_now": "3 years ago",
+                "path": "/paperfaces/",
+                "author": null,
+                "excerpt": "Portraits painted digitally on an iPad with Paper for iOS.",
+                "image": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1.7757009345794392,
+                      "src": "/static/f3691df6c0e8169e366d8b1f7acbfa7b/ad579/paperfaces-project-feature.jpg",
+                      "srcSet": "/static/f3691df6c0e8169e366d8b1f7acbfa7b/5827c/paperfaces-project-feature.jpg 190w,\n/static/f3691df6c0e8169e366d8b1f7acbfa7b/a4187/paperfaces-project-feature.jpg 380w,\n/static/f3691df6c0e8169e366d8b1f7acbfa7b/ad579/paperfaces-project-feature.jpg 760w,\n/static/f3691df6c0e8169e366d8b1f7acbfa7b/d0063/paperfaces-project-feature.jpg 1140w,\n/static/f3691df6c0e8169e366d8b1f7acbfa7b/fdaf9/paperfaces-project-feature.jpg 1520w,\n/static/f3691df6c0e8169e366d8b1f7acbfa7b/9352a/paperfaces-project-feature.jpg 1600w",
+                      "sizes": "(max-width: 760px) 100vw, 760px"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "node": {
+              "id": "d5b211d3-f879-58fb-8fac-69244329b327",
+              "excerpt": "<p>TODO</p>",
+              "timeToRead": 1,
+              "frontmatter": {
+                "title": "Lego Man",
+                "date": "2014-08-21T00:00:00.000Z",
+                "date_pretty": "August 21st, 2014",
+                "date_from_now": "7 years ago",
+                "path": "/paperfaces/yorgle-portrait/",
+                "author": null,
+                "excerpt": "PaperFaces portrait of @yorgle drawn with Paper for iOS on an iPad.",
+                "image": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1.3286713286713288,
+                      "src": "/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/ad579/paperfaces-yorgle-twitter.jpg",
+                      "srcSet": "/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/5827c/paperfaces-yorgle-twitter.jpg 190w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/a4187/paperfaces-yorgle-twitter.jpg 380w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/ad579/paperfaces-yorgle-twitter.jpg 760w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/d0063/paperfaces-yorgle-twitter.jpg 1140w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/fdaf9/paperfaces-yorgle-twitter.jpg 1520w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/d2f4e/paperfaces-yorgle-twitter.jpg 2048w",
+                      "sizes": "(max-width: 760px) 100vw, 760px"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "node": {
+              "id": "7b70104f-7e9f-5a4f-83f2-5f687109c2b3",
+              "excerpt": "<p>TODO</p>",
+              "timeToRead": 1,
+              "frontmatter": {
+                "title": "Mastering Paper for iOS: back to the basics",
+                "date": "2014-02-09T00:00:00.000Z",
+                "date_pretty": "February 9th, 2014",
+                "date_from_now": "8 years ago",
+                "path": "/mastering-paper/basics/",
+                "author": null,
+                "excerpt": "A refresher tutorial on Paper for iOS drawing and painting techniques, along with color theory principles for good measure.",
+                "image": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1.7757009345794392,
+                      "src": "/static/56f71a1f107d6e3f300192eb73acd1d3/ad579/paper-53-basics-feature.jpg",
+                      "srcSet": "/static/56f71a1f107d6e3f300192eb73acd1d3/5827c/paper-53-basics-feature.jpg 190w,\n/static/56f71a1f107d6e3f300192eb73acd1d3/a4187/paper-53-basics-feature.jpg 380w,\n/static/56f71a1f107d6e3f300192eb73acd1d3/ad579/paper-53-basics-feature.jpg 760w,\n/static/56f71a1f107d6e3f300192eb73acd1d3/d0063/paper-53-basics-feature.jpg 1140w,\n/static/56f71a1f107d6e3f300192eb73acd1d3/fdaf9/paper-53-basics-feature.jpg 1520w,\n/static/56f71a1f107d6e3f300192eb73acd1d3/9352a/paper-53-basics-feature.jpg 1600w",
+                      "sizes": "(max-width: 760px) 100vw, 760px"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "pageContext": {
+      "tag": "Paper for iOS",
+      "pageNumber": 0,
+      "humanPageNumber": 1,
+      "skip": 0,
+      "limit": 10,
+      "numberOfPages": 1,
+      "previousPagePath": "",
+      "nextPagePath": ""
+    }
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

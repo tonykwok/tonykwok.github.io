@@ -1,0 +1,51 @@
+Frequently asked questions
+==========================
+
+1. My tablet froze, how do I reboot it?
+---------------------------------------
+
+If your Tegra 3 prototype is not responding to touch, you can try to reboot it using adb from a shell window.
+  > adb reboot
+
+If adb is not responding either, then remove the backplate and find the reset button below the camera flash.
+
+.. _flash_system_image:
+
+2. How do I flash a new system image to the device?
+---------------------------------------------------
+
+To flash a new system image, follow these steps:
+
+#. Place the device face down on a flat surface. Use a magazine or its original 
+   wrapping to protect the screen
+#. Remove the 4 screws that are holding the back plate, and remove the cover.
+#. Insert the debug board that came with the device to the connector in the back of the device.
+#. Connect the device to the computer using the usb cable.
+#. In the debug board, press the RESET + FRC RCV buttons. The LEDs in the debug board should light up. 
+   The tablet screen will remain black.
+#. If you have a .zip file, unpack the system image into your computer and run the flashos.bat if your are 
+   running Windows, or flashos.sh if you are running Linux. 
+#. If you are running the installer, unpack the system image and when asked if you want to flash the system,
+   select *Yes* and follow the instructions. Your system should be already in recovery mode per the steps above.
+#. The system will reboot.
+
+Some of the FCam examples will save data to /data/fcam. This directory does not exist by default. This is a good time to create it. 
+Run a console and type::
+
+   > adb shell mkdir /data/fcam
+
+Also, by default the device screen will go to sleep after 1 minute. This could be very inconvenient. Tap on the clock, select the Settings icon, choose the 'Settings' -> 'Display' -> 'Sleep' option and change the default timeout time to 30 minutes.
+
+3. I get 'USB device not found' when flashing the device, how do I fix this?
+----------------------------------------------------------------------------
+
+There two possible reasons for this. Either the tablet is not in recovery mode or there is a 
+problem with the recovery mode usb drivers. To check for 1, make sure you have followed all 
+the steps outlined above. The tablet screen should remain blank in recovery mode. If you see the
+tablet booting, then it is not in recovery mode. After you have successfully put the system into
+recovery mode, try flashing the device. Make sure the USB cable is connected to the computer and the
+tablet. If you still receive the same error, watch for Windows notifications about missing drivers.
+To be sure, you can launch the Device Manager. Under Universal Serial Bus Controllers, you should see
+one device named “NVIDIA USB Boot-recovery driver for Mobile”. If you don’t find this device, there is
+a driver problem. Locate in the device manager the device unrecognized device (device with a bang!).
+The easiest way to do this is to disconnect and reconnect the usb cable to the computer while the device manager is opened. Then, update the driver to the one included in the system image package under usbpcdriver. 

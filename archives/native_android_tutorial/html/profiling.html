@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Profiling your application &mdash; FCam for Tegra 1.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FCam for Tegra 1.3 documentation" href="index.html" />
+    <link rel="next" title="Camera Control using the FCam API" href="fcam.html" />
+    <link rel="prev" title="OpenCV on Tegra" href="opencv.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: black; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/nvidia_logo.png" border="0" alt="NVIDIA logo"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="fcam.html" title="Camera Control using the FCam API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="opencv.html" title="OpenCV on Tegra"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Profiling your application</a><ul>
+<li><a class="reference internal" href="#preparing-for-profiling">Preparing for profiling</a></li>
+<li><a class="reference internal" href="#tegra-profiler">Tegra profiler</a></li>
+<li><a class="reference internal" href="#using-a-timer-class">Using a timer class</a></li>
+<li><a class="reference internal" href="#perfhud-es-profiling-opengl-es-code">PerfHUD ES (Profiling OpenGL ES code)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="opencv.html"
+                        title="previous chapter">OpenCV on Tegra</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="fcam.html"
+                        title="next chapter">Camera Control using the FCam API</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/profiling.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="profiling-your-application">
+<h1>Profiling your application<a class="headerlink" href="#profiling-your-application" title="Permalink to this headline">¶</a></h1>
+<p>Now that you know how to create non-trivial native Android apps, we want to make them run fast.
+The first thing to do, before evaluating whether the application is fast enough, is to try
+building and running the project in the release mode, as opposed to the debug mode (see section
+<a class="reference internal" href="#preparation"><em>Preparing for profiling</em></a> below).
+If that didn&#8217;t give you enough speed-up, you will have to employ heavier tools.
+To find the hot spots in your application and optimize them away, you have to profile the application code.
+There are several tools and approaches that will help you in profiling on Tegra-based devices.</p>
+<ol class="arabic simple">
+<li>If you already know where the bottleneck is, you need to measure
+its execution time with a timer class as you optimize the bottleneck away.
+We provide a timer class implementation for your convenience.</li>
+<li><strong>Tegra profiler</strong> is standard and default Tegra profiler. It offers a nice graphical user interface, but it only runs on Windows.</li>
+<li><strong>PerfHUD ES</strong> is a tool for debugging and profiling OpenGL ES 2.0 applications.</li>
+</ol>
+<p>In this tutorial we will learn how to use the first and the second approach for the code
+example <tt class="docutils literal"><span class="pre">SimpleImageOpenCV</span></tt>.</p>
+<p>For PerfHUD ES, we will use the last of the OpenGL ES tutorials, <tt class="docutils literal"><span class="pre">SimpleImageDisplayGL</span></tt>.</p>
+<div class="section" id="preparing-for-profiling">
+<span id="preparation"></span><h2>Preparing for profiling<a class="headerlink" href="#preparing-for-profiling" title="Permalink to this headline">¶</a></h2>
+<p>First of all, we need to check whether you have the profiling tools. If you chose
+to install the complete version of TADP 2.0 you already have Tegra Profiler (on Windows)
+and PerfHUD ES in your NVPACK folder.</p>
+<p>For all the profilers you need to add these flags in the <tt class="docutils literal"><span class="pre">Application.mk</span></tt> file:</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">APP_CFLAGS</span> <span class="o">+=</span> -fno-omit-frame-pointer -mno-thumb
+</pre></div>
+</div>
+<p>If compiler optimizations are causing incorrect function backtraces,
+you can add <tt class="docutils literal"><span class="pre">-g</span></tt> flag:</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">APP_CFLAGS</span> <span class="o">+=</span> -fno-omit-frame-pointer -mno-thumb -g
+</pre></div>
+</div>
+<p>We need to make sure your application is compiled in release mode. If you created build
+configurations, right-click on the project&#8217;s name in the in the <em>Project Explorer</em> pane,
+then <em>Build Configuration &gt; Set Active &gt; Release</em>. Otherwise, right-click on the project&#8217;s
+name in the in the <em>Project Explorer</em> pane, then <em>Properties</em>; click on the <em>C/C++ Build</em>
+entry in the left pane and look at the <em>Build Command</em> field: if it contains
+<tt class="docutils literal"><span class="pre">NDK_DEBUG</span> <span class="pre">=</span> <span class="pre">1</span></tt> either remove it or set it to zero.</p>
+<div class="admonition-note admonition">
+<p class="first admonition-title">Note</p>
+<p>You might find in the documentation for the profiling tools that another solution to the problem of incorrect backtraces
+is to compile your application in debug mode, using for instance the flag:</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">APP_OPTIM</span> <span class="o">:=</span> debug
+</pre></div>
+</div>
+<p class="last">in the <tt class="docutils literal"><span class="pre">Android.mk</span></tt> file. We discourage you from doing this because profiling
+information gathered on un-optimized code does not correctly reflect the performance you
+can expect if you let the compiler optimize the code.</p>
+</div>
+<p>Now, clean the project, compile it, and you&#8217;re ready to start profiling.</p>
+</div>
+<div class="section" id="tegra-profiler">
+<h2>Tegra profiler<a class="headerlink" href="#tegra-profiler" title="Permalink to this headline">¶</a></h2>
+<p>This tool is pretty easy to set up and use, therefore it is a recommended choice for Windows hosts.
+There is a complete user guide that can be accessed from
+<tt class="docutils literal"><span class="pre">$NVPACK_PATH\docs\index.xhtml</span></tt> but we&#8217;ll go over the basics with a full example here.</p>
+<p>Launch Tegra Profiler and start a new profiling report (<em>Analyze &gt; Sample an Application...</em>)</p>
+<a class="reference internal image-reference" href="_images/TegraProfiler_start_new.png"><img alt="_images/TegraProfiler_start_new.png" src="_images/TegraProfiler_start_new.png" style="width: 338.0px; height: 148.0px;" /></a>
+<p>Now in the <tt class="docutils literal"><span class="pre">Target</span></tt> field you should see your device. In the <tt class="docutils literal"><span class="pre">Package</span></tt>
+field select <strong>Deploy to Device</strong> and then select the apk file
+that you want to profile. Since we are profiling our OpenCV example, the apk
+file should be in
+<tt class="docutils literal"><span class="pre">&lt;Your</span> <span class="pre">Workspace&gt;\SimpleImageOpenCV\bin\SimpleImageOpenCV.apk</span></tt>.
+The workspace is probably in <tt class="docutils literal"><span class="pre">$NVPACK_PATH\nvsample_workspace</span></tt> if you copied
+the files during import, or in <tt class="docutils literal"><span class="pre">\tutorials</span></tt> if you didn&#8217;t.</p>
+<a class="reference internal image-reference" href="_images/TegraProfiler_1.png"><img alt="_images/TegraProfiler_1.png" src="_images/TegraProfiler_1.png" style="width: 500.0px; height: 488.0px;" /></a>
+<p>Tegra Profiler can only profile applications that have been signed with NVIDIA&#8217;s custom
+application signature.
+The easiest way to solve this is to make Tegra Profiler sign the apk file
+automatically: <em>Analyze &gt; Options &gt; Sign unsigned packages automatically</em>.</p>
+<a class="reference internal image-reference" href="_images/TegraProfiler_signing.png"><img alt="_images/TegraProfiler_signing.png" src="_images/TegraProfiler_signing.png" style="width: 500.0px; height: 224.0px;" /></a>
+<p>To avoid conflicts with different signatures, in case you have the application
+already installed, you should first uninstall it.  You can do it from a shell a shell:</p>
+<div class="highlight-python"><pre>adb uninstall com.nvidia.tutorial</pre>
+</div>
+<p>or you can do it from your device (<em>Settings &gt; Applications &gt; [Select app] &gt; Uninstall</em>).</p>
+<p>On Windows, if PowerShell is not in your system&#8217;s path you need to add it (it is usually
+located at: <tt class="docutils literal"><span class="pre">C:\WINDOWS\system32\WindowsPowerShell\v1.0</span></tt>). Otherwise you might get
+the error:</p>
+<div class="highlight-python"><pre>Windows cannot find 'PowerShell'. Make sure you typed the name correctly, and then try again.</pre>
+</div>
+<p>We also need the Tegra Profiler daemon in order to profile. Tegra Profiler will install
+it the first time it&#8217;s run. So let&#8217;s hit <strong>Begin</strong> and <strong>OK</strong> on the warning to let this
+happen. We have to manually start the daemon the first time we use it, so you might get
+an error such as (click on &#8220;Details&#8221; to see it):</p>
+<div class="highlight-python"><pre>Dynamic exception type: class AlibError
+std::exception::what: perf component not found</pre>
+</div>
+<p>To start the daemon go in the applications pane, click on Tegra Profiler and hit the
+<strong>Start</strong> button. If the button is greyed out, reboot your Android device and try again.  After the
+daemon is running, click <strong>Begin</strong> again in the Tegra Profiler window,
+and you should see in the bottom right corner of the window that Tegra
+Profiler is sampling:</p>
+<a class="reference internal image-reference" href="_images/TegraProfiler_sampling.png"><img alt="_images/TegraProfiler_sampling.png" src="_images/TegraProfiler_sampling.png" style="width: 214.0px; height: 57.0px;" /></a>
+<p>On your device you should see the application running. Click on <strong>CAM</strong> and move the tablet
+around. When you&#8217;re done, hit the <strong>Stop</strong> button. Note that to get statistically
+consistent results you should take at least a couple of minutes of sampling.
+In the end you should see something like this:</p>
+<a class="reference internal image-reference" href="_images/TegraProfiler_report1.png"><img alt="_images/TegraProfiler_report1.png" src="_images/TegraProfiler_report1.png" style="width: 749.7px; height: 720.0px;" /></a>
+<p>From this report it is easy to see which functions required more time to run (the
+percentages by the different function names), as well as the temporal distribution of
+the different calls (in this example calls are mostly uniformly distributed).</p>
+</div>
+<div class="section" id="using-a-timer-class">
+<h2>Using a timer class<a class="headerlink" href="#using-a-timer-class" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes, instead of sampling what function is being executed
+and determining a rough percentage of time spent on different functions, you
+need to get exact execution times of particular lines (or blocks) of
+the code. To this end, you can use timers. In this tutorial we provide you with a timer
+class that allows you to do that, or you can write your own. If you are familiar
+with Matlab&#8217;s tic and toc functions you&#8217;ll find yourself at home with this class.</p>
+<p>Much like Matlab&#8217;s timing functions, this timer saves the timestamps
+of successive calls of the function <tt class="docutils literal"><span class="pre">Timer::tic()</span></tt> in a stack. Subsequent
+calls to <tt class="docutils literal"><span class="pre">Timer::toc()</span></tt> provide the time elapsed (in ms) from the last
+<tt class="docutils literal"><span class="pre">Timer::tic()</span></tt> call, and pop that timestamp from the stack. You can also
+get the time in milliseconds since the construction of the timer by using
+<tt class="docutils literal"><span class="pre">Timer::get()</span></tt>.</p>
+<p>To see how to use the timer class, we will play again with the <em>SimpleImageOpenCV</em> example.
+Let&#8217;s measure how long it takes to compute Fast features on your device.
+Copy <tt class="docutils literal"><span class="pre">Timer.cpp</span></tt> and <tt class="docutils literal"><span class="pre">Timer.h</span></tt> from <tt class="docutils literal"><span class="pre">/tutorials/SharedCode</span></tt> into
+<tt class="docutils literal"><span class="pre">&lt;Your</span> <span class="pre">Workspace&gt;/SimpleImageOpenCV/jni</span></tt>. (If you copy them outside of Eclipse, you should
+select <tt class="docutils literal"><span class="pre">jni</span></tt> folder and refresh with <strong>F5</strong> so you&#8217;ll see them.)  Then, open
+<tt class="docutils literal"><span class="pre">OpenCV_native.cpp</span></tt>. Let&#8217;s include a couple of headers in this file
+(more information about logging can be found in <a class="reference internal" href="devprocess.html#native-log"><em>Printing to Android log from native code</em></a>):</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &quot;Timer.h&quot;        </span><span class="c1">// The timer class</span>
+<span class="cp">#include &lt;android/log.h&gt;  </span><span class="c1">// We will use android&#39;s log to print the timing results</span>
+<span class="c1">// Let&#39;s define a tag called MyTimer so that we can filter logs later</span>
+<span class="cp">#define LOG(...) __android_log_print(ANDROID_LOG_VERBOSE, &quot;MyTimer&quot;, __VA_ARGS__)</span>
+</pre></div>
+</div>
+<p>We also need to add the timer source file to the list of source files in the <tt class="docutils literal"><span class="pre">Android.mk</span></tt> file:</p>
+<div class="highlight-make"><div class="highlight"><pre><span class="nv">LOCAL_SRC_FILES</span> <span class="o">:=</span> main.cpp Engine.cpp DrawRect.cpp RectShader.cpp OpenCV_native.cpp Timer.cpp
+</pre></div>
+</div>
+<p>Now let&#8217;s find the chunk of code we want to analyze in <tt class="docutils literal"><span class="pre">OpenCV_native.cpp</span></tt> and let&#8217;s
+add a couple of lines to the function <tt class="docutils literal"><span class="pre">COpenCVSample::runLoadCVImg()</span></tt>:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// detect FAST features</span>
+
+<span class="n">Timer</span> <span class="n">t</span><span class="p">;</span>
+
+<span class="n">t</span><span class="p">.</span><span class="n">tic</span><span class="p">();</span> <span class="c1">// Start the timer</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cv</span><span class="o">::</span><span class="n">KeyPoint</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
+<span class="n">cv</span><span class="o">::</span><span class="n">FastFeatureDetector</span> <span class="n">detector</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span>
+<span class="n">detector</span><span class="p">.</span><span class="n">detect</span><span class="p">(</span><span class="n">g_img</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+
+<span class="n">LOG</span><span class="p">(</span><span class="s">&quot;cv::FastFeatureDetector took %d ms to run.&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">toc</span><span class="p">());</span> <span class="c1">// t.toc() gives the time in ms since t.tic()</span>
+</pre></div>
+</div>
+<p>Before we run the code, let&#8217;s open the LogCat view in Eclipse to see the logs. Go to <em>Window &gt;
+Show View &gt; LogCat</em>. If you don&#8217;t see the LogCat option, go to <em>Window &gt; Show View &gt; Other...</em>
+and look for LogCat. Now let&#8217;s add a filter so that our logs don&#8217;t get lost in a bunch of
+clutter. Click on the plus symbol in the <tt class="docutils literal"><span class="pre">Filters</span></tt> pane:</p>
+<a class="reference internal image-reference" href="_images/Timer_addFilter.png"><img alt="_images/Timer_addFilter.png" src="_images/Timer_addFilter.png" style="width: 210.0px; height: 99.0px;" /></a>
+<p>if you don&#8217;t see the filter pane, you need to toggle the <strong>Filter view</strong> button:</p>
+<a class="reference internal image-reference" href="_images/Timer_showFilters.png"><img alt="_images/Timer_showFilters.png" src="_images/Timer_showFilters.png" style="width: 182.0px; height: 49.0px;" /></a>
+<p>Finally name the filter and use the same tag we defined in the cpp file:</p>
+<a class="reference internal image-reference" href="_images/Timer_settingFilter.png"><img alt="_images/Timer_settingFilter.png" src="_images/Timer_settingFilter.png" style="width: 525.0px; height: 321.0px;" /></a>
+<p>Now if we run the application on the device and select the option <strong>IMAGE</strong>, we should see
+in the LogCat viewer something like the following (click on the image to enlarge):</p>
+<a class="reference internal image-reference" href="_images/Timer_resultingTime.png"><img alt="_images/Timer_resultingTime.png" src="_images/Timer_resultingTime.png" style="width: 448.8px; height: 176.8px;" /></a>
+</div>
+<div class="section" id="perfhud-es-profiling-opengl-es-code">
+<h2>PerfHUD ES (Profiling OpenGL ES code)<a class="headerlink" href="#perfhud-es-profiling-opengl-es-code" title="Permalink to this headline">¶</a></h2>
+<p>PerfHUD ES is a complete tool for profiling and debugging OpenGL ES applications. It allows
+to access performance information, as well as the call trace, mipmaps, etc.</p>
+<p>If you chose to install the complete version of TADP 2.0 you already have PerfHUD ES
+in your NVPACK folder. In the same folder you can find a guide to its use. In order for
+PerfHUD ES to be able to gather statistics, we have to first enable the target support.</p>
+<p>Connect your device; then go to <tt class="docutils literal"><span class="pre">NVPACK_PATH/perfhud_switch</span></tt> folder and run the
+file <tt class="docutils literal"><span class="pre">enable_perfhud.bat</span></tt> (in Linux or Mac <tt class="docutils literal"><span class="pre">enable_perfhud.sh</span></tt>). Note that this script only
+enables support until the device is rebooted, so you&#8217;ll have to do it again if you turn
+your device off.</p>
+<p>Let us use the <tt class="docutils literal"><span class="pre">SimpleImageDisplayGL</span></tt> tutorial to learn the basics of the profiler. Because
+of the way PerfHUD ES talks to the application, we need to recompile the project adding
+internet permission in <tt class="docutils literal"><span class="pre">AndroidManifest.xml</span></tt>:</p>
+<div class="highlight-make"><div class="highlight"><pre> &lt;manifest xmlns:android<span class="o">=</span><span class="s2">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+  <span class="nv">package</span><span class="o">=</span><span class="s2">&quot;com.nvidia.tutorial&quot;</span>
+<span class="hll">  android:versionCode<span class="o">=</span><span class="s2">&quot;1&quot;</span>
+</span>  android:versionName<span class="o">=</span><span class="s2">&quot;1.0&quot;</span>&gt;
+
+  &lt;uses-permission android:name<span class="o">=</span><span class="s2">&quot;android.permission.INTERNET&quot;</span> /&gt;
+
+  <span class="o">[</span>...<span class="o">]</span>
+</pre></div>
+</div>
+<p>Now you can compile and run the application on your device.
+Let&#8217;s open LogCat and type NV in the search field. You should see the following messages (and a bunch more):</p>
+<div class="highlight-python"><pre>NV Interposer: nvdmInit called by perfhud
+NV Interposer: NVPerfHUD ES is active.
+NV Interposer: Communication layer init succeed, listen on port 7876.</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you have a firewall software installed on your host machine you might have to open the
+port indicated in the LogCat as shown above to allow PerfHUD ES to communicate with
+the application on your Tegra device.</p>
+</div>
+<p>We can now start PerfHUD ES. You should see a screen like the one below:</p>
+<a class="reference internal image-reference" href="_images/Perf_start.png"><img alt="_images/Perf_start.png" src="_images/Perf_start.png" style="width: 583.0px; height: 407.0px;" /></a>
+<p>The first graph shows the CPU load for the different CPUs, the second shows a bunch of
+statistics. You can choose to show/hide any of these statistics by clicking on their name
+below the graph. Let&#8217;s switch to the <em>Frame Debugger</em> mode (second button on the left-hand
+frame):</p>
+<a class="reference internal image-reference" href="_images/Perf_FrameDebugger.png"><img alt="_images/Perf_FrameDebugger.png" src="_images/Perf_FrameDebugger.png" style="width: 964.0px; height: 600.0px;" /></a>
+<p>There are several tabs at the top. The currently active tab (<cite>Frame Scrubber</cite>) shows the
+content of the frame buffer at the time of different draw calls. In the current view, the
+word <em>OFF</em> should be blinking: that was the element that was drawn by the current call.
+At the bottom of the window you will see a scroll-bar (circled in red in the
+figure above). Right above it you will see the call to <tt class="docutils literal"><span class="pre">glDrawElements()</span></tt>. If you drag
+the bar back one step by 3 steps you will see that the background was rendered (hopefully
+you will not get an attack of epilepsy) with the call <tt class="docutils literal"><span class="pre">glDrawElements()</span></tt>.</p>
+<p>Note that this bar is common to all the <cite>Frame Scrubber</cite> tabs. For instance, if you go
+to the  <cite>Texture Viewer</cite> you can use it to change between different draw calls and see
+the corresponding textures (it should flip between the background image and different sets
+of fonts). When you look at mipmaps you can actually click on any of the different levels
+and</p>
+<p>The most interesting tab is probably the <cite>Shader Viewer</cite> tab.  Here you can see what shaders
+are called and when. In our example, we do not precompile the shaders so we can see the
+code, interact with it, and even change it at run-time!</p>
+<p>Let&#8217;s look at the top-left pane:</p>
+<a class="reference internal image-reference" href="_images/Perf_ShaderViewer.png"><img alt="_images/Perf_ShaderViewer.png" src="_images/Perf_ShaderViewer.png" style="width: 442.0px; height: 380.0px;" /></a>
+<p>Note that the actual numbers of the programs might be different in the window you are looking
+at. In this case, <em>program 3</em> is relative to the text we&#8217;ve drawn on the screen (the two buttons
+and the timer) and was therefore used by the last three draw calls (as indicated by &#8220;3-5&#8221; in
+the <em>Used by Draw Call</em> column). Since the scroll-bar at the bottom is all the way to the left,
+this program is shown as active (light blue). Note that you can click on any of the attributes or
+uniforms to see values and information.
+Now use the navigation bar to go back to the second draw call and you will see that program 9,
+which is relative to the background texture, becomes active.  The fragment and vertex shaders
+shown in the right pane are <tt class="docutils literal"><span class="pre">plain.frag</span></tt> and <tt class="docutils literal"><span class="pre">plain.vert</span></tt> from our code.</p>
+<p>Let&#8217;s go on the device and hit the <strong>ON</strong> button in the example application; PerfHUD ES will
+not update this view automatically, we need to hit the button to <em>Capture next frame</em>, indicated by the red circle in this screenshot:</p>
+<a class="reference internal image-reference" href="_images/Perf_NewFrame.png"><img alt="_images/Perf_NewFrame.png" src="_images/Perf_NewFrame.png" style="width: 186.0px; height: 96.0px;" /></a>
+<p>Now the shaders in the right pane are our <tt class="docutils literal"><span class="pre">filter.vert</span></tt> and <tt class="docutils literal"><span class="pre">filter.frag</span></tt>. Note that, if you click
+on uniforms within the code you will be able to see information about it in the left panes.
+Let&#8217;s go to the fragment shader, and change the sobel filter to be from vertical to horizontal.
+Click the <strong>Edit Shader</strong> button and replace the first 6 lines of the main function with:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">gl_FragColor</span>  <span class="o">=</span>       <span class="n">texture2D</span><span class="p">(</span> <span class="n">uTex</span><span class="p">,</span> <span class="n">vTexCoord</span> <span class="o">+</span> <span class="n">vec2</span><span class="p">(</span>  <span class="n">uD</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>  <span class="n">uD</span><span class="p">.</span><span class="n">y</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">gl_FragColor</span> <span class="o">+=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">texture2D</span><span class="p">(</span> <span class="n">uTex</span><span class="p">,</span> <span class="n">vTexCoord</span> <span class="o">+</span> <span class="n">vec2</span><span class="p">(</span>  <span class="n">uD</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>  <span class="mf">0.0</span>  <span class="p">)</span> <span class="p">);</span>
+<span class="n">gl_FragColor</span> <span class="o">+=</span>       <span class="n">texture2D</span><span class="p">(</span> <span class="n">uTex</span><span class="p">,</span> <span class="n">vTexCoord</span> <span class="o">+</span> <span class="n">vec2</span><span class="p">(</span>  <span class="n">uD</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">uD</span><span class="p">.</span><span class="n">y</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">gl_FragColor</span> <span class="o">-=</span>       <span class="n">texture2D</span><span class="p">(</span> <span class="n">uTex</span><span class="p">,</span> <span class="n">vTexCoord</span> <span class="o">+</span> <span class="n">vec2</span><span class="p">(</span> <span class="o">-</span><span class="n">uD</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>  <span class="n">uD</span><span class="p">.</span><span class="n">y</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">gl_FragColor</span> <span class="o">-=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">texture2D</span><span class="p">(</span> <span class="n">uTex</span><span class="p">,</span> <span class="n">vTexCoord</span> <span class="o">+</span> <span class="n">vec2</span><span class="p">(</span> <span class="o">-</span><span class="n">uD</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>  <span class="mf">0.0</span>  <span class="p">)</span> <span class="p">);</span>
+<span class="n">gl_FragColor</span> <span class="o">-=</span>       <span class="n">texture2D</span><span class="p">(</span> <span class="n">uTex</span><span class="p">,</span> <span class="n">vTexCoord</span> <span class="o">+</span> <span class="n">vec2</span><span class="p">(</span> <span class="o">-</span><span class="n">uD</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">uD</span><span class="p">.</span><span class="n">y</span> <span class="p">)</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Then hit <strong>Compile and Apply</strong>. Look at the screen of your device and you should see that
+now the screen has changed:</p>
+<a class="reference internal image-reference" href="_images/Perf_NewShader.png"><img alt="_images/Perf_NewShader.png" src="_images/Perf_NewShader.png" style="width: 768.0px; height: 480.0px;" /></a>
+<p>PerfHUD ES is also a powerful profiling tool. However, aside from the information
+provided in the <em>Performance Dashboard</em> tab, the profiling data is only available
+for specific system images and, therefore, we will not cover those capabilities
+here.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="fcam.html" title="Camera Control using the FCam API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="opencv.html" title="OpenCV on Tegra"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, NVIDIA Research - Mobile Visual Computing.
+      Last updated on Jun 13, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+.. FCam for Tegra documentation master file, created by
+   sphinx-quickstart on Fri Aug 24 16:01:43 2012.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+.. ifconfig:: audience in ( 'internal' )
+
+   .. note:: INTERNAL USE ONLY. To generate external documents set audience = 'external' in conf.py. 
+
+Native Development on NVIDIA Android Devices
+============================================
+
+This documentation gives you a roadmap and tutorial on how to do visual computing in C++ on Android.
+We will not cover much Java development here, for that see http://developer.android.com, but we do cover
+how Java and C/C++ interact via JNI (Java Native Interface).
+Most of this document is relevant for native (C/C++) development on any Android device,
+some only on NVIDIA Tegra devices, and even a smaller subset only on NVIDIA Cardhu developer board.
+
+Table of contents:
+
+.. toctree::
+   :maxdepth: 2
+
+   Development tools <devtools>
+   Introduction to Android development <devprocess>
+   OpenGL ES 2.0 <opengles>
+   OpenCV <opencv>
+   Profiling <profiling>
+   FCam tutorial <fcam>
+   High-performance image processing <imageprocessing>
+   FCameraPro <fcamerapro>
+   SW engineering tools <sweng>
+   Webinars <webinars>
+   FAQs <faqs>
+

@@ -1,0 +1,71 @@
+{
+  "componentChunkName": "component---src-templates-post-js",
+  "path": "/paperfaces/yorgle-portrait/",
+  "result": {
+    "data": {
+      "markdownRemark": {
+        "frontmatter": {
+          "title": "Lego Man",
+          "authors": [{ "id": "mmistakes", "name": "Michael Rose" }],
+          "date": "2014-08-21T00:00:00.000Z",
+          "date_pretty": "August 21st, 2014",
+          "date_from_now": "7 years ago",
+          "last_modified_at": null,
+          "last_modified_at_from_now": null,
+          "path": "/paperfaces/yorgle-portrait/",
+          "author": null,
+          "excerpt": "PaperFaces portrait of @yorgle drawn with Paper for iOS on an iPad.",
+          "tags": ["portrait", "illustration", "Paper for iOS"],
+          "image": {
+            "childImageSharp": {
+              "fluid": {
+                "aspectRatio": 1.3349514563106797,
+                "src": "/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/fc20c/paperfaces-yorgle-twitter.jpg",
+                "srcSet": "/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/6e883/paperfaces-yorgle-twitter.jpg 275w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/a09ef/paperfaces-yorgle-twitter.jpg 550w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/fc20c/paperfaces-yorgle-twitter.jpg 1100w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/5d6ff/paperfaces-yorgle-twitter.jpg 1650w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/d2f4e/paperfaces-yorgle-twitter.jpg 2048w",
+                "sizes": "(max-width: 1100px) 100vw, 1100px"
+              },
+              "fixed": {
+                "src": "/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/fc20c/paperfaces-yorgle-twitter.jpg",
+                "height": 825,
+                "width": 1100
+              }
+            }
+          },
+          "toc": null,
+          "comments": null,
+          "comments_locked": null,
+          "hide_meta": null
+        },
+        "id": "d5b211d3-f879-58fb-8fac-69244329b327",
+        "html": "<p>TODO</p>",
+        "excerpt": "TODO",
+        "timeToRead": 1,
+        "tableOfContents": ""
+      },
+      "comments": { "edges": [] }
+    },
+    "pageContext": {
+      "next": {
+        "frontmatter": {
+          "path": "/tiny-paintings/michael-rose-painting/",
+          "title": "Cut My Face in Half",
+          "authors": [{ "id": "mmistakes", "name": "Michael Rose" }],
+          "categories": ["tiny-paintings"],
+          "tags": ["watercolor", "portrait", "self portrait", "illustration"]
+        },
+        "fileAbsolutePath": "/home/28041/opensource/github.com/tonykwok/made-mistakes-gatsby/src/posts/tiny-paintings/michael-rose-painting.md"
+      },
+      "previous": {
+        "frontmatter": {
+          "path": "/mastering-paper/basics/",
+          "title": "Mastering Paper for iOS: back to the basics",
+          "authors": [{ "id": "mmistakes", "name": "Michael Rose" }],
+          "categories": ["mastering-paper"],
+          "tags": ["Paper for iOS", "tutorial", "Apple"]
+        },
+        "fileAbsolutePath": "/home/28041/opensource/github.com/tonykwok/made-mistakes-gatsby/src/posts/mastering-paper/basics.md"
+      }
+    }
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

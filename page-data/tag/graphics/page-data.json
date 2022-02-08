@@ -1,0 +1,81 @@
+{
+  "componentChunkName": "component---src-templates-tags-js",
+  "path": "/tag/graphics/",
+  "result": {
+    "data": {
+      "site": {
+        "siteMetadata": {
+          "author": { "name": "Tony Guo", "url": "https://kwapoong.github.io" }
+        }
+      },
+      "taxonomyYaml": { "id": "Graphics", "excerpt": null, "html": null },
+      "allMarkdownRemark": {
+        "edges": [
+          {
+            "node": {
+              "id": "03f25d58-f1bc-5b79-b990-e6e306304a9e",
+              "excerpt": "<p><em>Original published at <a href=\"https://plus.google.com/u/0/105051985738280261832/posts/XAZ4CeVP6DC\">https://plus.google.com/u/0/105051985738280261832/posts/XAZ4CeVP6DC</a></em></p>\n<p>A few days ago I wrote a post trying to correct a…</p>",
+              "timeToRead": 7,
+              "frontmatter": {
+                "title": "How about some Android graphics true facts? (Part 2 of 2)",
+                "date": "2020-07-16T00:00:00.000Z",
+                "date_pretty": "July 16th, 2020",
+                "date_from_now": "2 years ago",
+                "path": "/articles/android-graphics-true-facts-2/",
+                "author": null,
+                "excerpt": "A fantastic Google+ post by Dianne Hackborn (framework engineer on Android) explained the ins and outs of Android's hardware acceleration.",
+                "image": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1.7757009345794392,
+                      "src": "/static/4e922c5dabc4c979d3900335c978fad7/ad579/android-logo.jpg",
+                      "srcSet": "/static/4e922c5dabc4c979d3900335c978fad7/5827c/android-logo.jpg 190w,\n/static/4e922c5dabc4c979d3900335c978fad7/a4187/android-logo.jpg 380w,\n/static/4e922c5dabc4c979d3900335c978fad7/ad579/android-logo.jpg 760w,\n/static/4e922c5dabc4c979d3900335c978fad7/d0063/android-logo.jpg 1140w,\n/static/4e922c5dabc4c979d3900335c978fad7/fdaf9/android-logo.jpg 1520w,\n/static/4e922c5dabc4c979d3900335c978fad7/4fb49/android-logo.jpg 1920w",
+                      "sizes": "(max-width: 760px) 100vw, 760px"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "node": {
+              "id": "3b8705d0-d841-5764-8737-cc5651cdb1a3",
+              "excerpt": "<p><em>Original published at <a href=\"https://plus.google.com/105051985738280261832/posts/2FXDCz8x93s\">https://plus.google.com/105051985738280261832/posts/2FXDCz8x93s</a></em></p>\n<p>(Edit: there have been a number of comments treating…</p>",
+              "timeToRead": 8,
+              "frontmatter": {
+                "title": "How about some Android graphics true facts? (Part 1 of 2)",
+                "date": "2020-07-16T00:00:00.000Z",
+                "date_pretty": "July 16th, 2020",
+                "date_from_now": "2 years ago",
+                "path": "/articles/android-graphics-true-facts-1/",
+                "author": null,
+                "excerpt": "A fantastic Google+ post by Dianne Hackborn (framework engineer on Android) explained the ins and outs of Android's hardware acceleration.",
+                "image": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1.7757009345794392,
+                      "src": "/static/4e922c5dabc4c979d3900335c978fad7/ad579/android-logo.jpg",
+                      "srcSet": "/static/4e922c5dabc4c979d3900335c978fad7/5827c/android-logo.jpg 190w,\n/static/4e922c5dabc4c979d3900335c978fad7/a4187/android-logo.jpg 380w,\n/static/4e922c5dabc4c979d3900335c978fad7/ad579/android-logo.jpg 760w,\n/static/4e922c5dabc4c979d3900335c978fad7/d0063/android-logo.jpg 1140w,\n/static/4e922c5dabc4c979d3900335c978fad7/fdaf9/android-logo.jpg 1520w,\n/static/4e922c5dabc4c979d3900335c978fad7/4fb49/android-logo.jpg 1920w",
+                      "sizes": "(max-width: 760px) 100vw, 760px"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "pageContext": {
+      "tag": "Graphics",
+      "pageNumber": 0,
+      "humanPageNumber": 1,
+      "skip": 0,
+      "limit": 10,
+      "numberOfPages": 1,
+      "previousPagePath": "",
+      "nextPagePath": ""
+    }
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}

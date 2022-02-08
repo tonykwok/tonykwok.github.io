@@ -1,0 +1,50 @@
+{
+  "componentChunkName": "component---src-pages-paperfaces-js",
+  "path": "/paperfaces/",
+  "result": {
+    "data": {
+      "site": { "siteMetadata": { "title": "Reisen" } },
+      "file": {
+        "childImageSharp": {
+          "fluid": {
+            "aspectRatio": 1.7741935483870968,
+            "src": "/static/f3691df6c0e8169e366d8b1f7acbfa7b/fc20c/paperfaces-project-feature.jpg",
+            "srcSet": "/static/f3691df6c0e8169e366d8b1f7acbfa7b/6e883/paperfaces-project-feature.jpg 275w,\n/static/f3691df6c0e8169e366d8b1f7acbfa7b/a09ef/paperfaces-project-feature.jpg 550w,\n/static/f3691df6c0e8169e366d8b1f7acbfa7b/fc20c/paperfaces-project-feature.jpg 1100w,\n/static/f3691df6c0e8169e366d8b1f7acbfa7b/9352a/paperfaces-project-feature.jpg 1600w",
+            "sizes": "(max-width: 1100px) 100vw, 1100px"
+          },
+          "fixed": {
+            "src": "/static/f3691df6c0e8169e366d8b1f7acbfa7b/fc20c/paperfaces-project-feature.jpg",
+            "height": 619,
+            "width": 1100
+          }
+        }
+      },
+      "allMarkdownRemark": {
+        "edges": [
+          {
+            "node": {
+              "id": "d5b211d3-f879-58fb-8fac-69244329b327",
+              "frontmatter": {
+                "title": "Lego Man",
+                "path": "/paperfaces/yorgle-portrait/",
+                "image": {
+                  "childImageSharp": {
+                    "fluid": {
+                      "aspectRatio": 1.33,
+                      "src": "/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/f4608/paperfaces-yorgle-twitter.jpg",
+                      "srcSet": "/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/d60bb/paperfaces-yorgle-twitter.jpg 133w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/c48d8/paperfaces-yorgle-twitter.jpg 267w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/f4608/paperfaces-yorgle-twitter.jpg 533w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/b30f4/paperfaces-yorgle-twitter.jpg 800w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/d3ff8/paperfaces-yorgle-twitter.jpg 1067w,\n/static/0e2e1f96ee3d3297ca9a4acab5ea34ad/db123/paperfaces-yorgle-twitter.jpg 2048w",
+                      "sizes": "(max-width: 533px) 100vw, 533px"
+                    }
+                  }
+                },
+                "thumbnail": null
+              }
+            }
+          }
+        ]
+      }
+    },
+    "pageContext": {}
+  },
+  "staticQueryHashes": ["215131063", "3443189517"]
+}
